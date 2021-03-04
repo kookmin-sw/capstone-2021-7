@@ -1,9 +1,9 @@
 import os, uuid
 
+from django.core.files.storage import Storage, default_storage, FileSystemStorage
+
 from django.db import models
 from django.utils import timezone
-
-# Create your models here.
 
 def translate_request_filename(instance, filename):
     ext = filename.split('.')[-1]

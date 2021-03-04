@@ -18,6 +18,8 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+AUTH_USER_MODEL = 'account.User'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -41,11 +43,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'koreantranlater',
+    'rest_framework.authtoken',
+    'apps.koreantranlater',
     'storages',
+    'apps.account',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -74,6 +80,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'supago.wsgi.application'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Database
