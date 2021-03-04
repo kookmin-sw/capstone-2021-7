@@ -275,4 +275,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# google vision api
+
+ecstatic-seeker-304704-5706692e8bb7.json
 # End of https://www.toptal.com/developers/gitignore/api/django,vscode,python,macos,windows
