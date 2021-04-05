@@ -38,7 +38,7 @@ e-mail: showppark12@kookmin.ac.kr
 ```markdown
 이름:   차유미
 학번:   20171708
-e-mail: ckdball@naver.com
+e-mail: ckdballl@naver.com
 역할:   
 ```
 
