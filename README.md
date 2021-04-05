@@ -24,7 +24,7 @@
 ## 내용에 아래와 같은 내용들을 추가하세요.
 
 ### 1. 프로잭트 소개
-![image](https://user-images.githubusercontent.com/28581506/113533270-7a424400-9608-11eb-8d37-2df600ed9afd.png)
+![image](https://user-images.githubusercontent.com/28581506/113533270-7a424400-9608-11eb-8d37-2df600ed9afd.png){: width="800" height="400")
 
 
 ### 2. 소개 영상
