@@ -18,16 +18,14 @@
   - Theme Chooser에서 태마선택
   - 수정후 팀페이지 확인하여 점검.
 
-**팀페이지 주소** -> https://kookmin-sw.github.io/ '{{자신의 리파지토리 아이디}}'
-
-**예시)** 2020년 0조  https://kookmin-sw.github.io/capstone-2020-0/
+**팀페이지 주소** 2021년 7조 -> https://github.com/kookmin-sw/capstone-2021-7
 
 
 ## 내용에 아래와 같은 내용들을 추가하세요.
 
 ### 1. 프로잭트 소개
+![image](https://user-images.githubusercontent.com/28581506/113533270-7a424400-9608-11eb-8d37-2df600ed9afd.png)
 
-프로젝트
 
 ### 2. 소개 영상
 
@@ -35,9 +33,33 @@
 
 ### 3. 팀 소개
 
-팀을 소개하세요.
+```markdown
+이름:   정지연
+학번:   20171699
+e-mail: 
+역할:   팀장, 
+```
 
-팀원정보 및 담당이나 사진 및 SNS를 이용하여 소개하세요.
+```markdown
+이름:   박종민
+학번:   20152825
+e-mail: showppark12@kookmin.ac.kr
+역할:   
+```
+
+```markdown
+이름:   차유미
+학번:   20171708
+e-mail: ckdball@naver.com
+역할:   
+```
+
+```markdown
+이름:   최은솔
+학번:   20171712
+e-mail: achldmsthf@kookmin.ac.kr
+역할:   
+```
 
 ### 4. 사용법
 
