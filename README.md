@@ -24,29 +24,29 @@
 ```markdown
 이름:   정지연
 학번:   20171699
-e-mail: 
-역할:   팀장, 
+e-mail: wdusdhso@kookmin.ac.kr
+역할:   팀장, api개발, 데이터수집, aws personalize 구축
 ```
 
 ```markdown
 이름:   박종민
 학번:   20152825
 e-mail: showppark12@kookmin.ac.kr
-역할:   
+역할:   api개발, db관리, Front-end(앱)
 ```
 
 ```markdown
 이름:   차유미
 학번:   20171708
 e-mail: ckdballl@naver.com
-역할:   
+역할:   Front-end(앱)
 ```
 
 ```markdown
 이름:   최은솔
 학번:   20171712
 e-mail: achldmsthf@kookmin.ac.kr
-역할:   
+역할:   추천 알고리즘 개발
 ```
 
 
