@@ -3,7 +3,7 @@
 
 **팀페이지 주소** 2021년 7조 -> https://github.com/kookmin-sw/capstone-2021-7
 
-## 프로잭트 소개
+## 프로젝트 소개
 <img src = "https://user-images.githubusercontent.com/28581506/113533270-7a424400-9608-11eb-8d37-2df600ed9afd.png" height="350px" width="700px">
 
 ### 소개
