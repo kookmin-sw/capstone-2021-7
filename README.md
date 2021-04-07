@@ -35,6 +35,7 @@ e-mail: showppark12@kookmin.ac.kr
 역할:   api개발, db관리, Front-end(앱)
 ```
 
+![유미](https://user-images.githubusercontent.com/28581506/113860511-1626a800-97e1-11eb-95f7-c8a8f6497b3a.jpg)
 ```markdown
 이름:   차유미
 학번:   20171708
