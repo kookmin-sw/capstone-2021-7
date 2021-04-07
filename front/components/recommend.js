@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
     },
     contents:{
         flex:8,
-        borderBottomColor:'#3498DB',
-        borderBottomWidth:5,
+        // borderBottomColor:'#3498DB',
+        // borderBottomWidth:5,
         paddingBottom:100,
         alignItems:'center'
         
