@@ -1,50 +1,77 @@
 import React, { useState } from 'react';
 import { render } from 'react-dom';
-import { StyleSheet, View, Text, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 
-function Recommend(){
+const Recommend = () => {
     return(
         <View style={styles.recommend}>
             <View style={styles.topIcon}>
-                <FontAwesome5 name="thumbs-up" size={65} color="#3498DB" />
+                <FontAwesome5 name="thumbs-up" size={50} color="#3498DB" />
             </View>
             <View style={styles.contents}>
                 <Text>
                     <Text style={styles.question}>
                         <MaterialIcons  name="restaurant-menu" size={50} color="#3498DB" /> 나한테 딱 맞는 음식{'\n'}
                     </Text>
-                    <FontAwesome name="circle" size={100} color="#E0E0E0" />{"\t"}{"\t"}      
-                    <FontAwesome name="circle" size={100} color="#E0E0E0" />{"\t"}{"\t"}  
-                    <FontAwesome name="circle" size={100} color="#E0E0E0" />{"\n"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
+                    </TouchableOpacity>{"\t"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
+                    </TouchableOpacity>{"\t"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
+                    </TouchableOpacity>{"\t"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
+                    </TouchableOpacity>{"\n"}
                     <Text style={styles.name}>
-                        카테고리1{"\t"}{"\t"}{"\t"} 카테고리2{"\t"}{"\t"}{"\t"}카테고리3
+                        카테고리1{"\t"}카테고리2{"\t"}카테고리3{"\t"}카테고리4
                     </Text>
                 </Text>
                 <Text>
                     <Text style={styles.question}>
-                        <FontAwesome5 name="smile" size={50} color="#3498DB" /> 내가 좋아할 음식{'\n'}
+                        <Ionicons name="ios-time" size={50} color="#3498DB" />시간대별 음식{'\n'}
                     </Text>
-                    <FontAwesome name="circle" size={100} color="#E0E0E0" />{"\t"}{"\t"}
-                    <FontAwesome name="circle" size={100} color="#E0E0E0" /> {"\t"}{"\t"}
-                    <FontAwesome name="circle" size={100} color="#E0E0E0" />{"\n"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
+                    </TouchableOpacity>{"\t"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
+                    </TouchableOpacity>{"\t"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" />  
+                    </TouchableOpacity>{"\t"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
+                    </TouchableOpacity>{"\n"}
                     <Text style={styles.name}>
-                        카테고리4{"\t"}{"\t"}{"\t"} 카테고리5{"\t"}{"\t"}{"\t"}카테고리6
+                        카테고리5{"\t"}카테고리6{"\t"}카테고리7{"\t"}카테고리8
                     </Text>
                 </Text>
                 <Text>
                     <Text style={styles.question}>
                         <Ionicons name="md-sunny" size={55} color="#3498DB" /> 지금 날씨에 어울리는 음식{'\n'}
                     </Text>
-                    <FontAwesome name="circle" size={100} color="#E0E0E0" /> {"\t"}{"\t"}
-                    <FontAwesome name="circle" size={100} color="#E0E0E0" /> {"\t"}{"\t"}
-                    <FontAwesome name="circle" size={100} color="#E0E0E0" /> {"\n"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
+                    </TouchableOpacity>{"\t"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
+                    </TouchableOpacity>{"\t"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
+                    </TouchableOpacity>{"\t"}
+                    <TouchableOpacity>
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
+                    </TouchableOpacity>{"\n"}
                     <Text style={styles.name}>
-                        카테고리7{"\t"}{"\t"}{"\t"} 카테고리8{"\t"}{"\t"}{"\t"}카테고리9
+                        카테고리9{"\t"}카테고리10{"\t"}카테고리11{"\t"}카테고리12
                     </Text>
                 </Text>
             </View>
@@ -80,13 +107,13 @@ const styles = StyleSheet.create({
         flex:1
     },
     question:{
-        fontSize:30,
+        fontSize:25,
         fontWeight:"bold",
         color:'#3498DB',
         lineHeight:80,
     },
     name:{
-        fontSize:18,
+        fontSize:15,
         fontWeight:"bold"
     }
 
