@@ -4,8 +4,7 @@
 **팀페이지 주소** 2021년 7조 -> https://github.com/kookmin-sw/capstone-2021-7
 
 ## 1. 프로잭트 소개
-![image](https://user-images.githubusercontent.com/28581506/113533270-7a424400-9608-11eb-8d37-2df600ed9afd.png)
-
+<img src = "https://user-images.githubusercontent.com/28581506/113533270-7a424400-9608-11eb-8d37-2df600ed9afd.png" height="400px" width="800px">
 
 ### 소개
 해당 프로젝트에서는 이러한 고민을 데이터 기반 추천 시스템을 통해 사용자가 신뢰할 수 있는 추천 목록을 제공하여 결정을 내릴 수 있도록 도움을 주어 해결하고자 한다. 더하여 서비스를 사용하는 사용자들이 혼자서 추천시스템을 제공받을 뿐만 아니라, 여러명의 사람들과 함께 공통의 추천목록을 제공받을 수 있도록 다수를 위한 추천시스템도 개발하고자 한다.
@@ -21,7 +20,9 @@
 
 ## 3. 팀 소개
 
-<img src = "https://user-images.githubusercontent.com/28581506/113861003-ae249180-97e1-11eb-8575-2e5ad80be2c7.jpg" width="200px">```markdown
+<img src = "https://user-images.githubusercontent.com/28581506/113861003-ae249180-97e1-11eb-8575-2e5ad80be2c7.jpg" width="200px">
+
+```markdown
 이름:   정지연
 학번:   20171699
 e-mail: wdusdhso@kookmin.ac.kr
