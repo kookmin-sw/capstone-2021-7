@@ -21,6 +21,8 @@
 
 ## 3. 팀 소개
 
+<img src = "https://user-images.githubusercontent.com/28581506/113861003-ae249180-97e1-11eb-8575-2e5ad80be2c7.jpg" width="200px">
+
 ```markdown
 이름:   정지연
 학번:   20171699
@@ -35,7 +37,7 @@ e-mail: showppark12@kookmin.ac.kr
 역할:   api개발, db관리, Front-end(앱)
 ```
 
-<img src = "https://user-images.githubusercontent.com/28581506/113860511-1626a800-97e1-11eb-95f7-c8a8f6497b3a.jpg" width="300px">
+<img src = "https://user-images.githubusercontent.com/28581506/113860511-1626a800-97e1-11eb-95f7-c8a8f6497b3a.jpg" width="200px">
 
 ```markdown
 이름:   차유미
@@ -43,6 +45,8 @@ e-mail: showppark12@kookmin.ac.kr
 e-mail: ckdballl@naver.com
 역할:   Front-end(앱)
 ```
+
+<img src = "https://user-images.githubusercontent.com/28581506/113861083-c4325200-97e1-11eb-84dc-61e27ce1b471.jpg" width="200px">
 
 ```markdown
 이름:   최은솔
