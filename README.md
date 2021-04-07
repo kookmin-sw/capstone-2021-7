@@ -30,6 +30,8 @@ e-mail: wdusdhso@kookmin.ac.kr
 역할:   팀장, api개발, 데이터수집, aws personalize 구축
 ```
 
+<img src = "https://user-images.githubusercontent.com/28581506/113869012-378c9180-97eb-11eb-881b-66106b5470af.jpg" width="200px">
+
 #### 박종민
 
 ```markdown
