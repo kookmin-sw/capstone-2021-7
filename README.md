@@ -20,41 +20,39 @@
 
 ## 3. 팀 소개
 
+#### 정지연
+
 <img src = "https://user-images.githubusercontent.com/28581506/113862339-39eaed80-97e3-11eb-89f1-839322a16e6c.jpg" width="200px">
 
 ```markdown
-이름:   정지연
 학번:   20171699
 e-mail: wdusdhso@kookmin.ac.kr
 역할:   팀장, api개발, 데이터수집, aws personalize 구축
 ```
 
-
+#### 박종민
 
 ```markdown
-이름:   박종민
 학번:   20152825
 e-mail: showppark12@kookmin.ac.kr
 역할:   api개발, db관리, Front-end(앱)
 ```
 
-
+#### 차유미
 
 <img src = "https://user-images.githubusercontent.com/28581506/113861258-f643b400-97e1-11eb-88e7-973ff3de4096.jpg" width="200px">
 
 ```markdown
-이름:   차유미
 학번:   20171708
 e-mail: ckdballl@naver.com
 역할:   Front-end(앱)
 ```
 
-
+#### 최은솔
 
 <img src = "https://user-images.githubusercontent.com/28581506/113862424-55ee8f00-97e3-11eb-9aa0-656f1907b761.jpg" width="200px">
 
 ```markdown
-이름:   최은솔
 학번:   20171712
 e-mail: achldmsthf@kookmin.ac.kr
 역할:   추천 알고리즘 개발
