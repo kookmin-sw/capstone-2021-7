@@ -7,10 +7,15 @@
 <img src = "https://user-images.githubusercontent.com/28581506/113533270-7a424400-9608-11eb-8d37-2df600ed9afd.png" height="350px" width="700px">
 
 ### 소개
-해당 프로젝트에서는 '오늘 뭐 먹지?'의 고민을 데이터 기반 추천 시스템을 통해 사용자가 신뢰할 수 있는 추천 목록을 제공하여 결정을 내릴 수 있도록 도움을 주어 해결하고자 한다. 더하여 서비스를 사용하는 사용자들이 혼자서 추천시스템을 제공받을 뿐만 아니라, 여러명의 사람들과 함께 공통의 추천목록을 제공받을 수 있도록 다수를 위한 추천시스템도 개발하고자 한다.
+6해당 프로젝트에서는 '오늘 뭐 먹지?'의 고민을 데이터 기반 추천 시스템을 통해 사용자가 신뢰할 수 있는 추천 목록을 제공하여 결정을 내릴 수 있도록 도움을 주어 해결하고자 한다. 더하여 서비스를 사용하는 사용자들이 혼자서 추천목록을 제공받을 뿐만 아니라, 여러명의 사람들과 함께 공통의 추천목록을 제공받을 수 있도록 다수를 위한 추천시스템도 개발하고자 한다.
 
 ### 배경
 '오늘 뭐 먹지?', 혼자 밥을 먹을 때도, 다른 사람들과 함께 먹을 때도 누구나 한번 쯤 해보았을 법한 고민이다. 이 고민은 최근들어 코로나로 인해 외출을 삼가하게 되면서 '오늘 뭐 시켜먹지?'로 변화하고 있다. 우리는 실제 사용자들이 배달음식을 주문할 때 얼마나 고민하는지를 알아보기 위해 배달어플 사용자 480명을 대상으로 혼자일 때, 여러명일 때 두 상황으로 나누어 조사를 실시하였다. 그 결과, 두 상황에서 모두 고민한다고 대답한 사람이 90% 이상이었다. 이를 통해 많은 사람들이 실제로 배달음식을 주문할 때 결정을 못해 시간을 지체하고 있다는 사실을 인지하게 되었다. 
+
+## Abstract
+In the project, we try to solve the problem of "what do we eat today?" by providing users with a reliable recommendation list through a data-based recommendation system to help them make decisions. In addition, we would like to develop a recommendation system for many users so that users receive not only recommendation list by oneself, but also a common recommendation list with several people.
+
+"What should I eat today?" It's a concern that anyone would have tried when eating alone or eating with others. Recently, This concern is changing to 'What should I order today?' as Corona has been keeping me from going out. We conducted a survey of 480 delivery app users in two situations when they were alone or multiple to find out how much they were worried about ordering delivery food. As a result, more than 90% of the respondents said they were worried in both situations. This has led that many people are actually delaying their time because they cannot decide what kind of ordering delivery food.
 
 
 ## 소개 영상
