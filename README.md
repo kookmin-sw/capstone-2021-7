@@ -20,7 +20,7 @@
 
 ## 3. 팀 소개
 
-<img src = "https://user-images.githubusercontent.com/28581506/113861003-ae249180-97e1-11eb-8575-2e5ad80be2c7.jpg" width="200px">
+<img src = "https://user-images.githubusercontent.com/28581506/113862339-39eaed80-97e3-11eb-89f1-839322a16e6c.jpg" width="200px">
 
 ```markdown
 이름:   정지연
@@ -45,6 +45,7 @@ e-mail: ckdballl@naver.com
 역할:   Front-end(앱)
 ```
 
+<img src = "https://user-images.githubusercontent.com/28581506/113862424-55ee8f00-97e3-11eb-9aa0-656f1907b761.jpg" width="200px">
 
 ```markdown
 이름:   최은솔
