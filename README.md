@@ -21,9 +21,7 @@
 
 ## 3. 팀 소개
 
-<img src = "https://user-images.githubusercontent.com/28581506/113861003-ae249180-97e1-11eb-8575-2e5ad80be2c7.jpg" width="200px">
-
-```markdown
+<img src = "https://user-images.githubusercontent.com/28581506/113861003-ae249180-97e1-11eb-8575-2e5ad80be2c7.jpg" width="200px">```markdown
 이름:   정지연
 학번:   20171699
 e-mail: wdusdhso@kookmin.ac.kr
