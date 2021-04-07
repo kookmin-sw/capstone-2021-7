@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { render } from 'react-dom';
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -85,11 +86,12 @@ const styles = StyleSheet.create({
     recommend:{
         backgroundColor:'white',
         width:'100%',
-        paddingTop:80,
+        paddingTop:70,
         flex:1,
     },
     topIcon:{
         flex:1,
+        paddingBottom:20,
         alignItems: 'center',
         borderBottomColor: '#3498DB',
         borderBottomWidth: 5,
