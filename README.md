@@ -46,7 +46,6 @@ e-mail: ckdballl@naver.com
 역할:   Front-end(앱)
 ```
 
-<img src = "https://user-images.githubusercontent.com/28581506/113861083-c4325200-97e1-11eb-84dc-61e27ce1b471.jpg" width="200px">
 
 ```markdown
 이름:   최은솔
