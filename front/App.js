@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Main from './components/main';
 import Recommend from './components/recommend';
 import MyOrder from './components/myorder';
+import Menu from './components/menu';
 import Login from './components/login';
 import MyProfile from './components/myprofile';
 import MyStore from './components/mystore';
@@ -17,9 +18,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName = "main"
+        initialRouteName = "menu"
       >
-        <Tab.Screen name= "main" component = {Main}/>
+        <Tab.Screen name= "menu" component = {Menu}/>
         <Tab.Screen name= "mystore" component = {MyStore}/>
         <Tab.Screen name= "recommend" component = {Recommend}/>
         <Tab.Screen name= "myorder" component = {MyOrder}/>
