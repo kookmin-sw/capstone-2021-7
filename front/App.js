@@ -6,23 +6,22 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Main from './components/main';
 import Recommend from './components/recommend';
-import Store from './components/store';
 import MyOrder from './components/myorder';
+import Login from './components/login';
 import MyProfile from './components/myprofile';
 import MyStore from './components/mystore';
 
 const Tab = createBottomTabNavigator();
 
-
 export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName = "store"
+        initialRouteName = "main"
       >
         <Tab.Screen name= "main" component = {Main}/>
         <Tab.Screen name= "mystore" component = {MyStore}/>
-        <Tab.Screen name= "store" component = {Store}/>
+        <Tab.Screen name= "recommend" component = {Recommend}/>
         <Tab.Screen name= "myorder" component = {MyOrder}/>
         <Tab.Screen name= "myprofile" component = {MyProfile}/>
       </Tab.Navigator>
@@ -37,4 +36,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
