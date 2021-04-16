@@ -1,32 +1,43 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
 const MyProfile = () => {
+  const [isSelected, setSelection] = useState(false);
+  const [isSelected2, setSelection2] = useState(false);
+
   return (
     <View style={styles.myprofile}>
-      <Text style={styles.signintext}>
+      <Text style={styles.signuptext}>
         <Ionicons name="person-add" size={70} color="#3498DB" />{'\t'}회원가입
       </Text>
-      <View style={styles.input}>
-        <TextInput placeholder="이름"></TextInput>
-        <TextInput placeholder="생년월일 ( ex: 19980824 )"></TextInput>
-        <TextInput placeholder="아이디"></TextInput>
-        <TextInput placeholder="비밀번호"></TextInput>
-        <View style={styles.check}>
-          <CheckBox></CheckBox><Text>남자    </Text>
-          <CheckBox></CheckBox><Text>여자</Text>
+      <View>
+        <TextInput style={styles.input} placeholder="이름"></TextInput>
+        <TextInput style={styles.input} placeholder="생년월일 ( ex: 19980824 )"></TextInput>
+        <TextInput style={styles.input} placeholder="아이디"></TextInput>
+        <TextInput style={styles.input} placeholder="비밀번호"></TextInput>
+        <View style={styles.checks}>
+          <CheckBox 
+            style={styles.check}
+            value={isSelected}
+            onValueChange={setSelection}
+          >
+          </CheckBox><Text style={styles.label}>남자{'\t'}{'\t'}</Text>
+          <CheckBox 
+            style={styles.check}
+            value={isSelected2}
+            onValueChange={setSelection2}
+          >
+          </CheckBox><Text style={styles.label}>여자</Text>
         </View>
-        
-        
       </View>
-      <View style={styles.button}>
-        <TouchableOpacity>
-          <Text>완료{'\t'}{'\t'}</Text>
+      <View style={styles.buttons}>
+        <TouchableOpacity style={styles.button1}>
+          <Text style={styles.text}>완료{'\t'}{'\t'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>로그인</Text>
+        <TouchableOpacity style={styles.button2}>
+          <Text style={styles.text}>로그인</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -40,19 +51,60 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  signintext: {
+  signuptext: {
     fontSize: 40,
     fontWeight:'bold',
-    color:"#3498DB"
+    color:"#3498DB",
+    paddingBottom:50,
   },
   input: {
-
+    borderColor:'#DBDBDB',
+    borderWidth:2,
+    borderRadius:5,
+    marginBottom:15,
+    width:300,
+    height:50,
   },
-  button: {
-    flexDirection:'row'
+  checks: {
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center'
   },
   check: {
-    flexDirection:'row'
+    tintColor:"#3498DB",
+    alignSelf: "center"
+  },
+  buttons: {
+    flexDirection:'row',
+    marginTop:20,
+  },
+  button1: {
+    borderColor:"#3498DB",
+    borderWidth:2,
+    backgroundColor:"#3498DB",
+    borderRadius:5,
+    padding:10,
+    
+    margin:10,
+    width:100,
+  },
+  button2: {
+    borderColor:"#3498DB",
+    borderWidth:2,
+    backgroundColor:"#3498DB",
+    borderRadius:5,
+    padding:10,
+    margin:10,
+    width:180
+  },
+  text:{
+    fontSize:15,
+    fontWeight:'bold',
+    textAlign:'center',
+    color:'white',
+  },
+  label:{
+    margin:8
   }
 });
 
