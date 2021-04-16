@@ -9,16 +9,16 @@ const Login = () => {
       <Text style={styles.signintext}>
         <Ionicons name="person" size={70} color="#3498DB" />{'\t'}로그인
       </Text>
-      <View style={styles.input}>
-        <TextInput placeholder="아이디"></TextInput>
-        <TextInput placeholder="비밀번호"></TextInput>
+      <View>
+        <TextInput style={styles.input} placeholder=" 아이디"></TextInput>
+        <TextInput style={styles.input}placeholder=" 비밀번호"></TextInput>
       </View>
-      <View style={styles.button}>
-        <TouchableOpacity>
-          <Text>완료{'\t'}{'\t'}</Text>
+      <View style={styles.buttons}>
+        <TouchableOpacity style={styles.button1}>
+          <Text style={styles.text}>완료{'\t'}{'\t'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>회원가입</Text>
+        <TouchableOpacity style={styles.button2}>
+          <Text style={styles.text}>회원가입</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -35,14 +35,44 @@ const styles = StyleSheet.create({
   signintext: {
     fontSize: 40,
     fontWeight:'bold',
-    color:"#3498DB"
+    color:"#3498DB",
+    paddingBottom:50
   },
   input: {
-
+    borderColor:'#DBDBDB',
+    borderWidth:2,
+    borderRadius:5,
+    marginBottom:15,
+    width:300,
+    height:50,
   },
-  button: {
-    flexDirection:'row'
+  buttons: {
+    flexDirection:'row',
   },
+  button1: {
+    borderColor:"#3498DB",
+    borderWidth:2,
+    backgroundColor:"#3498DB",
+    borderRadius:5,
+    padding:10,
+    margin:10,
+    width:100,
+  },
+  button2: {
+    borderColor:"#3498DB",
+    borderWidth:2,
+    backgroundColor:"#3498DB",
+    borderRadius:5,
+    padding:10,
+    margin:10,
+    width:180
+  },
+  text:{
+    fontSize:15,
+    fontWeight:'bold',
+    textAlign:'center',
+    color:'white',
+  }
 });
 
 export default Login;
