@@ -14,12 +14,13 @@ class User(AbstractUser):
         ('male','male'),
         ('female','female')
     )
+    password = models.CharField(max_length=256)
     phone = models.CharField(max_length = 150, unique = True ,default = "null")
     name = models.CharField(max_length = 150, default = "null")
     gender = models.CharField(max_length = 150, choices = GENDER, default = "null")
-    taste = models.IntegerField(default = 0)
-    price = models.IntegerField(default = 0)
-    amount = models.IntegerField(default = 0)
+    taste = models.IntegerField(default = -1)
+    price = models.IntegerField(default = -1)
+    amount = models.IntegerField(default = -1)
     userSmallCategory = models.ManyToManyField(SmallCategory, through = "User_SmallCategory")
     userStore = models.ManyToManyField(Store, through = "User_Store")
     

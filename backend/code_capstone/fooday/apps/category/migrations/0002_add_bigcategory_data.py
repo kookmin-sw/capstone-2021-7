@@ -14,8 +14,6 @@ class Migration(migrations.Migration):
 
     bigCategoryList=[
         "치킨",
-        "버거",
-        "찜/탕",
         "분식",
         "일식/돈까스",
         "족발/보쌈",
