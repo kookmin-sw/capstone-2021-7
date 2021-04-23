@@ -24,7 +24,7 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
                 return Response(
                     status = status.HTTP_400_BAD_REQUEST,
                     data = {
-                        'message': '카테고리나 위치정보가 입력되지 않았습니다.'
+                        'message': '카테고리나 위치정보가 입력되지 않았거나 잘못입력됬습니다.'
                     }
                 )
             location = location.split()[1]
