@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox } from 'r
 
 import { Ionicons } from '@expo/vector-icons';
 
-const MyProfile = () => {
+const MyProfile = ({navigation}) => {
   const [isSelected, setSelection] = useState(false);
   const [isSelected2, setSelection2] = useState(false);
 
@@ -36,7 +36,10 @@ const MyProfile = () => {
         <TouchableOpacity style={styles.button1}>
           <Text style={styles.text}>완료{'\t'}{'\t'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button2}>
+        <TouchableOpacity 
+        style={styles.button2}
+        onPress={()=>navigation.navigate('login')}
+        >
           <Text style={styles.text}>로그인</Text>
         </TouchableOpacity>
       </View>
