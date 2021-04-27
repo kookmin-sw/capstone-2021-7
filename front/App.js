@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import "react-native-gesture-handler";
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['Remote debugger']);
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -14,12 +17,10 @@ import MyStore from './components/mystore';
 const Tab = createBottomTabNavigator();
 
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName = "store"
-      >
+      <Tab.Navigator initialRouteName = "main" >
         <Tab.Screen name= "main" component = {Main}/>
         <Tab.Screen name= "mystore" component = {MyStore}/>
         <Tab.Screen name= "store" component = {Store}/>
@@ -30,11 +31,4 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-  },
-});
-
+export default App;
