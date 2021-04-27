@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { color } from 'react-native-reanimated';
@@ -25,28 +25,85 @@ const Store = () => {
         </Text>
       </View>
 
-      <View style={styles.list}>
+      <ScrollView style={styles.list}>
         <TouchableOpacity>
-          <Text style={styles.text}>
-            <FontAwesome name="square" size={70} color="#E0E0E0" />{'\t'}지연이네 카테고리1
-          </Text>
+          <View style={styles.tq}>
+            <View>
+              <FontAwesome name="square" size={80} color="#E0E0E0" />
+            </View>
+            <View style={styles.tqname}>
+              <Text style={styles.bigText}>지연이네 카테고리1</Text>
+              <Text style={styles.smallText}>지연이의 지성, 지연이의 미모</Text>
+            </View>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text style={styles.text}>
-            <FontAwesome name="square" size={70} color="#E0E0E0" />{'\t'}은솔이네 카테고리1
-          </Text>
+          <View style={styles.tq}>
+            <View>
+              <FontAwesome name="square" size={80} color="#E0E0E0" />
+            </View>
+            <View style={styles.tqname}>
+              <Text style={styles.bigText}>은솔이네 카테고리1</Text>
+              <Text style={styles.smallText}>은솔이의 지성, 은솔이의 미모</Text>
+            </View>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text style={styles.text}>
-            <FontAwesome name="square" size={70} color="#E0E0E0" />{'\t'}종민이네 카테고리1
-          </Text>
+          <View style={styles.tq}>
+            <View>
+              <FontAwesome name="square" size={80} color="#E0E0E0" />
+            </View>
+            <View style={styles.tqname}>
+              <Text style={styles.bigText}>종민이네 카테고리1</Text>
+              <Text style={styles.smallText}>종민이의 지성, 종민이의 미모</Text>
+            </View>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text style={styles.text}>
-            <FontAwesome name="square" size={70} color="#E0E0E0" />{'\t'}유미네 카테고리1
-          </Text>
+          <View style={styles.tq}>
+            <View>
+              <FontAwesome name="square" size={80} color="#E0E0E0" />
+            </View>
+            <View style={styles.tqname}>
+              <Text style={styles.bigText}>유미네 카테고리1</Text>
+              <Text style={styles.smallText}>유미의 지성, 유미의 미모</Text>
+            </View>
+          </View>
         </TouchableOpacity>
-      </View>
+        <TouchableOpacity>
+          <View style={styles.tq}>
+            <View>
+              <FontAwesome name="square" size={80} color="#E0E0E0" />
+            </View>
+            <View style={styles.tqname}>
+              <Text style={styles.bigText}>달콩이네 카테고리1</Text>
+              <Text style={styles.smallText}>달콩이의 지성, 달콩이의 미모</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <View style={styles.tq}>
+            <View>
+              <FontAwesome name="square" size={80} color="#E0E0E0" />
+            </View>
+            <View style={styles.tqname}>
+              <Text style={styles.bigText}>서리네 카테고리1</Text>
+              <Text style={styles.smallText}>서리의 지성, 서리의 미모</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <View style={styles.tq}>
+            <View>
+              <FontAwesome name="square" size={80} color="#E0E0E0" />
+            </View>
+            <View style={styles.tqname}>
+              <Text style={styles.bigText}>모찌네 카테고리1</Text>
+              <Text style={styles.smallText}>모찌의 지성, 모찌의 미모</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
 
   );
@@ -60,8 +117,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   top: {
-    paddingTop:'10%',
-    flex:1,
+    flex:0.5,
+    marginTop:30,
     borderBottomColor:"#3498DB",
     borderBottomWidth:5,
     alignItems:'center',
@@ -70,8 +127,10 @@ const styles = StyleSheet.create({
     flexDirection:'row',
   },
   list: {
-    flex:2,
+    flex:5,
     paddingTop:'10%',
+    width:'100%',
+    paddingLeft:'20%',
   },
   category: {
     fontSize:28,
@@ -79,16 +138,26 @@ const styles = StyleSheet.create({
   },
   // feedback:{
   // }
-  text: {
+  bigText:{
     fontSize:20,
     fontWeight:'bold',
-    textAlign:'justify',
-    
+  },
+  smallText:{
+    fontSize:15,
+    fontWeight:'bold',
+    color:'#3498DB',
   },
   feedtext: {
     fontSize:15,
     fontWeight:"bold",
     color:'#898989'
+  },
+  tq: {
+    flexDirection:'row',
+  },
+  tqname:{
+    marginLeft:15,
+    justifyContent:'center',
   }
 });
 
