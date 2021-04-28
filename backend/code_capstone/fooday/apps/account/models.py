@@ -23,6 +23,7 @@ class User(AbstractUser):
     amount = models.IntegerField(default = -1)
     userSmallCategory = models.ManyToManyField(SmallCategory, through = "User_SmallCategory")
     userStore = models.ManyToManyField(Store, through = "User_Store")
+    userMenu = models.ManyToManyField(Menu, through = "User_Menu")
     
 class User_SmallCategory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
