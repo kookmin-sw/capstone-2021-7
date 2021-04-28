@@ -81,6 +81,10 @@ class UserViewSet(viewsets.ModelViewSet):
         name = request.data.get('name')
         password = request.data.get('password')
         gender = request.data.get('gender')
+
+        taste = request.data.get('taste')
+        price = request.data.get('price')
+        amount = request.data.get('amount')
         
         if User.objects.filter(phone=phone).exists():
             return Response(
@@ -93,6 +97,9 @@ class UserViewSet(viewsets.ModelViewSet):
             phone = phone,
             name= name,
             gender = gender,
+            taste = taste,
+            price = price,
+            amount = amount
         )
 
         token = Token.objects.create(user=user)
