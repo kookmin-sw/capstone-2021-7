@@ -11,4 +11,4 @@ class SmallCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SmallCategory
-        fields = ('__all__')
+        fields = ['id', 'name','bigCategory']

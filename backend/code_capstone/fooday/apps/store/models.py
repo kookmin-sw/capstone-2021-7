@@ -21,4 +21,10 @@ class Menu(models.Model):
     price = models.CharField(max_length = 150, default = "null")
     name = models.CharField(max_length = 150, default = "null")
     img = models.ImageField(upload_to="food", blank= True, null= True)
+    smallCategory = models.ManyToManyField(SmallCategory, through = "Menu_SmallCategory")
+
+class Menu_SmallCategory(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    smallCategory = models.ForeignKey(SmallCategory, on_delete=models.CASCADE)
+    
     
