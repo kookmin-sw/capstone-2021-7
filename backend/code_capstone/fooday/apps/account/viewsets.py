@@ -24,8 +24,9 @@ class UserMenuViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
 
         menuList = request.data.get('menuList')
-        
-        geocoding_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + "서울특별시 성북구 솔샘로5가길 7" + "&key=" + os.getenv('GOOGLE_APIKEY')
+        location = request.data.get('location')
+
+        geocoding_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + os.getenv('GOOGLE_APIKEY')
         geo_response = requests.get(geocoding_url)
         res = geo_response.json()
         lat = str(res['results'][0]['geometry']['location']['lat'])
@@ -35,7 +36,7 @@ class UserMenuViewSet(viewsets.ModelViewSet):
         openweathermap_url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" +lng +"&appid=" + os.getenv('OPENWEATHER_APIKEY')
         weather_response = requests.get(openweathermap_url)
         res = weather_response.json()
-        description = res['weather'][0]['description']
+        description = res['weather'][0]['main']
         temp = round(res['main']['temp'] - 273.15,2)
         weather = ""
         print("메인",description)
