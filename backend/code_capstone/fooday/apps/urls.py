@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 from apps.account import viewsets as accountView
 from apps.category import viewsets as categoryView
 from apps.store import viewsets as storeView
+from apps.recommend import views as recommendView
 
 router = DefaultRouter()
 
@@ -21,4 +22,5 @@ router.register(r'menu', storeView.MenuViewSet)
 
 urlpatterns = [
     path('',include(router.urls)),
+    path('recommendcategory/', recommendView.RecommendCategory.as_view()),
 ]

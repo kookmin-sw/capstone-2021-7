@@ -10,19 +10,51 @@ from rest_framework.authtoken.models import Token
 from .models import *
 from .serializers import *
 
+import requests
+import json
+import os
+
+import urllib.request
+
 class UserMenuViewSet(viewsets.ModelViewSet):
 
     queryset = User_Menu.objects.all()
     serializer_class = UserMenuSerializer
     
     def create(self, request, *args, **kwargs):
+
         menuList = request.data.get('menuList')
-        weather = request.data.get('weather')
+        
+        geocoding_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + "서울특별시 성북구 솔샘로5가길 7" + "&key=" + os.getenv('GOOGLE_APIKEY')
+        geo_response = requests.get(geocoding_url)
+        res = geo_response.json()
+        lat = str(res['results'][0]['geometry']['location']['lat'])
+        lng = str(res['results'][0]['geometry']['location']['lng'])
+        print("lat : ",lat)
+        print("lng : ",lng)
+        openweathermap_url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" +lng +"&appid=" + os.getenv('OPENWEATHER_APIKEY')
+        weather_response = requests.get(openweathermap_url)
+        res = weather_response.json()
+        description = res['weather'][0]['description']
+        temp = round(res['main']['temp'] - 273.15,2)
+        weather = ""
+        print("메인",description)
+        print("온도",temp)
+
+        if temp >24:
+            weather = "더움"
+        elif temp > 10:
+            weather = "적정"
+        else :
+            weather = "추움"
+
+        real = description + "," + weather
+        print(real)
         for menu in menuList:
             serializer = self.get_serializer(data={
                 "user" : request.user.id,
                 "menu" : menu,
-                "weather":weather
+                "weather": real
             })
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
@@ -49,6 +81,10 @@ class UserViewSet(viewsets.ModelViewSet):
         name = request.data.get('name')
         password = request.data.get('password')
         gender = request.data.get('gender')
+
+        taste = request.data.get('taste')
+        price = request.data.get('price')
+        amount = request.data.get('amount')
         
         if User.objects.filter(phone=phone).exists():
             return Response(
@@ -61,6 +97,9 @@ class UserViewSet(viewsets.ModelViewSet):
             phone = phone,
             name= name,
             gender = gender,
+            taste = taste,
+            price = price,
+            amount = amount
         )
 
         token = Token.objects.create(user=user)
