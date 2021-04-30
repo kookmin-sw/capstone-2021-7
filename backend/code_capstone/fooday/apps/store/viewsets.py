@@ -41,6 +41,29 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
                 }
             )
 
+class MenuViewSet(viewsets.ModelViewSet):
+
+    queryset = Menu.objects.all()
+    serializer_class = MenuSerializer
+
+    """
+    List a queryset.
+    """
+    def list(self, request, *args, **kwargs):
+        store = request.data.get('store')
+        if store == None:
+            return Response(
+                status = status.HTTP_400_BAD_REQUEST,
+                data = {
+                    'message': '음식점을 입력해야합니다.'
+                }
+            )
+
+        queryset = Menu.objects.filter(store = store)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 class StoreSmallCategoryViewSet(viewsets.ModelViewSet):
 
     queryset = Store.objects.all()
@@ -83,26 +106,3 @@ class StoreSmallCategoryViewSet(viewsets.ModelViewSet):
                     'message': '잘못된 입력입니다.'
                 }
             )
-
-
-class MenuViewSet(viewsets.ModelViewSet):
-
-    queryset = Menu.objects.all()
-    serializer_class = MenuSerializer
-
-    """
-    List a queryset.
-    """
-    def list(self, request, *args, **kwargs):
-        store = request.data.get('store')
-        if store == None:
-            return Response(
-                status = status.HTTP_400_BAD_REQUEST,
-                data = {
-                    'message': '음식점을 입력해야합니다.'
-                }
-            )
-
-        queryset = Menu.objects.filter(store = store)
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
