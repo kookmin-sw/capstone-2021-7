@@ -19,6 +19,8 @@ router.register(r'bigcategory', categoryView.BigCategoryViewSet)
 # store
 router.register(r'storebigcategory', storeView.StoreBigCategoryViewSet)
 router.register(r'menu', storeView.MenuViewSet)
+router.register(r'storesmallcategory', storeView.StoreSmallCategoryViewSet)
+
 
 urlpatterns = [
     path('',include(router.urls)),

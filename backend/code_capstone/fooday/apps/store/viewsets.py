@@ -4,9 +4,10 @@ from rest_framework import (
 )
 from rest_framework import status
 from rest_framework.response import Response
-
+from django.db.models import Prefetch
 from .models import *
 from .serializers import *
+
 
 class StoreBigCategoryViewSet(viewsets.ModelViewSet):
 
@@ -24,7 +25,7 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
                 return Response(
                     status = status.HTTP_400_BAD_REQUEST,
                     data = {
-                        'message': '카테고리나 위치정보가 입력되지 않았거나 잘못입력됬습니다.'
+                        'message': '카테고리나 위치정보가 입력되지 않았거나 잘못 입력되었습니다.'
                     }
                 )
             location = location.split()[1]
@@ -39,6 +40,50 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
                     'message': '잘못된 입력입니다.'
                 }
             )
+
+class StoreSmallCategoryViewSet(viewsets.ModelViewSet):
+
+    queryset = Store.objects.all()
+    serializer_class = StoreSmallCategorySerializer
+
+    """
+    List a queryset.
+    """
+    def list(self, request, *args, **kwargs):
+        try :
+            smallCategory = request.data.get('smallCategory')
+            location = request.data.get('location')
+
+            if (smallCategory is None) or (location is None) :
+                return Response(
+                    status = status.HTTP_400_BAD_REQUEST,
+                    data = {
+                        'message': '카테고리나 위치정보가 입력되지 않았거나 잘못 입력되었습니다.'
+                    }
+                )
+            menus = Menu.objects.filter(smallCategory=smallCategory)
+            location = location.split()[1]
+
+            stores = Store.objects.filter(menu__in=menus, location__contains=location)
+            if (stores is None):
+                return Response(
+                    status = status.HTTP_400_BAD_REQUEST,
+                    data = {
+                        'message': '해당되는 가게가 없습니다.'
+                    }
+                )
+            queryset = stores.prefetch_related(Prefetch('menu', queryset=Menu.objects.filter(smallCategory=smallCategory), to_attr='filtered_menu')).distinct().order_by('pk')
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+
+        except ValueError or IndexError:
+            return Response(
+                status = status.HTTP_400_BAD_REQUEST,
+                data = {
+                    'message': '잘못된 입력입니다.'
+                }
+            )
+
 
 class MenuViewSet(viewsets.ModelViewSet):
 
