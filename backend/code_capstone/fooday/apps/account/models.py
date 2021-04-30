@@ -24,6 +24,8 @@ class User(AbstractUser):
     userSmallCategory = models.ManyToManyField(SmallCategory, through = "User_SmallCategory")
     userStore = models.ManyToManyField(Store, through = "User_Store")
     userMenu = models.ManyToManyField(Menu, through = "User_Menu")
+    age = models.IntegerField(default = 0)
+    
     
 class User_SmallCategory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
