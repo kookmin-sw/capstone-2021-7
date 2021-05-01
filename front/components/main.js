@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
+
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
-import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import { getBigCategory } from '../api/mainAPI';
 
 const Main = () => {
-  const [bigCategory , setBigCategory] = useState([])
+  const [bigCategory , setBigCategory] = useState([]);
 
   const callGetBigCategory = async () => {
     await getBigCategory()
       .then((result) => {
-        console.log("bigcategory data : ", result.data);
         setBigCategory(result.data);
       })
       .catch((err) => console.log(err));
@@ -22,8 +23,7 @@ const Main = () => {
     callGetBigCategory();
   },[]);
 
-  const renderBigCategory = ({item}) => {
-    console.log(item);
+  const renderBigCategory = ({ item }) => {
     return (
       <View
         style={{
@@ -44,12 +44,12 @@ const Main = () => {
       </View>
     );
   }
+
   return (
     <View style ={styles.container}>
       <View style ={styles.top}>
-        <MaterialCommunityIcons name="silverware-fork-knife" size={50} color="#3498DB" />
+        <MaterialCommunityIcons name="silverware-fork-knife" size={50} color="#3498DB"/>
       </View>
-
       <SafeAreaView style ={styles.flat}>
         <FlatList
           data={bigCategory}
