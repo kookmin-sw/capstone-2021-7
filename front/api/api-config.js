@@ -4,6 +4,7 @@ import axios from "axios";
 axios.defaults.baseURL = "http://ec2-13-209-254-218.ap-northeast-2.compute.amazonaws.com/";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
+
 const tokenConfig = async () => {
   let token = null;
   try {
