@@ -43,25 +43,17 @@ const MainStackScreen = ({ location }) => {
           headerTintColor: '#fff',
           headerTitleAlign: 'center',
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: 'bold'
           },
-        }}
-      >
+        }}>
         <MainStack.Screen 
           name="main" 
           component={Main}
           options={{
-            headerTitle: <Header location = {location}/>
-          }}
-        />
-        <MainStack.Screen 
-          name="location" 
-          component={Location}
-        />
-        <MainStack.Screen 
-          name="postcode" 
-          component={Postcode}
-        />
+            headerTitle: <Header location={location}/>
+          }}/>
+        <MainStack.Screen name="location" component={Location}/>
+        <MainStack.Screen name="postcode" component={Postcode}/>
       </MainStack.Navigator>
   );
 }
