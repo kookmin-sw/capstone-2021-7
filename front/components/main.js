@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-import { getBigCategory } from '../api/mainAPI';
+import { getBigCategory } from '../api/main-api';
 
 const Main = () => {
   const [bigCategory , setBigCategory] = useState([]);

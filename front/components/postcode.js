@@ -9,6 +9,7 @@ import { UserLocationContext } from '../context/userlocationcontext';
 
 const ShowPostcode = () => {
   const navigation = useNavigation();
+  
   const { setUserLocation }  = useContext(UserLocationContext);
 
   return (
@@ -18,11 +19,10 @@ const ShowPostcode = () => {
         jsOptions={{ animated: true }}
         onSelected={ async ( data ) => {
           setUserLocation("");
-          console.log(data.address)
+          console.log(data.address);
           await setUserLocation(data.address);
-          navigation.push('location')
-        }}
-      />
+          navigation.push('location');
+        }}/>
     </View>
   );
 };

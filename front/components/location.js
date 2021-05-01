@@ -8,7 +8,9 @@ import { UserLocationContext } from '../context/userlocationcontext';
 
 const Location = () => {
   const navigation = useNavigation();
-  const [detailLocation, setDetailLocation] = useState("")
+
+  const [detailLocation, setDetailLocation] = useState("");
+
   const {userLocation, setUserLocation} = useContext(UserLocationContext);
 
   const onClick = () => {
