@@ -15,12 +15,12 @@ from apps.utils import *
 
 import boto3
 import os
-
+import requests
 
 class RecommendCategory(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def recommendByAWS():
+    def recommendByAWS(self, user):
         personalizeRt = boto3.client(
             'personalize-runtime',
             region_name='ap-northeast-2',
@@ -29,7 +29,7 @@ class RecommendCategory(APIView):
         )
         response = personalizeRt.get_recommendations(
             campaignArn = "arn:aws:personalize:ap-northeast-2:287004205854:campaign/fooday-campaign-2", 
-            userId = requset.user
+            userId = str(user)
         )
         smallCategoryList = []
 
@@ -42,7 +42,7 @@ class RecommendCategory(APIView):
             smallCategoryList.append(smallCategorydict)
         return smallCategoryList
 
-    def recommendByWeather(weatherGroup):
+    def recommendByWeather(self, weatherGroup):
         qs = User_Menu.objects.filter(weather = weatherGroup).select_related('menu').values('menu__smallCategory').annotate(count=Count('menu__smallCategory')).order_by('-count')
         smallCategoryList = []
         
@@ -54,7 +54,7 @@ class RecommendCategory(APIView):
             smallCategoryList.append(smallCategorydict)
         return smallCategoryList
 
-    def recommendByTimeSlot(timeSlot):
+    def recommendByTimeSlot(self, timeSlot):
         qs = User_Menu.objects.filter(timeSlot = timeSlot).select_related('menu').values('menu__smallCategory').annotate(count=Count('menu__smallCategory')).order_by('-count')
         smallCategoryList= []
 
@@ -74,11 +74,12 @@ class RecommendCategory(APIView):
         lat, lng = geoCoding(location)
         description, temp, weatherGroup = openWeather(lat, lng)
         
-        awsCategoryList = recommendByAWS()
-        weatherCategoryList = recommendByWeather(weatherGroup)
-        timeSlotCategoryList = recommendByTimeSlot(timeSlot)
+        awsCategoryList = self.recommendByAWS(request.user.id)
+        weatherCategoryList = self.recommendByWeather(weatherGroup)
+        timeSlotCategoryList = self.recommendByTimeSlot(timeSlot)
 
         return Response({
+            "user" : request.user.id,
             "awsCategoryList" : awsCategoryList,
             "weatherCategoryList" : weatherCategoryList,
             "timeSlotCategoryList" : timeSlotCategoryList
