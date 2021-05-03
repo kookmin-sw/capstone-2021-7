@@ -6,63 +6,44 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import *
 from .serializers import *
+from apps.utils import *
 
-import requests
-import json
-import os
-
-import urllib.request
 
 class UserMenuViewSet(viewsets.ModelViewSet):
 
     queryset = User_Menu.objects.all()
     serializer_class = UserMenuSerializer
-    
-    def create(self, request, *args, **kwargs):
+    permission_classes = [IsAuthenticated]   
 
+    def create(self, request, *args, **kwargs):
         menuList = request.data.get('menuList')
         location = request.data.get('location')
 
-        geocoding_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + os.getenv('GOOGLE_APIKEY')
-        geo_response = requests.get(geocoding_url)
-        res = geo_response.json()
-        lat = str(res['results'][0]['geometry']['location']['lat'])
-        lng = str(res['results'][0]['geometry']['location']['lng'])
-        print("lat : ",lat)
-        print("lng : ",lng)
-        openweathermap_url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" +lng +"&appid=" + os.getenv('OPENWEATHER_APIKEY')
-        weather_response = requests.get(openweathermap_url)
-        res = weather_response.json()
-        description = res['weather'][0]['main']
-        temp = round(res['main']['temp'] - 273.15,2)
-        weather = ""
-        print("메인",description)
-        print("온도",temp)
+        timeSlot = setTimeSlot()
+        lat, lng = geoCoding(location)
+        description, temp, weatherGroup = openWeather(lat, lng)
 
-        if temp >24:
-            weather = "더움"
-        elif temp > 10:
-            weather = "적정"
-        else :
-            weather = "추움"
-
-        real = description + "," + weather
-        print(real)
         for menu in menuList:
             serializer = self.get_serializer(data={
                 "user" : request.user.id,
                 "menu" : menu,
-                "weather": real
+                "weather": weatherGroup,
+                "timeSlot" : timeSlot
             })
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
+
         return Response(
             status=status.HTTP_201_CREATED, 
             data = {
-                "message":"성공"
+                "message": "성공",
+                "weatherGroup" : weatherGroup,
+                "timeSlot": timeSlot
             }
         )
         
@@ -82,7 +63,7 @@ class UserViewSet(viewsets.ModelViewSet):
         name = request.data.get('name')
         password = request.data.get('password')
         gender = request.data.get('gender')
-
+        
         taste = request.data.get('taste')
         price = request.data.get('price')
         amount = request.data.get('amount')
