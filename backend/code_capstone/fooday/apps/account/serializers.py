@@ -5,7 +5,7 @@ class UserMenuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User_Menu
-        fields = ['user','menu','weather']
+        fields = ['user','menu','weather','timeSlot']
         read_only_fields = ['timestamp']
 
 class UserSerializer(serializers.ModelSerializer):
