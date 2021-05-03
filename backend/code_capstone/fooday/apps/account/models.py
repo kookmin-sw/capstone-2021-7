@@ -39,10 +39,19 @@ class User_Store(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     
 class User_Menu(models.Model):
+    SLOT = (
+        ('morning','morning'),
+        ('lunch','lunch'),
+        ('latelunch','latelunch'),
+        ('dinner','dinner'),
+        ('midnignsnack','midnignsnack')
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default = timezone.now)
+    timeSlot = models.CharField(max_length = 150, choices = SLOT, default = "null")
     weather = models.CharField(max_length = 150, default = "null")
+    
     
     
     
