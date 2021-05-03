@@ -16,6 +16,7 @@ import Login from './components/login';
 import MyProfile from './components/myprofile';
 import MyStore from './components/mystore';
 import Store from './components/store';
+import Survey from './components/survey';
 
 
 const Tab = createBottomTabNavigator();
@@ -49,6 +50,7 @@ const App = () => {
         <Stack.Screen name="mystore" component={MyStore}/>
         <Stack.Screen name="recommend" component={Recommend}/>
         <Stack.Screen name="store" component={Store}/>
+        <Stack.Screen name="survey" component={Survey}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
