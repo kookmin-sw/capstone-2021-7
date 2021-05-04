@@ -4,6 +4,7 @@ from rest_framework import (
 )
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django.db.models import Prefetch
 from .models import *
 from .serializers import *
@@ -68,6 +69,7 @@ class StoreSmallCategoryViewSet(viewsets.ModelViewSet):
 
     queryset = Store.objects.all()
     serializer_class = StoreSmallCategorySerializer
+    permission_classes = [IsAuthenticated,]
 
     """
     List a queryset.

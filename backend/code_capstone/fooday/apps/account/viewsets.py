@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
 from apps.utils import *
+from apps.store.models import *
 import time
 
 class UserMenuViewSet(viewsets.ModelViewSet):
@@ -22,27 +23,32 @@ class UserMenuViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         menuList = request.data.get('menuList')
-        location = request.data.get('location')
+        # location = request.data.get('location')
 
         timeSlot = setTimeSlot()
-        lat, lng = geoCoding(location)
-        description, temp, weatherGroup = openWeather(lat, lng)
+        # lat, lng = geoCoding(location)
+        # description, temp, weatherGroup = openWeather(lat, lng)
 
         for menu in menuList:
             serializer = self.get_serializer(data={
                 "user" : request.user.id,
                 "menu" : menu,
-                "weather": weatherGroup,
+                "weather": "Clear,더움",
                 "timeSlot" : timeSlot
             })
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
 
+            datas = Menu_SmallCategory.objects.filter(menu=menu)
+            user = User.objects.get(id=request.user.id)
+            for data in datas:
+                User_SmallCategory_Order.objects.create(user=user, smallCategory=data.smallCategory)
+
         return Response(
             status=status.HTTP_201_CREATED,
             data = {
                 "message": "성공",
-                "weatherGroup" : weatherGroup,
+                # "weatherGroup" : weatherGroup,
                 "timeSlot": timeSlot
             }
         )
@@ -119,35 +125,43 @@ class UserViewSet(viewsets.ModelViewSet):
         )
 
 
-class UserSmallCategoryViewSet(viewsets.ModelViewSet):
+class UserSmallCategoryLikeViewSet(viewsets.ModelViewSet):
 
-    queryset = User_SmallCategory.objects.all()
-    serializer_class = UserSmallCategorySerializer
+    queryset = User_SmallCategory_Like.objects.all()
+    serializer_class = UserSmallCategoryLikeSerializer
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        eventType = request.data.get('eventType')
         eventList = request.data.get('eventList')
-        timestamp = int(time.time())
-        for event in eventList:
-            serializer = self.get_serializer(data={
-                "user" : request.user.id,
-                "smallCategory" : event[0],
-                "eventType": eventType,
-                "eventValue" : event[1],
-                "timestamp" : timestamp
-            })
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
 
-        return Response(
-            status=status.HTTP_201_CREATED,
-            data = {
-                "message": "성공",
-                "eventType": eventType,
-                "eventValue" : event[1]
-            }
-        )
+        if eventList==None:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': '잘못된 입력입니다.'},
+            )
+
+        try:
+            for event in eventList:
+                serializer = self.get_serializer(data={
+                    "user" : request.user.id,
+                    "smallCategory" : event[0],
+                    "rating" : event[1]
+                })
+                serializer.is_valid(raise_exception=True)
+                self.perform_create(serializer)
+
+            return Response(
+                status=status.HTTP_201_CREATED,
+                data = {
+                    "message": "성공",
+                    "eventList" : eventList
+                }
+            )
+        except :
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': '잘못된 입력입니다.'},
+            )
 
     def perform_create(self, serializer):
         serializer.save()
@@ -163,6 +177,12 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
         smallCategory = request.data.get('smallCategory')
         scenario = request.data.get('scenario')
         score = request.data.get('score')
+
+        if (smallCategory==None) or (scenario==None) or (score==None) :
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': '잘못된 입력입니다.'},
+            )
 
         serializer = self.get_serializer(data={
             "user" : request.user.id,
