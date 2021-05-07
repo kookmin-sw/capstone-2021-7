@@ -38,15 +38,16 @@ const MyProfile = ({navigation}) => {
       return;
     }
     else {
-      navigation.navigate('survey');
-      
-      console.log({
-        name,
-        phone,
-        username,
-        password,
-        gender
-      });
+      {
+        navigation.navigate('survey', {
+          name: name,
+          phone: phone,
+          username: username,
+          password: password,
+          gender: gender
+        });
+      }
+
     }
   }
   
@@ -71,7 +72,7 @@ const MyProfile = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity 
         style={styles.button2}
-        onPress={()=>navigation.navigate('login')}
+        onPress={()=> navigation.navigate('login')}
         >
           <Text style={styles.text}>로그인</Text>
         </TouchableOpacity>

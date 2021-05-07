@@ -1,13 +1,18 @@
+// react
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
-import "react-native-gesture-handler";
-import { YellowBox } from 'react-native';
-YellowBox.ignoreWarnings(['Remote debugger']);
+// react-native
+import { LogBox } from 'react-native';
+// LogBox.ignoreLogs(['Remote debugger']);
+
+// react-navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+// vector-icons
+
+// component
 import Main from './components/main';
 import Recommend from './components/recommend';
 import MyOrder from './components/myorder';
@@ -17,42 +22,81 @@ import MyProfile from './components/myprofile';
 import MyStore from './components/mystore';
 import Store from './components/store';
 import Survey from './components/survey';
+import Header from './components/header';
+import Location from './components/location';
+import Postcode from './components/postcode';
 
+// context
+import UserLocationProvider from './context/userlocationprovider';
 
-const Tab = createBottomTabNavigator();
-const Home = () =>{
+// API
+
+const MainStack = createStackNavigator();
+
+const MainStackScreen = ({ location }) => {
   return(
-    <Tab.Navigator
-      initialRouteName = "main"
-    >
-    <Tab.Screen name= "main" component = {Main}/>
-    <Tab.Screen name= "mystore" component = {MyStore}/>
-    <Tab.Screen name= "recommend" component = {Recommend}/>
-    <Tab.Screen name= "myorder" component = {MyOrder}/>
-    <Tab.Screen name= "myprofile" component = {MyProfile}/>
-    </Tab.Navigator>
+      <MainStack.Navigator 
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#3498DB',
+            height: 100,
+          },
+          headerTintColor: '#fff',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontWeight: 'bold'
+          },
+        }}>
+        <MainStack.Screen 
+          name="main" 
+          component={Main}
+          options={{
+            headerTitle: <Header location={location}/>
+          }}/>
+        <MainStack.Screen name="location" component={Location}/>
+        <MainStack.Screen name="postcode" component={Postcode}/>
+      </MainStack.Navigator>
   );
 }
 
+const MyProfileStack = createStackNavigator();
 
-const Stack = createStackNavigator();
+const MyProfileStackScreen = () => {
+  return(
+    <MyProfileStack.Navigator>
+      <MyProfileStack.Screen name="myprofile" component={MyProfile}/>
+      <MyProfileStack.Screen name="survey" component={Survey}/>
+      <MyProfileStack.Screen name="login" component={Login}/>
+
+    </MyProfileStack.Navigator>
+  );
+}
+
+const RecommendStack = createStackNavigator();
+
+const RecommendStackScreen = () => {
+  return(
+    <RecommendStack.Navigator>
+      <RecommendStack.Screen name="Recommend" component={Recommend}/>
+    </RecommendStack.Navigator>
+  );
+}
+
+const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="home" component={Home}/>
-        <Stack.Screen name="main" component={Main}/>
-        <Stack.Screen name="login" component={Login}/>
-        <Stack.Screen name="menu" component={Menu}/>
-        <Stack.Screen name="myorder" component={MyOrder}/>
-        <Stack.Screen name="myprofile" component={MyProfile}/>
-        <Stack.Screen name="mystore" component={MyStore}/>
-        <Stack.Screen name="recommend" component={Recommend}/>
-        <Stack.Screen name="store" component={Store}/>
-        <Stack.Screen name="survey" component={Survey}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserLocationProvider>
+      <NavigationContainer >
+        <Tab.Navigator initialRouteName = "main" >
+          <Tab.Screen name="main" children={()=><MainStackScreen location={location}/>}/>
+          <Tab.Screen name="mystore" component={MyStore}/>
+          <Tab.Screen name="recommend" component={RecommendStackScreen}/>
+          <Tab.Screen name="myorder" component={MyOrder}/>
+          <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </UserLocationProvider>
   );
 }
 

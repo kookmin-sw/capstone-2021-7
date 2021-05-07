@@ -1,8 +1,11 @@
 import React ,{useState, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox } from 'react-native';
 
+import { postUserInformation } from '../api/user-api';
+
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-const Survey = ({navigation}) => {
+const Survey = ({route}) => {
+    const {name, phone, username, password, gender} = route.params;
 
     const [taste, setTaste] = useState("");
     const [price, setPrice] = useState("");
@@ -18,17 +21,25 @@ const Survey = ({navigation}) => {
         setAmount(e.target.value);
     }
 
-    // print = (e) => {
-    //     e.preventDefault();
+    const postData = {name: name, phone: phone, username: username, password: password, gender: gender, taste: taste, price: price, amount: amount};
+    const callPostUserInformation = async () => {
+        await postUserInformation(postData)
+            .then((result) => {
+                // if(result.data =="회원가입 성공"){
+                //     console.log("성공");
+                // }
+                console.log(result);
+            })
+          .catch((err) => console.log(err));
+    };
 
-    //     console.log({
-    //         name,
-    //         phone,
-    //         username,
-    //         password,
-    //         gender
-    //       });
-    // }
+    const inspection = (e) => {
+        e.preventDefault();
+        if((taste<1 || taste>5) || (price<1 || price>5) || (amount<1 || amount>5)){
+            alert('1부터 5까지의 값을 입력해주세요');
+        }
+        else callPostUserInformation();
+    }
     return(
         <View style={styles.survey}>
             <Text>
@@ -42,7 +53,7 @@ const Survey = ({navigation}) => {
                 '양'에 대한 중요도를 점수로 평가해주세요!(1~5점)
                 {'\n'}<TextInput value={amount} placeholder="ex)5" onChange={onChangeAmount}></TextInput>
             </Text>
-            <TouchableOpacity onPress={()=>navigation.navigate('login')}>
+            <TouchableOpacity onPress={inspection}>
                 <Text>완료</Text>
             </TouchableOpacity>
         </View>
