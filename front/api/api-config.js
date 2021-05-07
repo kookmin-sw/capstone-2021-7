@@ -1,7 +1,7 @@
 import axios from "axios";
 // import AsyncStorage from "@react-native-community/async-storage";
 
-axios.defaults.baseURL = "http://ec2-13-209-254-218.ap-northeast-2.compute.amazonaws.com/";
+axios.defaults.baseURL = "http://ec2-13-209-254-218.ap-northeast-2.compute.amazonaws.com:8080/";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
@@ -18,7 +18,8 @@ const tokenConfig = async () => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-    },
+      "Authorization" : "Token 39a51c7ad4093fa769efcd5f3f21acabab0e903f",
+    }
   };
 
   // if (token) {
@@ -35,7 +36,7 @@ const callAPI = async (method, url, data) => {
   const config = await tokenConfig();
   switch (method) {
     case "GET":
-      return axios.get(url);
+      return axios.get(url, config);
     case "POST":
       return axios.post(url, JSON.stringify(data), config);
     case "PUT":
@@ -44,5 +45,6 @@ const callAPI = async (method, url, data) => {
       return axios.delete(url, JSON.stringify(data), config);
   }
 };
+
 
 export { tokenConfig, callAPI };
