@@ -1,15 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
+
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { color } from 'react-native-reanimated';
 
-const Store = () => {
+import { UserLocationContext } from '../context/userlocationcontext';
+
+import { getStoreBySmallCatgory, getStoreByBigCatgory } from '../api/store-api';
+
+const Store = ({ route }) => {
+  const navigation = useNavigation();
+
+  // const [smallCategoryId, setSmallCategoryId] = useState();
+  const [storeList, setStoreList] = useState([]);
+
+  const { userLocation } = useContext(UserLocationContext);
+
+  const callGetStoreBySmallCatgory = async () => {
+    await getStoreBySmallCatgory({
+        location : userLocation,
+        smallCategory : route.params.categoryId
+      })
+      .then((result) => {
+        setStoreList(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const callGetStoreByBigCatgory = async () => {
+    await getStoreByBigCatgory({
+        location : userLocation,
+        bigCategory : route.params.categoryId
+      })
+      .then((result) => {
+        setStoreList(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  useEffect(() => {
+    console.log(route.params.categoryFlag);
+    if (route.params.categoryFlag == false){
+      callGetStoreBySmallCatgory();
+    } else{
+      callGetStoreByBigCatgory();
+    }
+    
+  },[]);
+
   return (
     <View style={styles.store}>
       <View style={styles.top}>
         <Text style={styles.category}>
-          <FontAwesome name="circle" size={120} color="#E0E0E0"/>{'\n'}카테고리1{'\t'}{'\t'}
+          <FontAwesome name="circle" size={120} color="#E0E0E0"/>{'\n'}{route.params.categoryName}{'\t'}{'\t'}
         </Text>
         <Text style={styles.feedback}>
           <TouchableOpacity>
@@ -26,83 +76,37 @@ const Store = () => {
       </View>
 
       <ScrollView style={styles.list}>
-        <TouchableOpacity>
-          <View style={styles.tq}>
-            <View>
-              <FontAwesome name="square" size={80} color="#E0E0E0" />
-            </View>
-            <View style={styles.tqname}>
-              <Text style={styles.bigText}>지연이네 카테고리1</Text>
-              <Text style={styles.smallText}>지연이의 지성, 지연이의 미모</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.tq}>
-            <View>
-              <FontAwesome name="square" size={80} color="#E0E0E0" />
-            </View>
-            <View style={styles.tqname}>
-              <Text style={styles.bigText}>은솔이네 카테고리1</Text>
-              <Text style={styles.smallText}>은솔이의 지성, 은솔이의 미모</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.tq}>
-            <View>
-              <FontAwesome name="square" size={80} color="#E0E0E0" />
-            </View>
-            <View style={styles.tqname}>
-              <Text style={styles.bigText}>종민이네 카테고리1</Text>
-              <Text style={styles.smallText}>종민이의 지성, 종민이의 미모</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.tq}>
-            <View>
-              <FontAwesome name="square" size={80} color="#E0E0E0" />
-            </View>
-            <View style={styles.tqname}>
-              <Text style={styles.bigText}>유미네 카테고리1</Text>
-              <Text style={styles.smallText}>유미의 지성, 유미의 미모</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.tq}>
-            <View>
-              <FontAwesome name="square" size={80} color="#E0E0E0" />
-            </View>
-            <View style={styles.tqname}>
-              <Text style={styles.bigText}>달콩이네 카테고리1</Text>
-              <Text style={styles.smallText}>달콩이의 지성, 달콩이의 미모</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.tq}>
-            <View>
-              <FontAwesome name="square" size={80} color="#E0E0E0" />
-            </View>
-            <View style={styles.tqname}>
-              <Text style={styles.bigText}>서리네 카테고리1</Text>
-              <Text style={styles.smallText}>서리의 지성, 서리의 미모</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.tq}>
-            <View>
-              <FontAwesome name="square" size={80} color="#E0E0E0" />
-            </View>
-            <View style={styles.tqname}>
-              <Text style={styles.bigText}>모찌네 카테고리1</Text>
-              <Text style={styles.smallText}>모찌의 지성, 모찌의 미모</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+        {storeList.map((elem, key) => {
+          return(
+            <TouchableOpacity 
+              key = {key}
+              onPress={()=> {
+                navigation.navigate({
+                  name : 'menu',
+                  params:{
+                    storeId:elem.id,
+                    storeName:elem.name,
+                    storeLocation:elem.location,
+                    storeIntro:elem.intro
+                  }
+              })}}>
+              <View style={styles.tq}>
+                <View>
+                  <FontAwesome name="square" size={80} color="#E0E0E0" />
+                </View>
+                <View style={styles.tqname}>
+                  <Text style={styles.bigText}>{elem.name}</Text>
+                  <View style={{
+                    flexDirection: "row"
+                  }}>
+                    {elem.menu.map((elem, key) => 
+                      <Text key={key} style={styles.smallText}>{elem.name}, </Text>
+                    )} 
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+        )})}
       </ScrollView>
     </View>
 

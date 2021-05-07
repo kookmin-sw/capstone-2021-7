@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 // react
 import React from 'react';
 
@@ -32,7 +33,7 @@ import UserLocationProvider from './context/userlocationprovider';
 
 const MainStack = createStackNavigator();
 
-const MainStackScreen = ({ location }) => {
+const MainStackScreen = () => {
   return(
       <MainStack.Navigator 
         screenOptions={{
@@ -50,10 +51,12 @@ const MainStackScreen = ({ location }) => {
           name="main" 
           component={Main}
           options={{
-            headerTitle: <Header location={location}/>
+            headerTitle: <Header/>
           }}/>
         <MainStack.Screen name="location" component={Location}/>
         <MainStack.Screen name="postcode" component={Postcode}/>
+        <MainStack.Screen name="store" component={Store}/>
+        <MainStack.Screen name="menu" component={Menu}/>
       </MainStack.Navigator>
   );
 }
@@ -74,6 +77,8 @@ const RecommendStackScreen = () => {
   return(
     <RecommendStack.Navigator>
       <RecommendStack.Screen name="myprofile" component={Recommend}/>
+      <RecommendStack.Screen name="store" component={Store}/>
+      <RecommendStack.Screen name="menu" component={Menu}/>
     </RecommendStack.Navigator>
   );
 }
@@ -85,9 +90,9 @@ const App = () => {
     <UserLocationProvider>
       <NavigationContainer >
         <Tab.Navigator initialRouteName = "main" >
-          <Tab.Screen name="main" children={()=><MainStackScreen location={location}/>}/>
+          <Tab.Screen name="main" children={()=><MainStackScreen/>}/>
           <Tab.Screen name="mystore" component={MyStore}/>
-          <Tab.Screen name="recommend" component={RecommendStackScreen}/>
+          <Tab.Screen name="recommend" children={()=><RecommendStackScreen/>}/>
           <Tab.Screen name="myorder" component={MyOrder}/>
           <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
         </Tab.Navigator>
