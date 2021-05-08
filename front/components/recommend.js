@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { StyleSheet, View,ScrollView, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, View,ScrollView, Text, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -35,7 +35,17 @@ const Recommend = () => {
   }
 
   useEffect(() => {
-    callGetRecommendCategory();
+    if (userLocation ==="위치정보를 입력해주세요"){
+      Alert.alert(
+        "위치 정보를 입력해주세요",
+        " ",
+        [
+          { text: "위치정보 입력하러 가기", onPress: () => navigation.navigate('postcode') }
+        ]
+      );
+    } else {
+      callGetRecommendCategory(); 
+    }
   },[userLocation]);
 
   return(
@@ -60,6 +70,8 @@ const Recommend = () => {
                         navigation.navigate({
                           name : 'store',
                           params:{
+                            from : true,
+                            recommendType:"AWS",
                             categoryFlag: false,
                             categoryId:elem.id,
                             categoryName:elem.name
@@ -92,6 +104,8 @@ const Recommend = () => {
                       navigation.navigate({
                         name : 'store',
                         params:{
+                          from : true,
+                          recommendType:"TIME",
                           categoryFlag: false,
                           categoryId:elem.id,
                           categoryName:elem.name
@@ -124,6 +138,8 @@ const Recommend = () => {
                       navigation.navigate({
                         name : 'store',
                         params:{
+                          from : true,
+                          recommendType:"WEATHER",
                           categoryFlag: false,
                           categoryId:elem.id,
                           categoryName:elem.name

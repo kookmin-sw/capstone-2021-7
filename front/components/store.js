@@ -10,6 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { UserLocationContext } from '../context/userlocationcontext';
 
 import { getStoreBySmallCatgory, getStoreByBigCatgory } from '../api/store-api';
+import { categoryFeedback } from '../api/category-api';
 
 const Store = ({ route }) => {
   const navigation = useNavigation();
@@ -45,6 +46,34 @@ const Store = ({ route }) => {
       })
   }
 
+  const callCategoryFeedback = async (type) => {
+    console.log("타입 뭘로떠?",type);
+    if (type === true){
+      await categoryFeedback({
+        scenario : route.params.recommendType,
+        smallCategory : route.params.categoryId,
+        score : 1
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    } else {
+      await categoryFeedback({
+        scenario : route.params.recommendType,
+        smallCategory : route.params.categoryId,
+        score : -1
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }}
+
   useEffect(() => {
     console.log(route.params.categoryFlag);
     if (route.params.categoryFlag == false){
@@ -61,18 +90,22 @@ const Store = ({ route }) => {
         <Text style={styles.category}>
           <FontAwesome name="circle" size={120} color="#E0E0E0"/>{'\n'}{route.params.categoryName}{'\t'}{'\t'}
         </Text>
-        <Text style={styles.feedback}>
-          <TouchableOpacity>
-            <Text style={styles.feedtext}>
-              <FontAwesome5 name="thumbs-up" size={24} color="blue" />이 추천 좋아요{'\n'}
-            </Text>
-          </TouchableOpacity>{'\n'}
-          <TouchableOpacity>
-            <Text style={styles.feedtext}>
-              <FontAwesome5 name="thumbs-down" size={24} color="red" /> 이 추천 별로예요
-            </Text>
-          </TouchableOpacity>
-        </Text>
+        {route.params.from === false 
+        ? <View></View>
+        : <Text style={styles.feedback}>
+            <TouchableOpacity onPress={() => {callCategoryFeedback(true)}}>
+              <Text style={styles.feedtext}>
+                <FontAwesome5 name="thumbs-up" size={24} color="blue" />이 추천 좋아요{'\n'}
+              </Text>
+            </TouchableOpacity>{'\n'}
+            <TouchableOpacity onPress={() => {callCategoryFeedback(false)}}>
+              <Text style={styles.feedtext}>
+                <FontAwesome5 name="thumbs-down" size={24} color="red" /> 이 추천 별로예요
+              </Text>
+            </TouchableOpacity>
+          </Text>
+        }
+        
       </View>
 
       <ScrollView style={styles.list}>

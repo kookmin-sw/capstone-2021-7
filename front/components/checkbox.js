@@ -12,14 +12,12 @@ const CheckBox = ({clickedMenuList, setClickedMenuList, menuId }) => {
       {isClicked === false 
         ? <TouchableOpacity onPress={() => {
             setClickedMenuList(clickedMenuList => [...clickedMenuList, menuId])
-            console.log(menuId);
             setIsClicked(true)
           }}>
             <Feather name="square" size={24} color="black" /> 
           </TouchableOpacity>
         :  <TouchableOpacity onPress={() => {
             setClickedMenuList(clickedMenuList.filter(item => item !== menuId))
-            console.log(menuId);
             setIsClicked(false)
             }}>
             <Feather name="check-square" size={24} color="black" />
