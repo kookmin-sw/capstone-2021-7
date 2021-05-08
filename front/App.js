@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 
 // react-native
-import { LogBox } from 'react-native';
+import { LogBox, Alert, TouchableOpacity } from 'react-native';
 LogBox.ignoreLogs(['Remote debugger']);
 
 // react-navigation
@@ -39,12 +39,17 @@ const MainStackScreen = () => {
         screenOptions={{
           headerStyle: {
             backgroundColor: '#3498DB',
-            height: 100,
+            height: 120,
           },
-          headerTintColor: '#fff',
           headerTitleAlign: 'center',
           headerTitleStyle: {
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            color: 'white',
+            fontSize: 20,
+          },
+          headerBackTitle: " ",
+          headerBackTitleStyle: {
+            color: 'white'
           },
         }}>
         <MainStack.Screen 
@@ -53,8 +58,12 @@ const MainStackScreen = () => {
           options={{
             headerTitle: <Header/>
           }}/>
-        <MainStack.Screen name="location" component={Location}/>
-        <MainStack.Screen name="postcode" component={Postcode}/>
+        <MainStack.Screen name="location" component={Location} options={{
+            headerTitle: "위치정보 입력"
+          }}/>
+        <MainStack.Screen name="postcode" component={Postcode} options={{
+            headerTitle: "위치정보 입력"
+          }}/>
         <MainStack.Screen name="store" component={Store}/>
         <MainStack.Screen name="menu" component={Menu}/>
       </MainStack.Navigator>
@@ -65,7 +74,23 @@ const MyProfileStack = createStackNavigator();
 
 const MyProfileStackScreen = () => {
   return(
-    <MyProfileStack.Navigator>
+    <MyProfileStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#3498DB',
+          height: 120,
+        },
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          color: 'white',
+          fontSize: 20,
+        },
+        headerBackTitle: " ",
+        headerBackTitleStyle: {
+          color: 'white'
+        },
+      }}>
       <MyProfileStack.Screen name="myprofile" component={MyProfile}/>
     </MyProfileStack.Navigator>
   );
@@ -75,8 +100,24 @@ const RecommendStack = createStackNavigator();
 
 const RecommendStackScreen = () => {
   return(
-    <RecommendStack.Navigator>
-      <RecommendStack.Screen name="myprofile" component={Recommend}/>
+    <RecommendStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#3498DB',
+          height: 120,
+        },
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          color: 'white',
+          fontSize: 20,
+        },
+        headerBackTitle: " ",
+        headerBackTitleStyle: {
+          color: 'white'
+        },
+      }}>
+      <RecommendStack.Screen name="음식 추천" component={Recommend}/>
       <RecommendStack.Screen name="store" component={Store}/>
       <RecommendStack.Screen name="menu" component={Menu}/>
     </RecommendStack.Navigator>
@@ -92,7 +133,7 @@ const App = () => {
         <Tab.Navigator initialRouteName = "main" >
           <Tab.Screen name="main" children={()=><MainStackScreen/>}/>
           <Tab.Screen name="mystore" component={MyStore}/>
-          <Tab.Screen name="recommend" children={()=><RecommendStackScreen/>}/>
+          <Tab.Screen name="recommend" component={RecommendStackScreen}/>
           <Tab.Screen name="myorder" component={MyOrder}/>
           <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
         </Tab.Navigator>
