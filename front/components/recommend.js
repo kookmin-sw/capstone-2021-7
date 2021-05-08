@@ -1,86 +1,167 @@
-import React, { useState } from 'react';
-import { render } from 'react-dom';
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+
+import { StyleSheet, View,ScrollView, Text, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
 
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
+import { UserLocationContext } from '../context/userlocationcontext';
+
+import { getRecommendCategory } from '../api/category-api';
 
 const Recommend = () => {
-    return(
-        <View style={styles.recommend}>
-            <View style={styles.topIcon}>
-                <FontAwesome5 name="thumbs-up" size={50} color="#3498DB" />
-            </View>
-            <View style={styles.contents}>
-                <Text>
-                    <Text style={styles.question}>
-                        <MaterialIcons  name="restaurant-menu" size={50} color="#3498DB" /> 나한테 딱 맞는 음식{'\n'}
-                    </Text>
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
-                    </TouchableOpacity>{"\t"}
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
-                    </TouchableOpacity>{"\t"}
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
-                    </TouchableOpacity>{"\t"}
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
-                    </TouchableOpacity>{"\n"}
-                    <Text style={styles.name}>
-                        카테고리1{"\t"}카테고리2{"\t"}카테고리3{"\t"}카테고리4
-                    </Text>
-                </Text>
-                <Text>
-                    <Text style={styles.question}>
-                        <Ionicons name="ios-time" size={50} color="#3498DB" />시간대별 음식{'\n'}
-                    </Text>
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
-                    </TouchableOpacity>{"\t"}
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
-                    </TouchableOpacity>{"\t"}
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" />  
-                    </TouchableOpacity>{"\t"}
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
-                    </TouchableOpacity>{"\n"}
-                    <Text style={styles.name}>
-                        카테고리5{"\t"}카테고리6{"\t"}카테고리7{"\t"}카테고리8
-                    </Text>
-                </Text>
-                <Text>
-                    <Text style={styles.question}>
-                        <Ionicons name="md-sunny" size={55} color="#3498DB" /> 지금 날씨에 어울리는 음식{'\n'}
-                    </Text>
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
-                    </TouchableOpacity>{"\t"}
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
-                    </TouchableOpacity>{"\t"}
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" /> 
-                    </TouchableOpacity>{"\t"}
-                    <TouchableOpacity>
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
-                    </TouchableOpacity>{"\n"}
-                    <Text style={styles.name}>
-                        카테고리9{"\t"}카테고리10{"\t"}카테고리11{"\t"}카테고리12
-                    </Text>
-                </Text>
-            </View>
-            <View style={styles.space}></View>
-        </View>
+  const navigation = useNavigation();
 
-    );
-}
+  const [awsCategory, setAwsCategory] = useState([]);
+  const [weatherCategory, setWeatherCategory] = useState([]);
+  const [timeSlotCategory, setTimeSlotCategory] = useState([]);
+
+  const { userLocation } = useContext(UserLocationContext);
+
+  const callGetRecommendCategory = async () => {
+    await getRecommendCategory({
+      "location" : userLocation
+    })
+      .then((result) => {
+        setAwsCategory(result.data.awsCategoryList);
+        setWeatherCategory(result.data.weatherCategoryList)
+        setTimeSlotCategory(result.data.timeSlotCategoryList)
+      })
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    if (userLocation ==="위치정보를 입력해주세요"){
+      Alert.alert(
+        "위치 정보를 입력해주세요",
+        " ",
+        [
+          { text: "위치정보 입력하러 가기", onPress: () => navigation.navigate('postcode') }
+        ]
+      );
+    } else {
+      callGetRecommendCategory(); 
+    }
+  },[userLocation]);
+
+  return(
+    <ScrollView style={styles.recommend}>
+      <View style={styles.topIcon}>
+          <FontAwesome5 name="thumbs-up" size={50} color="#3498DB" />
+      </View>
+      <View style={styles.contents}>
+          <View>
+              <Text style={styles.question}>
+                  <MaterialIcons  name="restaurant-menu" size={50} color="#3498DB" /> 나한테 딱 맞는 음식{'\n'}
+              </Text>
+              <View style={{
+                flexDirection: "row",
+                justifyContent: "center",
+              }}>
+                {awsCategory.map((elem, key) => {
+                  return(
+                    <TouchableOpacity 
+                      key={key} 
+                      onPress={()=> {
+                        navigation.navigate({
+                          name : 'store',
+                          params:{
+                            from : true,
+                            recommendType:"AWS",
+                            categoryFlag: false,
+                            categoryId:elem.id,
+                            categoryName:elem.name
+                          }
+                          })}}>
+                      <View style={{ justifyContent: "center", alignItems: "center" }} >
+                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
+                        {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
+                        <View style={{ width: 60 }}>
+                          <Text style={{ textAlign: "center" }}>{elem.name} </Text>
+                        </View>
+                      </View>
+                  </TouchableOpacity>
+                )})}
+              </View>
+          </View>
+          <Text>
+            <Text style={styles.question}>
+                <Ionicons name="ios-time" size={50} color="#3498DB" />시간대별 음식{'\n'}
+            </Text>
+            <View style={{
+              flexDirection: "row",
+              justifyContent: "center",
+            }}>
+              {timeSlotCategory.map((elem, key) => {
+                return(
+                  <TouchableOpacity 
+                    key={key}
+                    onPress={()=> {
+                      navigation.navigate({
+                        name : 'store',
+                        params:{
+                          from : true,
+                          recommendType:"TIME",
+                          categoryFlag: false,
+                          categoryId:elem.id,
+                          categoryName:elem.name
+                        }
+                        })}} >
+                    <View style={{ justifyContent: "center", alignItems: "center" }} >
+                      <FontAwesome name="circle" size={72} color="#E0E0E0" />
+                      {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
+                      <View style={{ width: 60 }}>
+                        <Text style={{ textAlign: "center" }}>{elem.name} </Text>
+                      </View>
+                    </View>
+                </TouchableOpacity>
+              )})}
+            </View>
+          </Text>
+          <Text>
+            <Text style={styles.question}>
+                <Ionicons name="md-sunny" size={55} color="#3498DB" /> 지금 날씨에 어울리는 음식{'\n'}
+            </Text>
+            <View style={{
+              flexDirection: "row",
+              justifyContent: "center",
+            }}>
+              {weatherCategory.map((elem, key) => {
+                return(
+                  <TouchableOpacity 
+                    key={key}
+                    onPress={()=> {
+                      navigation.navigate({
+                        name : 'store',
+                        params:{
+                          from : true,
+                          recommendType:"WEATHER",
+                          categoryFlag: false,
+                          categoryId:elem.id,
+                          categoryName:elem.name
+                        }
+                        })}} >
+                    <View style={{ justifyContent: "center", alignItems: "center" }} >
+                      <FontAwesome name="circle" size={72} color="#E0E0E0" />
+                      {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
+                      <View style={{ width: 60 }}>
+                        <Text style={{ textAlign: "center" }}>{elem.name} </Text>
+                      </View>
+                    </View>
+                </TouchableOpacity>
+              )})}
+            </View>
+          </Text>
+      </View>
+      <View style={styles.space}></View>
+    </ScrollView>
+
+  );
+};
 
 const styles = StyleSheet.create({
     recommend:{
@@ -118,7 +199,6 @@ const styles = StyleSheet.create({
         fontSize:15,
         fontWeight:"bold"
     }
-
-})
+});
 
 export default Recommend;

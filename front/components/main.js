@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
+
+import { useNavigation } from '@react-navigation/native';
 
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import { getBigCategory } from '../api/main-api';
 
+import { UserLocationContext } from '../context/userlocationcontext';
+
 const Main = () => {
+  const navigation = useNavigation();
   const [bigCategory , setBigCategory] = useState([]);
+
+  const { userLocation } = useContext(UserLocationContext);
 
   const callGetBigCategory = async () => {
     await getBigCategory()
@@ -23,7 +30,31 @@ const Main = () => {
     callGetBigCategory();
   },[]);
 
+  const onClick = (item) => {
+    console.log(item);
+    if (userLocation ==="위치정보를 입력해주세요"){
+      Alert.alert(
+        "위치 정보를 입력해주세요",
+        "화면 상단의 돋보기를 눌러 위치정보를 입력해주세요",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    } else {
+      navigation.navigate({
+        name : 'store',
+        params:{
+          from : false,
+          categoryFlag: true,
+          categoryId:item.id,
+          categoryName:item.name,
+        }
+    })
+    }
+  }
+
   const renderBigCategory = ({ item }) => {
+    console.log(item);
     return (
       <View
         style={{
@@ -32,7 +63,7 @@ const Main = () => {
           margin: 15,
         }}
       >
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => { onClick(item) }}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <FontAwesome name="circle" size={72} color="#E0E0E0" />
             {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
@@ -50,7 +81,7 @@ const Main = () => {
       <View style ={styles.top}>
         <MaterialCommunityIcons name="silverware-fork-knife" size={50} color="#3498DB"/>
       </View>
-      <SafeAreaView style ={styles.flat}>
+      <View style ={styles.flat}>
         <FlatList
           data={bigCategory}
           renderItem={renderBigCategory}
@@ -59,7 +90,7 @@ const Main = () => {
           numColumns={3}
           key={3}
         />
-      </SafeAreaView>
+      </View>
     </View>
   );
 }

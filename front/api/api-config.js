@@ -1,5 +1,5 @@
 import axios from "axios";
-// import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-community/async-storage";
 
 axios.defaults.baseURL = "http://ec2-13-209-254-218.ap-northeast-2.compute.amazonaws.com:8080/";
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -18,7 +18,8 @@ const tokenConfig = async () => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-    },
+      "Authorization": "Token a1051e84d2cbbdbbf88a9e8b88a802c4ac68f5fa"
+    }
   };
 
   // if (token) {
@@ -44,5 +45,6 @@ const callAPI = async (method, url, data) => {
       return axios.delete(url, JSON.stringify(data), config);
   }
 };
+
 
 export { tokenConfig, callAPI };
