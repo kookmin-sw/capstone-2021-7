@@ -25,6 +25,7 @@ import Survey from './components/survey';
 import Header from './components/header';
 import Location from './components/location';
 import Postcode from './components/postcode';
+import Success from './components/success';
 
 // context
 import UserLocationProvider from './context/userlocationprovider';
@@ -67,7 +68,7 @@ const MyProfileStackScreen = () => {
       <MyProfileStack.Screen name="myprofile" component={MyProfile}/>
       <MyProfileStack.Screen name="survey" component={Survey}/>
       <MyProfileStack.Screen name="login" component={Login}/>
-
+      <MyProfileStack.Screen name="success" component={Success}/>
     </MyProfileStack.Navigator>
   );
 }
@@ -81,6 +82,7 @@ const RecommendStackScreen = () => {
     </RecommendStack.Navigator>
   );
 }
+
 
 const Tab = createBottomTabNavigator();
 

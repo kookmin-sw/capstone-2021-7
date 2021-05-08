@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 
 import { Ionicons } from '@expo/vector-icons';
 
-const Login = () => {
+const Login = ({navigation}) => {
   return (
     <View style={styles.myprofile}>
       <Text style={styles.signintext}>
@@ -17,7 +17,7 @@ const Login = () => {
         <TouchableOpacity style={styles.button1}>
           <Text style={styles.text}>완료{'\t'}{'\t'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button2}>
+        <TouchableOpacity onPress={()=>navigation.navigate('myprofile')} style={styles.button2}>
           <Text style={styles.text}>회원가입</Text>
         </TouchableOpacity>
       </View>

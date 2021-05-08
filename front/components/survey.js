@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox } from 'r
 import { postUserInformation } from '../api/user-api';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-const Survey = ({route}) => {
+
+const Survey = ({route, navigation}) => {
     const {name, phone, username, password, gender} = route.params;
 
     const [taste, setTaste] = useState("");
@@ -24,18 +25,18 @@ const Survey = ({route}) => {
     const postData = {name: name, phone: phone, username: username, password: password, gender: gender, taste: taste, price: price, amount: amount};
     const callPostUserInformation = async () => {
         await postUserInformation(postData)
-            .then((result) => {
-                // if(result.data =="회원가입 성공"){
-                //     console.log("성공");
-                // }
-                console.log(result);
+            .then(() => {
+                navigation.navigate('success');
             })
           .catch((err) => console.log(err));
     };
 
     const inspection = (e) => {
         e.preventDefault();
-        if((taste<1 || taste>5) || (price<1 || price>5) || (amount<1 || amount>5)){
+        if(taste=="" || price=="" || amount==""){
+            alert('빈칸에 값을 입력해주세요');
+        }
+        else if((taste<1 || taste>5) || (price<1 || price>5) || (amount<1 || amount>5)){
             alert('1부터 5까지의 값을 입력해주세요');
         }
         else callPostUserInformation();

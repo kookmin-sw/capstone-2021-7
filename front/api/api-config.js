@@ -1,7 +1,7 @@
 import axios from "axios";
 // import AsyncStorage from "@react-native-community/async-storage";
 
-axios.defaults.baseURL = "http://ec2-13-209-254-218.ap-northeast-2.compute.amazonaws.com/";
+axios.defaults.baseURL = "http://ec2-13-209-254-218.ap-northeast-2.compute.amazonaws.com:8080/";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
@@ -35,7 +35,7 @@ const callAPI = async (method, url, data) => {
   const config = await tokenConfig();
   switch (method) {
     case "GET":
-      return axios.get(url);
+      return axios.get(url, config);
     case "POST":
       return axios.post(url, JSON.stringify(data), config);
     case "PUT":
