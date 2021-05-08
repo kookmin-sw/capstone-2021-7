@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert, Image } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useNavigation } from '@react-navigation/native';
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderTopWidth: 5,
     borderTopColor: "#3498DB",
-  },
+  }
 });
 
 export default Main;

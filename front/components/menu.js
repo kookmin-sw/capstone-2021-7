@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -35,7 +35,13 @@ const Menu = ({ route }) => {
       location : userLocation
     })
     .then((result) => {
-      console.log(result.data);
+      Alert.alert(
+        "주문이 완료되었습니다.",
+        "주문내역에서 확인해주세요",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
     })
     .catch((err) => {
       console.log(err);

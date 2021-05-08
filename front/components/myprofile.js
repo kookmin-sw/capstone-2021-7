@@ -11,19 +11,19 @@ const MyProfile = ({navigation}) => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
 
-  const onChangeName = e => {
+  const onChangeName = (e) => {
     setName(e.target.value);
   }
-  const onChangePhone = e => {
+  const onChangePhone = (e) => {
     setPhone(e.target.value);
   }
-  const onChangeUsername = e => {
+  const onChangeUsername = (e) => {
     setUsername(e.target.value);
   }
-  const onChangePassword = e => {
+  const onChangePassword = (e) => {
     setPassword(e.target.value);
   }
-  const onChangeGender = e => {
+  const onChangeGender = (e) => {
     setGender(e.target.value);
   }
 
@@ -57,11 +57,11 @@ const MyProfile = ({navigation}) => {
         <Ionicons name="person-add" size={70} color="#3498DB" />{'\t'}회원가입
       </Text>
       <View>
-        <TextInput value={name} style={styles.input} onChange={onChangeName} placeholder="이름"></TextInput>
-        <TextInput value={phone} style={styles.input} onChange={onChangePhone} placeholder="번호 ( ex: 01012345678 )"></TextInput>
-        <TextInput value={username} style={styles.input} onChange={onChangeUsername} placeholder="아이디"></TextInput>
-        <TextInput value={password} style={styles.input} onChange={onChangePassword} placeholder="비밀번호"></TextInput>
-        <TextInput value={gender} style={styles.input} onChange={onChangeGender} placeholder="성별 ( ex: 남 )"></TextInput>
+        <TextInput value={name} style={styles.input} onChangeText={text => setName(text)} placeholder="이름"></TextInput>
+        <TextInput value={phone} style={styles.input} onChangeText={text => setPhone(text)} placeholder="번호 ( ex: 01012345678 )"></TextInput>
+        <TextInput value={username} style={styles.input} onChangeText={text => setUsername(text)} placeholder="아이디"></TextInput>
+        <TextInput value={password} style={styles.input} onChangeText={text => setPassword(text)} placeholder="비밀번호"></TextInput>
+        <TextInput value={gender} style={styles.input} onChangeText={text => setGender(text)} placeholder="성별 ( ex: 남 )"></TextInput>
       </View>
       <View style={styles.buttons}>
         <TouchableOpacity

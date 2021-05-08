@@ -27,6 +27,7 @@ import Header from './components/header';
 import Location from './components/location';
 import Postcode from './components/postcode';
 import Success from './components/success';
+import Rating from './components/rating';
 
 // context
 import UserLocationProvider from './context/userlocationprovider';
