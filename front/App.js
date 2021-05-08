@@ -4,7 +4,7 @@ import React from 'react';
 
 // react-native
 import { LogBox, Alert, TouchableOpacity } from 'react-native';
-LogBox.ignoreLogs(['Remote debugger']);
+// LogBox.ignoreLogs(['Remote debugger']);
 
 // react-navigation
 import { NavigationContainer } from '@react-navigation/native';
