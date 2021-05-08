@@ -5,6 +5,7 @@ from rest_framework import (
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 
 from django.db.models import Prefetch
 from .models import *
@@ -108,6 +109,7 @@ class StoreSmallCategoryViewSet(viewsets.ModelViewSet):
 
     queryset = Store.objects.all()
     serializer_class = StoreSmallCategorySerializer
+    permission_classes = [IsAuthenticated,]
 
     @action(detail=False, methods=('POST',), url_path='list', http_method_names=('post',))
     def storeSmallCategoryList(self, request, *args, **kwargs):
