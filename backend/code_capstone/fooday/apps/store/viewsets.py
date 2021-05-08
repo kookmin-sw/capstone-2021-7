@@ -4,7 +4,9 @@ from rest_framework import (
 )
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+
 from django.db.models import Prefetch
 from .models import *
 from .serializers import *
@@ -15,10 +17,8 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
     queryset = Store.objects.all()
     serializer_class = StoreBigCategorySerializer
 
-    """
-    List a queryset.
-    """
-    def list(self, request, *args, **kwargs):
+    @action(detail=False, methods=('POST',), url_path='list', http_method_names=('post',))
+    def storeBigCategoryList(self, request, *args, **kwargs):
         try :
             bigCategory = request.data.get('bigCategory')
             location = request.data.get('location')
@@ -42,6 +42,44 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
                 }
             )
 
+    @action(detail=False, methods=('POST',), url_path='signup', http_method_names=('post',))
+    def signup(self, request, *args, **kwargs):
+        
+        username = request.data.get('username')
+        phone = request.data.get('phone')
+        name = request.data.get('name')
+        password = request.data.get('password')
+        gender = request.data.get('gender')
+        
+        taste = request.data.get('taste')
+        price = request.data.get('price')
+        amount = request.data.get('amount')
+        
+        if User.objects.filter(phone=phone).exists():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': '해당 전화번호가 이미 존재합니다.'})
+
+        user = User.objects.create_user(
+            username = username,
+            password=password,
+            phone = phone,
+            name= name,
+            gender = gender,
+            taste = taste,
+            price = price,
+            amount = amount
+        )
+
+        token = Token.objects.create(user=user)
+    
+        return Response(
+                status=status.HTTP_200_OK,
+                data={
+                    'message' : "회원가입 성공",
+                }
+        )
+
 class MenuViewSet(viewsets.ModelViewSet):
 
     queryset = Menu.objects.all()
@@ -51,7 +89,9 @@ class MenuViewSet(viewsets.ModelViewSet):
     List a queryset.
     """
     def list(self, request, *args, **kwargs):
-        store = request.data.get('store')
+        store = self.request.query_params.get('store','')
+        # store = request.data.get('store')
+        print(store)
         if store == None:
             return Response(
                 status = status.HTTP_400_BAD_REQUEST,
@@ -71,14 +111,15 @@ class StoreSmallCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = StoreSmallCategorySerializer
     permission_classes = [IsAuthenticated,]
 
-    """
-    List a queryset.
-    """
-    def list(self, request, *args, **kwargs):
+    @action(detail=False, methods=('POST',), url_path='list', http_method_names=('post',))
+    def storeSmallCategoryList(self, request, *args, **kwargs):
+        
         try :
             smallCategory = request.data.get('smallCategory')
             location = request.data.get('location')
 
+            print("스몰카테고리 : ",smallCategory)
+            print("로케이션 : ",location)
             if (smallCategory is None) or (location is None) :
                 return Response(
                     status = status.HTTP_400_BAD_REQUEST,
