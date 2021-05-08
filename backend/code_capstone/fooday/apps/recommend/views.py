@@ -32,7 +32,6 @@ class RecommendCategory(APIView):
             userId = str(user)
         )
         smallCategoryList = []
-
         for item in response['itemList'][:4]:
             itemId = item['itemId']
             item = SmallCategory.objects.get(id = itemId)
@@ -47,6 +46,8 @@ class RecommendCategory(APIView):
         smallCategoryList = []
         
         for i in qs[:4]:
+            if i['menu__smallCategory']== None:
+                continue
             item = SmallCategory.objects.get(id = i['menu__smallCategory'])
             smallCategorydict = model_to_dict(item)
             smallCategorydict.pop("img")
@@ -57,8 +58,10 @@ class RecommendCategory(APIView):
     def recommendByTimeSlot(self, timeSlot):
         qs = User_Menu.objects.filter(timeSlot = timeSlot).select_related('menu').values('menu__smallCategory').annotate(count=Count('menu__smallCategory')).order_by('-count')
         smallCategoryList= []
-
+        
         for i in qs[:4]:
+            if i['menu__smallCategory']== None:
+                continue
             item = SmallCategory.objects.get(id = i['menu__smallCategory'])
             smallCategorydict = model_to_dict(item)
             smallCategorydict.pop("img")
