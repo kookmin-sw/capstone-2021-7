@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
 
+
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { getSmallCategory } from '../api/rating-api';
 
-const Rating = () => {
-
+const Rating = ({route, navigation}) => {
+  const {name, phone, username, password, gender, taste, price, amount} = route.params;
   const [smallCategory , setSmallCategory] = useState([]);
 
   const callGetSmallCategory = async () => {
@@ -46,6 +47,11 @@ const Rating = () => {
     // }
   }
 
+  const postData = {name: name, phone: phone, username: username, password: password, gender: gender, taste: taste, price: price, amount: amount};
+  const print = (e) =>{
+    e.preventDefault();
+    console.log(postData)
+  }
   const renderSmallCategory = ({ item }) => {
     // console.log(item);
     return (
@@ -72,7 +78,7 @@ const Rating = () => {
     return (
       <View style ={styles.rating}>
         <View style ={styles.top}>
-          <Text style={styles.title}>카테고리 중 5개를 골라 점수를 입력해주세요!</Text>
+          <Text style={styles.title}>카테고리 중 5개 이상을 골라 점수를 입력해주세요!</Text>
           <Text style={styles.sub}>
             1점에서 5점 사이로 평가해주세요
             <FontAwesome5 name="smile" size={20} color="#3498DB" />
@@ -88,6 +94,9 @@ const Rating = () => {
             key={4}
           />
         </View>
+        <TouchableOpacity onPress={print} style={styles.btn}>
+          <Text style={styles.btntext}>완료</Text>
+        </TouchableOpacity>
       </View>
     );
 }
@@ -124,6 +133,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderTopWidth: 5,
     borderTopColor: "#3498DB",
+  },
+  btn: {
+    borderColor:"#3498DB",
+    justifyContent:'center',
+    alignItems:'center',
+    borderWidth:2,
+    backgroundColor:"#3498DB",
+    borderRadius:5,
+    padding:10,
+    margin:10,
+    width:350,
+    height:50
+  },
+  btntext: {
+    color:'white', 
+    fontWeight:'bold', 
+    fontSize: 18
   }
 });
 

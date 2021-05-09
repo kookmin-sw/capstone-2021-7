@@ -98,6 +98,7 @@ const MyProfileStackScreen = () => {
       <MyProfileStack.Screen name="survey" component={Survey}/>
       <MyProfileStack.Screen name="login" component={Login}/>
       <MyProfileStack.Screen name="success" component={Success}/>
+      <MyProfileStack.Screen name="rating" component={Rating}/>
     </MyProfileStack.Navigator>
   );
 }
