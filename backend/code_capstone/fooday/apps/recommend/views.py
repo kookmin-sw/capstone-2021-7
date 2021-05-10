@@ -109,7 +109,10 @@ class RecommendCategoryForMany(APIView):
 
     def post(self, request, format=None):
 
-        user_ids = request.data.get('user_ids')
+        phoneList = request.data.get('phoneList')
+        user_ids = []
+        for phone in phoneList:
+            user_ids.append(User.objects.get(phone=phone).id)
         URL = 'https://8ah7aceauf.execute-api.ap-northeast-2.amazonaws.com/getrecommendation'
         data = {'user_id': [request.user.id] + user_ids}
         response = requests.post(URL, data=json.dumps(data))
