@@ -73,6 +73,32 @@ const MainStackScreen = () => {
   );
 }
 
+const MyStoreStack = createStackNavigator();
+
+const MyStoreStackScreen = () => {
+  return(
+    <MyStoreStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#3498DB',
+          height: 120,
+        },
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          color: 'white',
+          fontSize: 20,
+        },
+        headerBackTitle: " ",
+        headerBackTitleStyle: {
+          color: 'white'
+        },
+      }}>
+      <MyStoreStack.Screen name="mystore" component={MyStore}/>
+    </MyStoreStack.Navigator>
+  );
+}
+
 const MyProfileStack = createStackNavigator();
 
 const MyProfileStackScreen = () => {
@@ -140,7 +166,7 @@ const App = () => {
       <NavigationContainer >
         <Tab.Navigator initialRouteName = "main" >
           <Tab.Screen name="main" children={()=><MainStackScreen/>}/>
-          <Tab.Screen name="mystore" component={MyStore}/>
+          <Tab.Screen name="mystore" component={MyStoreStackScreen}/>
           <Tab.Screen name="recommend" component={RecommendStackScreen}/>
           <Tab.Screen name="myorder" component={MyOrder}/>
           <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
