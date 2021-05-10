@@ -55,7 +55,7 @@ class User_Menu(models.Model):
 class User_SmallCategory_Feedback(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     smallCategory = models.ForeignKey(SmallCategory, on_delete=models.CASCADE)
-    scenario = models.CharField(max_length = 150, choices= (('AWS', 'AWS'),('SELF','SELF')), default = "null")
+    scenario = models.CharField(max_length = 150, choices= (('AWS', 'AWS'),('SELF','SELF'),('TIME','TIME'),('WEATHER','WEATHER')), default = "null")
     score = models.IntegerField(default=0)
     timestamp = models.DateTimeField(default = timezone.now)
 

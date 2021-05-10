@@ -44,7 +44,7 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=('POST',), url_path='signup', http_method_names=('post',))
     def signup(self, request, *args, **kwargs):
-        
+        print("1")
         username = request.data.get('username')
         phone = request.data.get('phone')
         name = request.data.get('name')
@@ -59,7 +59,7 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={'message': '해당 전화번호가 이미 존재합니다.'})
-
+        print("2")
         user = User.objects.create_user(
             username = username,
             password=password,
@@ -70,7 +70,7 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
             price = price,
             amount = amount
         )
-
+        print("3")
         token = Token.objects.create(user=user)
     
         return Response(
