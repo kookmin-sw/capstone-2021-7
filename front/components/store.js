@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -47,7 +47,6 @@ const Store = ({ route }) => {
   }
 
   const callCategoryFeedback = async (type) => {
-    console.log("타입 뭘로떠?",type);
     if (type === true){
       await categoryFeedback({
         scenario : route.params.recommendType,
@@ -55,7 +54,13 @@ const Store = ({ route }) => {
         score : 1
       })
       .then((result) => {
-        console.log(result);
+        Alert.alert(
+          "좋아요를 눌렀습니다.",
+          "",
+          [
+            { text: "OK", onPress: () => console.log("ㅇㅇ") }
+          ]
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +72,13 @@ const Store = ({ route }) => {
         score : -1
       })
       .then((result) => {
-        console.log(result);
+        Alert.alert(
+          "싫어요를 눌렀습니다.",
+          "",
+          [
+            { text: "OK", onPress: () => console.log("ㅇㅇ") }
+          ]
+        );
       })
       .catch((err) => {
         console.log(err);
