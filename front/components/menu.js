@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -13,6 +15,8 @@ import { getMenu, orderMenu } from '../api/store-api';
 
 
 const Menu = ({ route }) => {
+  const navigation = useNavigation();
+
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
   const [menuList, setMenuList] = useState([]);
   const [clickedMenuList, setClickedMenuList] = useState([]);
@@ -39,7 +43,7 @@ const Menu = ({ route }) => {
         "주문이 완료되었습니다.",
         "주문내역에서 확인해주세요",
         [
-          { text: "OK", onPress: () => console.log("OK Pressed") }
+          { text: "OK", onPress: () => navigation.navigate('myorder') }
         ]
       );
     })
