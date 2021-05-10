@@ -68,7 +68,7 @@ const Menu = ({ route }) => {
 										<Text style={styles.catename}>{route.params.storeName}</Text>
 								</View>
 								<TouchableOpacity>
-										<Ionicons name="heart-outline" size={40} color="pink" />
+									<Ionicons name="heart-outline" size={40} color="pink" />
 								</TouchableOpacity>
 						</View>
 				</View>
@@ -106,19 +106,20 @@ const styles = StyleSheet.create({
 			paddingTop:30,
 			borderBottomColor: "#3498DB",
 			borderBottomWidth:5,
-			width:'100%',
-			alignItems: 'center',
+			width:350,
 			justifyContent:'center'
 	},
 	top:{
+		maxWidth:350,
 		flexDirection:'row',
-		alignItems:'center',
+		alignItems:'center'
 	//   marginLeft:50,
 	},
 	storename:{
-			marginLeft:20,
-			marginRight:50,
-			justifyContent:'center'
+		justifyContent:'center',
+		marginLeft:20,
+		marginRight:20,
+		width:200
 	},
 	catename:{
 			fontSize:22,
@@ -139,7 +140,6 @@ const styles = StyleSheet.create({
 			borderRadius:5,
 			width:400,
 			height:55,
-			marginBottom:'10%',
 			justifyContent:'center',
 	},
 	order:{
