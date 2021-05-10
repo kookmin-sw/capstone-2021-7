@@ -16,32 +16,38 @@ from apps.store.models import *
 from apps.category.models import *
 import time
 
-class UserMenuViewSet(viewsets.ModelViewSet):
+class OrderMenuViewSet(viewsets.ModelViewSet):
 
-    queryset = User_Menu.objects.all()
-    serializer_class = UserMenuSerializer
+    queryset = Order_Menu.objects.all()
+    serializer_class = OrderMenuSerializer
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         menuList = request.data.get('menuList')
         location = request.data.get('location')
+        user = User.objects.get(id=request.user.id)
 
         timeSlot = setTimeSlot()
         lat, lng = geoCoding(location)
         description, temp, weatherGroup = openWeather(lat, lng)
 
+        order = Order.objects.create(
+            user = user,
+            timeSlot = timeSlot,
+            weather = weatherGroup
+            )
+        print(order)
         for menu in menuList:
+            print(menu)
             serializer = self.get_serializer(data={
-                "user" : request.user.id,
-                "menu" : menu,
-                "weather": weatherGroup,
-                "timeSlot" : timeSlot
+                "order" : order.id,
+                "menu" : menu
             })
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
 
             datas = Menu_SmallCategory.objects.filter(menu=menu)
-            user = User.objects.get(id=request.user.id)
+            
             for data in datas:
                 User_SmallCategory_Order.objects.create(user=user, smallCategory=data.smallCategory)
 
