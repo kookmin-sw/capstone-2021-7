@@ -87,9 +87,10 @@ const Store = ({ route }) => {
   return (
     <View style={styles.store}>
       <View style={styles.top}>
-        <Text style={styles.category}>
-          <FontAwesome name="circle" size={120} color="#E0E0E0"/>{'\n'}{route.params.categoryName}{'\t'}{'\t'}
-        </Text>
+        <View style={styles.category}>
+          <FontAwesome name="circle" size={120} color="#E0E0E0"/>
+          <Text style={styles.categoryname}>{route.params.categoryName}</Text>
+        </View>
         {route.params.from === false 
         ? <View></View>
         : <Text style={styles.feedback}>
@@ -154,22 +155,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   top: {
-    flex:0.5,
+    flex:0.4,
     marginTop:30,
     borderBottomColor:"#3498DB",
     borderBottomWidth:5,
     alignItems:'center',
     justifyContent:'center',
-    width:'100%',
+    width:350,
     flexDirection:'row',
   },
   list: {
     flex:5,
     paddingTop:'10%',
-    width:'100%',
-    paddingLeft:'20%',
+    width:350,
   },
   category: {
+    alignItems:'center',
+    justifyContent:'center',
+    marginBottom:15
+  },
+  categoryname:{
     fontSize:28,
     fontWeight:'bold',
   },
