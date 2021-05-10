@@ -27,4 +27,5 @@ router.register(r'storesmallcategory', storeView.StoreSmallCategoryViewSet)
 urlpatterns = [
     path('',include(router.urls)),
     path('recommendcategory/', recommendView.RecommendCategory.as_view()),
+    path('recommendcategorymany/', recommendView.RecommendCategoryForMany.as_view())
 ]

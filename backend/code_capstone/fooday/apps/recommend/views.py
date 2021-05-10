@@ -20,6 +20,12 @@ import requests
 class RecommendCategory(APIView):
     permission_classes = (IsAuthenticated,)
 
+    def recommendBySelf(self, user):
+        URL = 'https://8ah7aceauf.execute-api.ap-northeast-2.amazonaws.com/getrecommendation'
+        data = {'user_id':[user]}
+        response = requests.post(URL, data=json.dumps(data))
+        return response.json()["body"]
+
     def recommendByAWS(self, user):
         personalizeRt = boto3.client(
             'personalize-runtime',
@@ -28,7 +34,7 @@ class RecommendCategory(APIView):
             aws_secret_access_key= os.getenv('AWS_SECRET_ACCESS_KEY')
         )
         response = personalizeRt.get_recommendations(
-            campaignArn = "arn:aws:personalize:ap-northeast-2:287004205854:campaign/fooday-campaign-2", 
+            campaignArn = "arn:aws:personalize:ap-northeast-2:287004205854:campaign/fooday-campaign-2",
             userId = str(user)
         )
         smallCategoryList = []
@@ -42,9 +48,9 @@ class RecommendCategory(APIView):
         return smallCategoryList
 
     def recommendByWeather(self, weatherGroup):
-        qs = User_Menu.objects.filter(weather = weatherGroup).select_related('menu').values('menu__smallCategory').annotate(count=Count('menu__smallCategory')).order_by('-count')
+        qs = Order_Menu.objects.filter(order__weather = weatherGroup).select_related('menu').values('menu__smallCategory').annotate(count=Count('menu__smallCategory')).order_by('-count')
         smallCategoryList = []
-        
+
         for i in qs[:4]:
             if i['menu__smallCategory']== None:
                 continue
@@ -56,9 +62,9 @@ class RecommendCategory(APIView):
         return smallCategoryList
 
     def recommendByTimeSlot(self, timeSlot):
-        qs = User_Menu.objects.filter(timeSlot = timeSlot).select_related('menu').values('menu__smallCategory').annotate(count=Count('menu__smallCategory')).order_by('-count')
+        qs = Order_Menu.objects.filter(order__timeSlot = timeSlot).select_related('menu').values('menu__smallCategory').annotate(count=Count('menu__smallCategory')).order_by('-count')
         smallCategoryList= []
-        
+
         for i in qs[:4]:
             if i['menu__smallCategory']== None:
                 continue
@@ -76,14 +82,31 @@ class RecommendCategory(APIView):
         timeSlot = setTimeSlot()
         lat, lng = geoCoding(location)
         description, temp, weatherGroup = openWeather(lat, lng)
-        
+
+        selfCategoryList = self.recommendBySelf(request.user.id)
         awsCategoryList = self.recommendByAWS(request.user.id)
         weatherCategoryList = self.recommendByWeather(weatherGroup)
         timeSlotCategoryList = self.recommendByTimeSlot(timeSlot)
 
         return Response({
             "user" : request.user.id,
+            "selfCategoryList" : selfCategoryList,
             "awsCategoryList" : awsCategoryList,
             "weatherCategoryList" : weatherCategoryList,
             "timeSlotCategoryList" : timeSlotCategoryList
+        })
+
+class RecommendCategoryForMany(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, format=None):
+
+        user_ids = request.data.get('user_ids')
+        URL = 'https://8ah7aceauf.execute-api.ap-northeast-2.amazonaws.com/getrecommendation'
+        data = {'user_id': [request.user.id] + user_ids}
+        response = requests.post(URL, data=json.dumps(data))
+
+        return Response({
+            "user" : request.user.id,
+            "selfCategoryList" : response.json()["body"]
         })
