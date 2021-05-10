@@ -24,7 +24,15 @@ class RecommendCategory(APIView):
         URL = 'https://8ah7aceauf.execute-api.ap-northeast-2.amazonaws.com/getrecommendation'
         data = {'user_id':[user]}
         response = requests.post(URL, data=json.dumps(data))
-        return response.json()["body"]
+
+        smallCategoryList = []
+        for itemId in json.loads(response.json()["body"]):
+            item = SmallCategory.objects.get(id = itemId)
+            smallCategorydict = model_to_dict(item)
+            smallCategorydict.pop("img")
+            smallCategorydict.pop("tag")
+            smallCategoryList.append(smallCategorydict)
+        return smallCategoryList
 
     def recommendByAWS(self, user):
         personalizeRt = boto3.client(
@@ -106,7 +114,15 @@ class RecommendCategoryForMany(APIView):
         data = {'user_id': [request.user.id] + user_ids}
         response = requests.post(URL, data=json.dumps(data))
 
+        smallCategoryList = []
+        for itemId in json.loads(response.json()["body"]):
+            item = SmallCategory.objects.get(id = itemId)
+            smallCategorydict = model_to_dict(item)
+            smallCategorydict.pop("img")
+            smallCategorydict.pop("tag")
+            smallCategoryList.append(smallCategorydict)
+
         return Response({
             "user" : request.user.id,
-            "selfCategoryList" : response.json()["body"]
+            "smallCategoryList" : smallCategoryList
         })
