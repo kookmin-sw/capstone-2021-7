@@ -17,12 +17,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['username','password','phone','name','gender','taste','price','amount']
         read_only_fields = ['last_login','createdAt']
 
-class UserSmallCategoryLikeSerializer(serializers.ModelSerializer):
+# class UserSmallCategoryLikeSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = User_SmallCategory_Like
-        fields = ['user','smallCategory','rating']
-        read_only_fields = ['timestamp']
+#     class Meta:
+#         model = User_SmallCategory_Like
+#         fields = ['user','smallCategory','rating']
+#         read_only_fields = ['timestamp']
 
 class UserSmallCategoryFeedbackSerializer(serializers.ModelSerializer):
 

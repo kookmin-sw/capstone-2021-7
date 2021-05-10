@@ -42,44 +42,6 @@ class StoreBigCategoryViewSet(viewsets.ModelViewSet):
                 }
             )
 
-    @action(detail=False, methods=('POST',), url_path='signup', http_method_names=('post',))
-    def signup(self, request, *args, **kwargs):
-        print("1")
-        username = request.data.get('username')
-        phone = request.data.get('phone')
-        name = request.data.get('name')
-        password = request.data.get('password')
-        gender = request.data.get('gender')
-        
-        taste = request.data.get('taste')
-        price = request.data.get('price')
-        amount = request.data.get('amount')
-        
-        if User.objects.filter(phone=phone).exists():
-            return Response(
-                status=status.HTTP_400_BAD_REQUEST,
-                data={'message': '해당 전화번호가 이미 존재합니다.'})
-        print("2")
-        user = User.objects.create_user(
-            username = username,
-            password=password,
-            phone = phone,
-            name= name,
-            gender = gender,
-            taste = taste,
-            price = price,
-            amount = amount
-        )
-        print("3")
-        token = Token.objects.create(user=user)
-    
-        return Response(
-                status=status.HTTP_200_OK,
-                data={
-                    'message' : "회원가입 성공",
-                }
-        )
-
 class MenuViewSet(viewsets.ModelViewSet):
 
     queryset = Menu.objects.all()
@@ -113,7 +75,7 @@ class StoreSmallCategoryViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=('POST',), url_path='list', http_method_names=('post',))
     def storeSmallCategoryList(self, request, *args, **kwargs):
-        
+
         try :
             smallCategory = request.data.get('smallCategory')
             location = request.data.get('location')
