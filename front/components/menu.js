@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
 			borderRadius:5,
 			width:400,
 			height:55,
-			marginBottom:'10%',
 			justifyContent:'center',
 	},
 	order:{
