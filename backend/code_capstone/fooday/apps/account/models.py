@@ -23,9 +23,21 @@ class User(AbstractUser):
     price = models.IntegerField(default = -1)
     amount = models.IntegerField(default = -1)
     userStore = models.ManyToManyField(Store, through = "User_Store")
-    userMenu = models.ManyToManyField(Menu, through = "User_Menu")
     age = models.IntegerField(default = 0)
 
+class Order(models.Model):
+    SLOT = (
+        ('morning','morning'),
+        ('lunch','lunch'),
+        ('latelunch','latelunch'),
+        ('dinner','dinner'),
+        ('midnigtsnack','midnigntsnack')
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default = timezone.now)
+    timeSlot = models.CharField(max_length = 150, choices = SLOT, default = "null")
+    weather = models.CharField(max_length = 150, default = "null")
+    orderMenu = models.ManyToManyField(Menu, through = "Order_Menu")
 
 class User_SmallCategory_Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -37,20 +49,9 @@ class User_Store(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
 
-class User_Menu(models.Model):
-    SLOT = (
-        ('morning','morning'),
-        ('lunch','lunch'),
-        ('latelunch','latelunch'),
-        ('dinner','dinner'),
-        ('midnignsnack','midnignsnack')
-    )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Order_Menu(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default = timezone.now)
-    timeSlot = models.CharField(max_length = 150, choices = SLOT, default = "null")
-    weather = models.CharField(max_length = 150, default = "null")
-
 
 class User_SmallCategory_Feedback(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

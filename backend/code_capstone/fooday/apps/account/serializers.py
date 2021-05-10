@@ -3,12 +3,11 @@ from .models import *
 from apps.store.models import *
 from django.utils import timezone
 
-class UserMenuSerializer(serializers.ModelSerializer):
+class OrderMenuSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = User_Menu
-        fields = ['user','menu','weather','timeSlot']
-        read_only_fields = ['timestamp']
+        model = Order_Menu
+        fields = ['order','menu']
 
 class UserSerializer(serializers.ModelSerializer):
 
