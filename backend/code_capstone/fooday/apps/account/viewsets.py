@@ -36,9 +36,8 @@ class OrderMenuViewSet(viewsets.ModelViewSet):
             timeSlot = timeSlot,
             weather = weatherGroup
             )
-        print(order)
+
         for menu in menuList:
-            print(menu)
             serializer = self.get_serializer(data={
                 "order" : order.id,
                 "menu" : menu
@@ -60,8 +59,19 @@ class OrderMenuViewSet(viewsets.ModelViewSet):
             }
         )
 
-    def perform_create(self, serializer):
-        serializer.save()
+class OrderViewSet(viewsets.ModelViewSet):
+
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    """
+    List a queryset.
+    """
+    def list(self, request, *args, **kwargs):
+        queryset = Order.objects.filter(user = request.user)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 class UserViewSet(viewsets.ModelViewSet):
 

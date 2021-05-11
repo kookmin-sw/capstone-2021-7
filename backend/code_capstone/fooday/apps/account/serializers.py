@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.forms.models import model_to_dict
+
 from .models import *
 from apps.store.models import *
 from django.utils import timezone
@@ -8,6 +10,25 @@ class OrderMenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order_Menu
         fields = ['order','menu']
+
+class OrderSerializer(serializers.ModelSerializer):
+    menu = serializers.SerializerMethodField() 
+
+    class Meta:
+        model = Order
+        fields = ['id','menu','timestamp']
+
+    def get_menu(self,obj):
+        returnList= []
+        menuList = obj.orderMenu.all()
+        for menu in menuList:
+            menu = model_to_dict(menu)
+            returnList.append({ 
+                "name" : menu['name'],
+                "price": menu['price']
+                })
+        return returnList
+
 
 class UserSerializer(serializers.ModelSerializer):
 

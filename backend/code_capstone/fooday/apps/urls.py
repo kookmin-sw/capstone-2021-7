@@ -11,6 +11,7 @@ router = DefaultRouter()
 
 # account
 router.register(r'ordermenu', accountView.OrderMenuViewSet)
+router.register(r'order', accountView.OrderViewSet)
 router.register(r'user',accountView.UserViewSet)
 router.register(r'userfeedback',accountView.UserSmallCategoryFeedbackViewSet)
 
