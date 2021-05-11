@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { RadioButton } from 'react-native-paper';
 
-const MyProfile = ({navigation}) => {
+const SignUp = ({navigation}) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -79,16 +79,10 @@ const MyProfile = ({navigation}) => {
       </View>
       <View style={styles.buttons}>
         <TouchableOpacity
-         style={styles.button1}
+         style={styles.button}
          onPress={inspection}
          >
           <Text style={styles.text}>다음</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        style={styles.button2}
-        onPress={()=> navigation.navigate('login')}
-        >
-          <Text style={styles.text}>로그인</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -140,24 +134,14 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     marginTop:20,
   },
-  button1: {
+  button: {
     borderColor:"#3498DB",
     borderWidth:2,
     backgroundColor:"#3498DB",
     borderRadius:5,
     padding:15,
     margin:10,
-    width:100,
-  },
-  button2: {
-    borderColor:"#3498DB",
-    justifyContent:'center',
-    borderWidth:2,
-    backgroundColor:"#3498DB",
-    borderRadius:5,
-    padding:10,
-    margin:10,
-    width:180
+    width:300,
   },
   text:{
     fontSize:15,
@@ -177,4 +161,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MyProfile;
+export default SignUp;
