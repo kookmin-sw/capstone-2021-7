@@ -14,6 +14,7 @@ import { UserLocationContext } from '../context/userlocationcontext';
 
 const Main = () => {
   const navigation = useNavigation();
+  
   const [bigCategory , setBigCategory] = useState([]);
 
   const { userLocation } = useContext(UserLocationContext);
@@ -31,7 +32,6 @@ const Main = () => {
   },[]);
 
   const onClick = (item) => {
-    console.log(item);
     if (userLocation ==="위치정보를 입력해주세요"){
       Alert.alert(
         "위치 정보를 입력해주세요",
@@ -54,7 +54,6 @@ const Main = () => {
   }
 
   const renderBigCategory = ({ item }) => {
-    console.log(item);
     return (
       <View
         style={{
