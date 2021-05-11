@@ -13,6 +13,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 
 // vector-icons
+import { Ionicons } from '@expo/vector-icons';
 
 // component
 import Main from './components/main';
@@ -166,32 +167,65 @@ const TabBar = () => {
   const { userLocation } = useContext(UserLocationContext);
 
   return (
-    <Tab.Navigator initialRouteName = "main" >
-          <Tab.Screen name="main" children={()=><MainStackScreen/>}/>
-          <Tab.Screen name="mystore" component={MyStoreStackScreen}/>
-          <Tab.Screen 
-            name="recommend" 
-            component={RecommendStackScreen}
-            listeners={({ navigation, route }) => ({
-              tabPress: e => {
-                // Prevent default action
-                e.preventDefault();
-                if (userLocation === "위치정보를 입력해주세요") {
-                  Alert.alert(
-                    "위치 정보를 입력해주세요",
-                    "화면 상단의 돋보기를 눌러 위치정보를 입력해주세요",
-                    [
-                      { text: "OK", onPress: () => console.log("OK Pressed") }
-                    ]
-                  );
-                } else {
-                  navigation.navigate('recommend');
-                }
-              },
-            })}/>
-          <Tab.Screen name="myorder" component={MyOrder}/>
-          <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
-        </Tab.Navigator>
+    <Tab.Navigator 
+      initialRouteName = "main"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color }) => {
+          let iconName;
+
+          if (route.name === 'main') {
+            iconName = "md-home";
+          }
+          else if (route.name === 'mystore') {
+            iconName = "heart";
+          }
+          else if (route.name === 'recommend') {
+            iconName = "ios-thumbs-up-sharp";
+          }
+          else if (route.name === 'myorder') {
+            iconName = "newspaper-sharp";
+          }
+          else if (route.name === 'myprofile') {
+            iconName = "ios-person-sharp";
+          }
+          return <Ionicons name={iconName} size={30} color={color}/>;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: "#3498DB",
+        inactiveTintColor: "gray",
+        style:{
+          borderTopColor: "#3498DB",
+          borderTopWidth:5,
+          height:100,
+        }
+      }}
+    >
+      <Tab.Screen name="main" children={()=><MainStackScreen/>}/>
+      <Tab.Screen name="mystore" component={MyStoreStackScreen}/>
+      <Tab.Screen 
+        name="recommend" 
+        component={RecommendStackScreen}
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+            if (userLocation === "위치정보를 입력해주세요") {
+              Alert.alert(
+                "위치 정보를 입력해주세요",
+                "화면 상단의 돋보기를 눌러 위치정보를 입력해주세요",
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+            } else {
+              navigation.navigate('recommend');
+            }
+          },
+        })}/>
+      <Tab.Screen name="myorder" component={MyOrder}/>
+      <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
+    </Tab.Navigator>
   );
 }
 
