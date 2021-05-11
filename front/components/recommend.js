@@ -20,7 +20,7 @@ const Recommend = () => {
   const [weatherCategory, setWeatherCategory] = useState([]);
   const [timeSlotCategory, setTimeSlotCategory] = useState([]);
 
-  const { userLocation } = useContext(UserLocationContext);
+  const { userLocation, setUserLocation } = useContext(UserLocationContext);
 
   const callGetRecommendCategory = async () => {
     await getRecommendCategory({
@@ -35,17 +35,7 @@ const Recommend = () => {
   }
 
   useEffect(() => {
-    if (userLocation ==="위치정보를 입력해주세요"){
-      Alert.alert(
-        "위치 정보를 입력해주세요",
-        " ",
-        [
-          { text: "위치정보 입력하러 가기", onPress: () => navigation.navigate('postcode') }
-        ]
-      );
-    } else {
-      callGetRecommendCategory(); 
-    }
+    callGetRecommendCategory(); 
   },[userLocation]);
 
   return(
