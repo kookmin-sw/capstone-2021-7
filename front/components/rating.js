@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Modal } from 'react-native';
 
 
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -8,8 +8,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import { getSmallCategory } from '../api/rating-api';
 
 const Rating = ({route, navigation}) => {
+  
   const {name, phone, username, password, gender, taste, price, amount} = route.params;
+
   const [smallCategory , setSmallCategory] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const callGetSmallCategory = async () => {
     await getSmallCategory()
@@ -25,32 +28,12 @@ const Rating = ({route, navigation}) => {
 
   const onClick = (item) => {
     console.log(item.id);
-    // console.log(item);
-    // if (userLocation ==="위치정보를 입력해주세요"){
-    //   Alert.alert(
-    //     "위치 정보를 입력해주세요",
-    //     "화면 상단의 돋보기를 눌러 위치정보를 입력해주세요",
-    //     [
-    //       { text: "OK", onPress: () => console.log("OK Pressed") }
-    //     ]
-    //   );
-    // } else {
-    //   navigation.navigate({
-    //     name : 'store',
-    //     params:{
-    //       from : false,
-    //       categoryFlag: true,
-    //       categoryId:item.id,
-    //       categoryName:item.name,
-    //     }
-    // })
-    // }
   }
 
   const postData = {name: name, phone: phone, username: username, password: password, gender: gender, taste: taste, price: price, amount: amount};
-  const print = (e) =>{
-    e.preventDefault();
-    console.log(postData)
+
+  const print = () =>{
+    console.log('ok')
   }
   const renderSmallCategory = ({ item }) => {
     // console.log(item);
@@ -80,7 +63,7 @@ const Rating = ({route, navigation}) => {
         <View style ={styles.top}>
           <Text style={styles.title}>카테고리 중 5개 이상을 골라 점수를 입력해주세요!</Text>
           <Text style={styles.sub}>
-            1점에서 5점 사이로 평가해주세요
+            평가는 1점에서 5점 사이만 가능합니다
             <FontAwesome5 name="smile" size={20} color="#3498DB" />
           </Text>
         </View>
@@ -94,7 +77,30 @@ const Rating = ({route, navigation}) => {
             key={4}
           />
         </View>
-        <TouchableOpacity onPress={print} style={styles.btn}>
+        <View style={styles.centeredView}>
+          <Modal
+            animationType="none"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Hello World!</Text>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>취소</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </View>
+        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.btn}>
           <Text style={styles.btntext}>완료</Text>
         </TouchableOpacity>
       </View>
@@ -150,6 +156,47 @@ const styles = StyleSheet.create({
     color:'white', 
     fontWeight:'bold', 
     fontSize: 18
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "black",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
   }
 });
 
