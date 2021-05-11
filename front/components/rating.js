@@ -9,10 +9,11 @@ import { getSmallCategory } from '../api/rating-api';
 
 const Rating = ({route, navigation}) => {
   
-  const {name, phone, username, password, gender, taste, price, amount} = route.params;
+  const {name, phone, username, password, gender, age, taste, price, amount} = route.params;
 
   const [smallCategory , setSmallCategory] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [count, setCount] = useState(0);
 
   const callGetSmallCategory = async () => {
     await getSmallCategory()
@@ -27,10 +28,15 @@ const Rating = ({route, navigation}) => {
   },[]);
 
   const onClick = (item) => {
-    console.log(item.id);
+    setModalVisible(!modalVisible)
+    countRate(item);
   }
 
-  const postData = {name: name, phone: phone, username: username, password: password, gender: gender, taste: taste, price: price, amount: amount};
+  const countRate = (item) => {
+    console.log('ok');
+  }
+
+  const postData = {name: name, phone: phone, username: username, password: password, age: age, gender: gender, taste: taste, price: price, amount: amount};
 
   const print = () =>{
     console.log('ok')
@@ -57,7 +63,6 @@ const Rating = ({route, navigation}) => {
       </View>
       );
     }
-
     return (
       <View style ={styles.rating}>
         <View style ={styles.top}>
@@ -66,6 +71,7 @@ const Rating = ({route, navigation}) => {
             평가는 1점에서 5점 사이만 가능합니다
             <FontAwesome5 name="smile" size={20} color="#3498DB" />
           </Text>
+          <Text style={styles.count}>평가한 음식 수: {count} 개</Text>
         </View>
         <View style={styles.flat}>
           <FlatList
@@ -77,6 +83,7 @@ const Rating = ({route, navigation}) => {
             key={4}
           />
         </View>
+
         <View style={styles.centeredView}>
           <Modal
             animationType="none"
@@ -89,18 +96,50 @@ const Rating = ({route, navigation}) => {
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>Hello World!</Text>
+                <Text style={styles.modalText}>점수를 선택해주세요</Text>
+                <View style={styles.buttons}>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.textStyle}>1점</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.textStyle}>2점</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.textStyle}>3점</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.textStyle}>4점</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.textStyle}>5점</Text>
+                  </TouchableOpacity>
+                </View>
                 <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => setModalVisible(!modalVisible)}
-                >
-                  <Text style={styles.textStyle}>취소</Text>
-                </TouchableOpacity>
+                    style={styles.cancelbutton}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.canceltext}>취소</Text>
+                  </TouchableOpacity>
               </View>
             </View>
           </Modal>
         </View>
-        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.btn}>
+        <TouchableOpacity onPress={print} style={styles.btn}>
           <Text style={styles.btntext}>완료</Text>
         </TouchableOpacity>
       </View>
@@ -119,7 +158,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:30
+    marginTop:50,
+    padding:10,
   },
   title: {
     color: "#3498DB",
@@ -131,9 +171,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize:15,
     marginTop:5,
+    marginBottom:10,
   },
   flat: {
-    flex: 2,
+    flex: 3,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -158,10 +199,12 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   centeredView: {
-    flex: 1,
+    // flex: 1,
+    position:'absolute',
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    left:22,
+    top:300
   },
   modalView: {
     margin: 20,
@@ -178,10 +221,29 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5
   },
+  buttons:{
+    flexDirection:'row',
+    marginTop:15,
+    marginBottom:30,
+  },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
+    borderWidth:1,
+    margin:5,
+  },
+  cancelbutton:{
+    backgroundColor:"#3498DB",
+    alignItems:'center',
+    justifyContent:'center',
+    width:200,
+    height:50,
+  },
+  canceltext:{
+    color:'white',
+    fontSize: 18,
+    fontWeight:'bold'
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -195,8 +257,17 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   modalText: {
+    fontWeight:'bold',
+    fontSize:20,
     marginBottom: 15,
     textAlign: "center"
+  },
+  count:{
+    color:'black', 
+    fontWeight:'900', 
+    fontSize:20,
+    marginTop:10,
+    marginBottom:20,
   }
 });
 

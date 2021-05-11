@@ -9,6 +9,7 @@ const SignUp = ({navigation}) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [checkpassword, setCheckPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [gender, setGender] = useState("male");
@@ -22,6 +23,10 @@ const SignUp = ({navigation}) => {
     {
       alert('빈칸에 값을 입력해주세요');
       return;
+    }
+    //비밀번호 확인 일치여부
+    else if(password!=checkpassword){
+      alert('비밀번호가 일치하지 않습니다.');
     }
     //나이 두자릿수
     else if(age<10 || age>99){
@@ -37,6 +42,7 @@ const SignUp = ({navigation}) => {
           phone: phone,
           username: username,
           password: password,
+          age: age,
           gender: gender
         });
       }
@@ -52,9 +58,10 @@ const SignUp = ({navigation}) => {
       </View>
       <View style={styles.inputs}>
         <TextInput value={name} style={styles.input} onChangeText={text => setName(text)} placeholder=" 이름"></TextInput>
-        <TextInput value={phone} style={styles.input} onChangeText={text => setPhone(text)} placeholder=" 번호 ( ex: 01012345678 )"></TextInput>
-        <TextInput value={username} style={styles.input} onChangeText={text => setUsername(text)} placeholder=" 아이디"></TextInput>
-        <TextInput value={password} style={styles.input} onChangeText={text => setPassword(text)} placeholder=" 비밀번호"></TextInput>
+        <TextInput value={phone} style={styles.input} keyboardType="number-pad" onChangeText={text => setPhone(text)} placeholder=" 번호 ( ex: 01012345678 )"></TextInput>
+        <TextInput value={username} style={styles.input} returnKeyType="next" onChangeText={text => setUsername(text)} placeholder=" 아이디"></TextInput>
+        <TextInput secureTextEntry={true} value={password} style={styles.input} onChangeText={text => setPassword(text)} placeholder=" 비밀번호"></TextInput>
+        <TextInput secureTextEntry={true} value={checkpassword} style={styles.input} onChangeText={text => setCheckPassword(text)} placeholder=" 비밀번호 확인"></TextInput>
         <TextInput value={age} style={styles.input} onChangeText={text => setAge(text)} placeholder=" 나이 ( ex: 24 )"></TextInput>
         <View style={styles.radiobtn}>
           <View style={styles.radiobtn}>
@@ -100,7 +107,7 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent:'center',
     textAlign:'center',
-    marginTop:'15%'
+    marginTop:'5%',
   },
   signuptext: {
     fontSize: 40,
@@ -109,7 +116,7 @@ const styles = StyleSheet.create({
     paddingBottom:50,
   },
   inputs: {
-    flex:4,
+    flex:5,
     justifyContent:'center',
     textAlign:'center'
   },
