@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 // react
-import React from 'react';
+import React, { useContext } from 'react';
 
 // react-native
 import { LogBox, Alert, TouchableOpacity } from 'react-native';
@@ -10,6 +10,7 @@ import { LogBox, Alert, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 
 // vector-icons
 
@@ -31,6 +32,7 @@ import Rating from './components/rating';
 
 // context
 import UserLocationProvider from './context/userlocationprovider';
+import { UserLocationContext } from './context/userlocationcontext';
 
 // API
 
@@ -160,17 +162,45 @@ const RecommendStackScreen = () => {
 
 const Tab = createBottomTabNavigator();
 
-const App = () => {
+const TabBar = () => {
+  const { userLocation } = useContext(UserLocationContext);
+
   return (
-    <UserLocationProvider>
-      <NavigationContainer >
-        <Tab.Navigator initialRouteName = "main" >
+    <Tab.Navigator initialRouteName = "main" >
           <Tab.Screen name="main" children={()=><MainStackScreen/>}/>
           <Tab.Screen name="mystore" component={MyStoreStackScreen}/>
-          <Tab.Screen name="recommend" component={RecommendStackScreen}/>
+          <Tab.Screen 
+            name="recommend" 
+            component={RecommendStackScreen}
+            listeners={({ navigation, route }) => ({
+              tabPress: e => {
+                // Prevent default action
+                e.preventDefault();
+                if (userLocation === "위치정보를 입력해주세요") {
+                  Alert.alert(
+                    "위치 정보를 입력해주세요",
+                    "화면 상단의 돋보기를 눌러 위치정보를 입력해주세요",
+                    [
+                      { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                  );
+                } else {
+                  navigation.navigate('recommend');
+                }
+              },
+            })}/>
           <Tab.Screen name="myorder" component={MyOrder}/>
           <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
         </Tab.Navigator>
+  );
+}
+
+const App = () => {  
+
+  return (
+    <UserLocationProvider>
+      <NavigationContainer >
+        <TabBar/>
       </NavigationContainer>
     </UserLocationProvider>
   );
