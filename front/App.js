@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 // react
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 // react-native
 import { LogBox, Alert, TouchableOpacity } from 'react-native';
@@ -11,6 +11,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from "@react-native-community/async-storage";
 
 // vector-icons
 
@@ -33,6 +34,8 @@ import Rating from './components/rating';
 // context
 import UserLocationProvider from './context/userlocationprovider';
 import { UserLocationContext } from './context/userlocationcontext';
+import LoginProvider from './context/loginprovider';
+import { IsLoginContext } from './context/logincontext';
 
 // API
 
@@ -163,46 +166,78 @@ const RecommendStackScreen = () => {
 const Tab = createBottomTabNavigator();
 
 const TabBar = () => {
+  
   const { userLocation } = useContext(UserLocationContext);
+  const { isLogin, setIsLogin } = useContext(IsLoginContext);
+
+  const autoLogin = async () => {
+    let token = null;
+    try {
+      token = await AsyncStorage.getItem("userToken");
+    } catch (e) {
+      console.log(e);
+    }
+    console.log("어디서 출력한건데 app.js? : ",token);
+    if (token){
+      setIsLogin(true);
+    }
+  }
+
+  useEffect(() => {
+    autoLogin();
+  },[]);
+
 
   return (
     <Tab.Navigator initialRouteName = "main" >
-          <Tab.Screen name="main" children={()=><MainStackScreen/>}/>
-          <Tab.Screen name="mystore" component={MyStoreStackScreen}/>
-          <Tab.Screen 
-            name="recommend" 
-            component={RecommendStackScreen}
-            listeners={({ navigation, route }) => ({
-              tabPress: e => {
-                // Prevent default action
-                e.preventDefault();
-                if (userLocation === "위치정보를 입력해주세요") {
-                  Alert.alert(
-                    "위치 정보를 입력해주세요",
-                    "화면 상단의 돋보기를 눌러 위치정보를 입력해주세요",
-                    [
-                      { text: "OK", onPress: () => console.log("OK Pressed") }
-                    ]
-                  );
-                } else {
-                  navigation.navigate('recommend');
-                }
-              },
-            })}/>
-          <Tab.Screen name="myorder" component={MyOrder}/>
-          <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
-        </Tab.Navigator>
+      <Tab.Screen name="main" children={()=><MainStackScreen/>}/>
+      <Tab.Screen name="mystore" component={MyStoreStackScreen}/>
+      <Tab.Screen 
+        name="recommend" 
+        component={RecommendStackScreen}
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+            if (isLogin === false ){
+              Alert.alert(
+                "로그인이 필요한 서비스입니다",
+                "로그인해주세요",
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+            } else if (userLocation === "위치정보를 입력해주세요") {
+              Alert.alert(
+                "위치 정보를 입력해주세요",
+                "화면 상단의 돋보기를 눌러 위치정보를 입력해주세요",
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+            } else {
+              navigation.navigate('recommend');
+            }
+          },
+        })}/>
+      <Tab.Screen name="myorder" component={MyOrder}/>
+      <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
+    </Tab.Navigator>
   );
 }
 
 const App = () => {  
 
+
+
   return (
-    <UserLocationProvider>
-      <NavigationContainer >
-        <TabBar/>
-      </NavigationContainer>
-    </UserLocationProvider>
+    <LoginProvider>
+      <UserLocationProvider>
+        <NavigationContainer >
+          <TabBar/>
+        </NavigationContainer>
+      </UserLocationProvider>
+    </LoginProvider>
   );
 }
 
