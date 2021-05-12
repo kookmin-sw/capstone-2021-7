@@ -12,20 +12,22 @@ class OrderMenuSerializer(serializers.ModelSerializer):
         fields = ['order','menu']
 
 class OrderSerializer(serializers.ModelSerializer):
-    menu = serializers.SerializerMethodField() 
+    menu = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
-        fields = ['id','menu','timestamp']
+        fields = ['id','timestamp','menu']
 
     def get_menu(self,obj):
         returnList= []
         menuList = obj.orderMenu.all()
         for menu in menuList:
+            store = menu.store.name
             menu = model_to_dict(menu)
             returnList.append({ 
                 "name" : menu['name'],
-                "price": menu['price']
+                "price": menu['price'],
+                "store": store,
                 })
         return returnList
 
