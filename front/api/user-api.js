@@ -5,4 +5,9 @@ const postUserInformation = (postData) => {
     return callAPI("POST", "user/signup/", postData);
   };
 
-export { postUserInformation };
+const login = (postData) => {
+  console.log("데이터",postData);
+  return callAPI("POST", "user/login/", postData);
+};
+
+export { postUserInformation, login };

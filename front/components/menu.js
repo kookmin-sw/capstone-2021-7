@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import CheckBox from './checkbox';
 
 import { UserLocationContext } from '../context/userlocationcontext';
+import { IsLoginContext } from '../context/logincontext';
 
 import { getMenu, orderMenu } from '../api/store-api';
 
@@ -17,41 +18,50 @@ import { getMenu, orderMenu } from '../api/store-api';
 const Menu = ({ route }) => {
   const navigation = useNavigation();
 
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
   const [menuList, setMenuList] = useState([]);
   const [clickedMenuList, setClickedMenuList] = useState([]);
 
   const { userLocation } = useContext(UserLocationContext);
-
-	const callGetMenu = async () => {
-		await getMenu(route.params.storeId)
-			.then((result) => {
-				setMenuList(result.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-  }
+  const { isLogin } = useContext(IsLoginContext);
+  
+  const callGetMenu = async () => {
+    await getMenu(route.params.storeId)
+      .then((result) => {
+        setMenuList(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
   
   const callOrderMenu = async () => {
-    await orderMenu({
-      menuList : clickedMenuList,
-      location : userLocation
-    })
-    .then((result) => {
+    if (isLogin===false){
       Alert.alert(
-        "주문이 완료되었습니다.",
-        "주문내역에서 확인해주세요",
+        "로그인이 필요한 서비스입니다.",
+        "로그인 해주세요",
         [
-          { text: "OK", onPress: () => navigation.navigate('myorder') }
+          { text: "OK", onPress: () => navigation.navigate('myprofile') }
         ]
-      );
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+        );
+    } else {
+      await orderMenu({
+        menuList : clickedMenuList,
+        location : userLocation
+        })
+        .then((result) => {
+        Alert.alert(
+          "주문이 완료되었습니다.",
+          "주문내역에서 확인해주세요",
+          [
+          { text: "OK", onPress: () => navigation.navigate('myorder') }
+          ]
+        );
+        })
+        .catch((err) => {
+        console.log(err);
+        })
+    }
   }
-
 
 	useEffect(() => {
 		callGetMenu();
