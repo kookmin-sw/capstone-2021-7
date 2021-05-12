@@ -13,7 +13,7 @@ const getMenu = ( data ) => {
 };
 
 const orderMenu = ( data ) => {
-  return callAPI("POST", "usermenu/", data);
+  return callAPI("POST", "ordermenu/", data);
 };
 
 export { getStoreByBigCatgory, getStoreBySmallCatgory, getMenu, orderMenu };

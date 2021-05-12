@@ -31,6 +31,7 @@ import Postcode from './components/postcode';
 import Success from './components/success';
 import Rating from './components/rating';
 import SignUp from './components/signup';
+import MyDetailOrder from './components/mydetailorder';
 
 // context
 import UserLocationProvider from './context/userlocationprovider';
@@ -102,6 +103,33 @@ const MyStoreStackScreen = () => {
       }}>
       <MyStoreStack.Screen name="mystore" component={MyStore}/>
     </MyStoreStack.Navigator>
+  );
+}
+
+const MyOrderStack = createStackNavigator();
+
+const MyOrderStackScreen = () => {
+  return(
+    <MyOrderStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#3498DB',
+          height: 120,
+        },
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          color: 'white',
+          fontSize: 20,
+        },
+        headerBackTitle: " ",
+        headerBackTitleStyle: {
+          color: 'white'
+        },
+      }}>
+      <MyOrderStack.Screen name="myorder" component={MyOrder}/>
+      <MyOrderStack.Screen name="mydetailorder" component={MyDetailOrder}/>
+    </MyOrderStack.Navigator>
   );
 }
 
@@ -254,7 +282,7 @@ const TabBar = () => {
             }
           },
         })}/>
-      <Tab.Screen name="myorder" component={MyOrder}/>
+      <Tab.Screen name="myorder" component={MyOrderStackScreen}/>
       <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
     </Tab.Navigator>
   );

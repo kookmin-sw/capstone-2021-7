@@ -10,4 +10,12 @@ const login = (postData) => {
   return callAPI("POST", "user/login/", postData);
 };
 
-export { postUserInformation, login };
+const logout = (data) => {
+  return callAPI("POST", "user/logout/", data);
+}
+
+const getOrder = () => {
+  return callAPI("GET", "order/", null);
+};
+
+export { postUserInformation, login, logout, getOrder };
