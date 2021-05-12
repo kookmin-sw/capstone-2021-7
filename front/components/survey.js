@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 
 const Survey = ({route, navigation}) => {
-  const {name, phone, username, password, gender} = route.params;
+  const {name, phone, username, password, gender, age} = route.params;
 
   const [taste, setTaste] = useState("1");
   const [price, setPrice] = useState("1");
@@ -38,6 +38,7 @@ const Survey = ({route, navigation}) => {
           username: username,
           password: password,
           gender: gender,
+          age: age,
           taste: taste,
           price: price,
           amount: amount
