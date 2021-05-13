@@ -14,6 +14,7 @@ router.register(r'ordermenu', accountView.OrderMenuViewSet)
 router.register(r'order', accountView.OrderViewSet)
 router.register(r'user',accountView.UserViewSet)
 router.register(r'userfeedback',accountView.UserSmallCategoryFeedbackViewSet)
+router.register(r'location',accountView.LocationViewSet)
 
 # category
 router.register(r'bigcategory', categoryView.BigCategoryViewSet)
