@@ -35,7 +35,7 @@ def openWeather(lat, lng):
     return description, temp, weatherGroup
 
 def setTimeSlot():
-    currentTime = timezone.localtime().time().hour
+    currentTime = timezone.now().time().hour
     timeSlot = ""
     if currentTime >= 6 and currentTime < 11:
         timeSlot = "morning"
