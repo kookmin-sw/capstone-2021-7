@@ -49,7 +49,7 @@ class OrderMenuViewSet(viewsets.ModelViewSet):
             self.perform_create(serializer)
 
             datas = Menu_SmallCategory.objects.filter(menu=menu)
-            
+
             for data in datas:
                 User_SmallCategory_Order.objects.create(user=user, smallCategory=data.smallCategory)
 
@@ -147,7 +147,8 @@ class UserViewSet(viewsets.ModelViewSet):
             gender = gender,
             taste = taste,
             price = price,
-            amount = amount
+            amount = amount,
+            age = age
         )
 
         token = Token.objects.create(user=user)
