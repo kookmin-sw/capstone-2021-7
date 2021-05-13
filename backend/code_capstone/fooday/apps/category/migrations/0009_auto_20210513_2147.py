@@ -27,9 +27,9 @@ class Migration(migrations.Migration):
         'udong.jpg',
         'momil.jpg',
         'rawfish.jpg',
-        '오코노미',
+        'okonomi.jpg',
         'ramen.jpg',
-        '하이라이스',
+        'highrice.jpeg',
         'nabe.jpg',
         'bossam.jpg',
         'jokbal.jpg',
@@ -41,8 +41,8 @@ class Migration(migrations.Migration):
         'dimsum.jpg',
         'tangsu.jpg',
         'kkanpung.jpg',
-        '유산슬',
-        '양장피',
+        'yusan.jpg',
+        'yangjangpi.JPG',
         'coldnoodles.jpg',
         'marasshang.jpg',
         'bibimbab.jpg',
@@ -68,10 +68,10 @@ class Migration(migrations.Migration):
         'doinjangjjige.jpg',
         'bude.jpg',
         'sundubu.JPG',
-        '육개장',
+        'yukge.jpeg',
         'cheongukjang.jpg',
         'seoleongtang.jpg',
-        '닭갈비',
+        'dakgalbi.jpg',
         'kimchijjim.JPG',
         'suyuk.jpg',
         'dongpa.jpg',
@@ -103,6 +103,7 @@ class Migration(migrations.Migration):
     ]
 
 
+    sqlCache = []
     for i, img in enumerate(imgList):
         sqlCache.append(
             """
@@ -112,10 +113,12 @@ class Migration(migrations.Migration):
             """.format(img = img, i = i+1)
         )
 
+    reverseSqlCache = []
     reverseSqlCache.append(
         """
-            DELETE FROM category_smallcategory;
-            ALTER TABLE category_smallcategory_tag auto_increment=1;
+            UPDATE category_smallcategory
+            SET img = null
+            where id>=1;
         """
     )
 
