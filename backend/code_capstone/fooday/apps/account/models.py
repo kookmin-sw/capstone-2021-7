@@ -25,6 +25,10 @@ class User(AbstractUser):
     userStore = models.ManyToManyField(Store, through = "User_Store")
     age = models.IntegerField(default = 0)
 
+class Location(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length = 500, default ="null")
+
 class Order(models.Model):
     SLOT = (
         ('morning','morning'),

@@ -11,6 +11,12 @@ class OrderMenuSerializer(serializers.ModelSerializer):
         model = Order_Menu
         fields = ['order','menu']
 
+class LocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Location
+        fields = ['id','user','name']
+
 class OrderSerializer(serializers.ModelSerializer):
     menu = serializers.SerializerMethodField()
 

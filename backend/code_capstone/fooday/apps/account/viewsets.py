@@ -62,6 +62,31 @@ class OrderMenuViewSet(viewsets.ModelViewSet):
             }
         )
 
+class LocationViewSet(viewsets.ModelViewSet):
+
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        name = request.data.get('name')
+        serializer = self.get_serializer(data={
+            "user":request.user.id,
+            "name":name
+        })
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    """
+    List a queryset.
+    """
+    def list(self, request, *args, **kwargs):
+        queryset = Location.objects.filter(user = request.user).order_by('-id')
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 class OrderViewSet(viewsets.ModelViewSet):
 
     queryset = Order.objects.all()
@@ -91,7 +116,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 data={'message': '해당 아이디가 이미 존재합니다.'})
         else :
             return Response(
-                status=status.HTTP_400_BAD_REQUEST,
+                status=status.HTTP_200_OK,
                 data={'message': 'OK'})
 
     @action(detail=False, methods=('POST',), url_path='checkphone', http_method_names=('post',))
@@ -104,7 +129,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 data={'message': '해당 전화번호가 이미 존재합니다.'})
         else :
             return Response(
-                status=status.HTTP_400_BAD_REQUEST,
+                status=status.HTTP_200_OK,
                 data={'message': 'OK'})
 
     @action(detail=False, methods=('POST',), url_path='signup', http_method_names=('post',))
@@ -197,49 +222,6 @@ class UserViewSet(viewsets.ModelViewSet):
             status=status.HTTP_400_BAD_REQUEST,
             data={'message': '아이디 혹은 비밀번호가 틀렸습니다.'},
         )
-
-
-# class UserSmallCategoryLikeViewSet(viewsets.ModelViewSet):
-
-#     queryset = User_SmallCategory_Like.objects.all()
-#     serializer_class = UserSmallCategoryLikeSerializer
-#     permission_classes = [IsAuthenticated]
-
-#     def create(self, request, *args, **kwargs):
-#         eventList = request.data.get('eventList')
-
-#         if eventList==None:
-#             return Response(
-#                 status=status.HTTP_400_BAD_REQUEST,
-#                 data={'message': '잘못된 입력입니다.'},
-#             )
-
-#         try:
-#             for event in eventList:
-#                 serializer = self.get_serializer(data={
-#                     "user" : request.user.id,
-#                     "smallCategory" : event[0],
-#                     "rating" : event[1]
-#                 })
-#                 serializer.is_valid(raise_exception=True)
-#                 self.perform_create(serializer)
-
-#             return Response(
-#                 status=status.HTTP_201_CREATED,
-#                 data = {
-#                     "message": "성공",
-#                     "eventList" : eventList
-#                 }
-#             )
-#         except :
-#             return Response(
-#                 status=status.HTTP_400_BAD_REQUEST,
-#                 data={'message': '잘못된 입력입니다.'},
-#             )
-
-#     def perform_create(self, serializer):
-#         serializer.save()
-
 
 class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
 
