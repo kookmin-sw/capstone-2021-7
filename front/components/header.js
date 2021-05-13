@@ -24,7 +24,7 @@ const Header = () => {
             <Text style ={styles.white2}>{userLocation} </Text>
             <TouchableOpacity 
               onPress={() => {
-                navigation.push('postcode')
+                navigation.push('locationlist')
               }}
             >
               <FontAwesome name="search" size={24} color="white"/>

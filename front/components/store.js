@@ -54,6 +54,7 @@ const Store = ({ route }) => {
         score : 1
       })
       .then((result) => {
+        console.log(result);
         Alert.alert(
           "좋아요를 눌렀습니다.",
           "",
@@ -63,7 +64,15 @@ const Store = ({ route }) => {
         );
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.data.message === "피드백 할 수 있는 시간대가 아닙니다."){
+          Alert.alert(
+            "이미 피드백이 끝난 카테고리입니다.",
+            "다음 시간대에 다시 피드백을 할 수 있습니다.",
+            [
+              { text: "OK", onPress: () => console.log("ㅇㅇ") }
+            ]
+          );
+        }
       })
     } else {
       await categoryFeedback({
@@ -72,6 +81,7 @@ const Store = ({ route }) => {
         score : -1
       })
       .then((result) => {
+        console.log(result);
         Alert.alert(
           "싫어요를 눌렀습니다.",
           "",
@@ -81,7 +91,15 @@ const Store = ({ route }) => {
         );
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.data.message === "피드백 할 수 있는 시간대가 아닙니다."){
+          Alert.alert(
+            "이미 피드백이 끝난 카테고리입니다.",
+            "다음 시간대에 다시 피드백을 할 수 있습니다.",
+            [
+              { text: "OK", onPress: () => console.log("ㅇㅇ") }
+            ]
+          );
+        }
       })
     }}
 
@@ -105,12 +123,32 @@ const Store = ({ route }) => {
         {route.params.from === false 
         ? <View></View>
         : <Text style={styles.feedback}>
-            <TouchableOpacity onPress={() => {callCategoryFeedback(true)}}>
+            <TouchableOpacity onPress={() => {
+              Alert.alert(
+                "정말로 좋아요를 누르시겠습니까?",
+                "한번 피드백을 하면 다음 시간대 까지는 해당 카테고리에 대해 피드백을 남기실 수 없습니다.",
+                [
+                  { text: "OK", onPress: () => callCategoryFeedback(true)},
+                  { text: "cancle", onPress: () => console.log("Ask me later pressed")}
+                ]
+              );
+              
+              }}>
               <Text style={styles.feedtext}>
                 <FontAwesome5 name="thumbs-up" size={24} color="blue" />이 추천 좋아요{'\n'}
               </Text>
             </TouchableOpacity>{'\n'}
-            <TouchableOpacity onPress={() => {callCategoryFeedback(false)}}>
+            <TouchableOpacity onPress={() => {
+              Alert.alert(
+                "정말로 싫어요를 누르시겠습니까?",
+                "한번 피드백을 하면 다음 시간대 까지는 해당 카테고리에 대해 피드백을 남기실 수 없습니다.",
+                [
+                  { text: "OK", onPress: () => callCategoryFeedback(false)},
+                  { text: "cancle", onPress: () => console.log("Ask me later pressed")}
+                ]
+              );
+              
+              }}>
               <Text style={styles.feedtext}>
                 <FontAwesome5 name="thumbs-down" size={24} color="red" /> 이 추천 별로예요
               </Text>

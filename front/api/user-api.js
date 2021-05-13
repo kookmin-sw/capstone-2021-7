@@ -18,4 +18,13 @@ const getOrder = () => {
   return callAPI("GET", "order/", null);
 };
 
-export { postUserInformation, login, logout, getOrder };
+const getLocationList = () => { 
+  return callAPI("GET", "location/", null);
+}
+
+const postLocation = (data) => { 
+  console.log(data);
+  return callAPI("POST", "location/", data);
+}
+
+export { postUserInformation, login, logout, getOrder, getLocationList, postLocation };
