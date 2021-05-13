@@ -24,7 +24,7 @@ class OrderSerializer(serializers.ModelSerializer):
         for menu in menuList:
             store = menu.store.name
             menu = model_to_dict(menu)
-            returnList.append({ 
+            returnList.append({
                 "name" : menu['name'],
                 "price": menu['price'],
                 "store": store,
@@ -36,7 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username','password','phone','name','gender','taste','price','amount']
+        fields = ['username','password','phone','name','gender','taste','price','amount','age']
         read_only_fields = ['last_login','createdAt']
 
 # class UserSmallCategoryLikeSerializer(serializers.ModelSerializer):
