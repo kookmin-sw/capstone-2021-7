@@ -32,6 +32,7 @@ import Success from './components/success';
 import Rating from './components/rating';
 import SignUp from './components/signup';
 import MyDetailOrder from './components/mydetailorder';
+import LocationList from './components/locationlist';
 
 // context
 import UserLocationProvider from './context/userlocationprovider';
@@ -40,6 +41,7 @@ import LoginProvider from './context/loginprovider';
 import { IsLoginContext } from './context/logincontext';
 
 // API
+import { getLocationList} from './api/user-api';
 
 const MainStack = createStackNavigator();
 
@@ -76,6 +78,7 @@ const MainStackScreen = () => {
           }}/>
         <MainStack.Screen name="store" component={Store}/>
         <MainStack.Screen name="menu" component={Menu}/>
+        <MainStack.Screen name="locationlist" component={LocationList}/>
       </MainStack.Navigator>
   );
 }
@@ -196,7 +199,7 @@ const Tab = createBottomTabNavigator();
 
 const TabBar = () => {
   
-  const { userLocation } = useContext(UserLocationContext);
+  const { userLocation, setUserLocation } = useContext(UserLocationContext);
   const { isLogin, setIsLogin } = useContext(IsLoginContext);
 
   const autoLogin = async () => {
@@ -212,8 +215,20 @@ const TabBar = () => {
     }
   }
 
+  const setInitLocation = async () => {
+    await getLocationList()
+    .then((result) => {
+      setUserLocation(result.data[0].name);
+      console.log(result.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   useEffect(() => {
     autoLogin();
+    setInitLocation();
   },[]);
 
 

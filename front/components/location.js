@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { UserLocationContext } from '../context/userlocationcontext';
 
+import { postLocation } from '../api/user-api';
+
 const Location = () => {
   const navigation = useNavigation();
 
@@ -13,8 +15,20 @@ const Location = () => {
 
   const {userLocation, setUserLocation} = useContext(UserLocationContext);
 
+  const callPostLocation = async ( location ) => {
+    await postLocation({ name: location })
+    .then((result)=> {
+      console.log(result.data);
+    })
+    .catch((err) => {
+      console.log(err.response);
+    })
+  }
+
   const onClick = () => {
-    setUserLocation(userLocation + " " + detailLocation);
+    let location = userLocation + " " + detailLocation
+    setUserLocation(location);
+    callPostLocation(location);
     navigation.navigate('main');
   }
 
