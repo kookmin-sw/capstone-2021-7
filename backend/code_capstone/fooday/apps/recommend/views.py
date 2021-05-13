@@ -104,19 +104,19 @@ class RecommendCategory(APIView):
         location = request.data.get('location')
 
         timeSlot = setTimeSlot()
-        # lat, lng = geoCoding(location)
-        # description, temp, weatherGroup = openWeather(lat, lng)
+        lat, lng = geoCoding(location)
+        description, temp, weatherGroup = openWeather(lat, lng)
 
         selfCategoryList = self.recommendBySelf(request.user.id)
         awsCategoryList = self.recommendByAWS(request.user.id)
-        # weatherCategoryList = self.recommendByWeather(weatherGroup)
+        weatherCategoryList = self.recommendByWeather(weatherGroup)
         timeSlotCategoryList = self.recommendByTimeSlot(timeSlot)
 
         return Response({
             "user" : request.user.id,
             "selfCategoryList" : selfCategoryList,
             "awsCategoryList" : awsCategoryList,
-            # "weatherCategoryList" : weatherCategoryList,
+            "weatherCategoryList" : weatherCategoryList,
             "timeSlotCategoryList" : timeSlotCategoryList
         })
 

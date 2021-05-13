@@ -1,5 +1,6 @@
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth import authenticate
+from django.utils import timezone
 
 from rest_framework import viewsets
 from rest_framework import status
@@ -14,7 +15,9 @@ from .serializers import *
 from apps.utils import *
 from apps.store.models import *
 from apps.category.models import *
-import time
+from datetime import datetime, date, time
+import pytz
+
 
 class OrderMenuViewSet(viewsets.ModelViewSet):
 
@@ -77,6 +80,32 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    @action(detail=False, methods=('POST',), url_path='checkusername', http_method_names=('post',))
+    def checkUsername(self, request, *args, **kwargs):
+        username = request.data.get('username')
+
+        if User.objects.filter(username=username).exists():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': '해당 아이디가 이미 존재합니다.'})
+        else :
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': 'OK'})
+
+    @action(detail=False, methods=('POST',), url_path='checkphone', http_method_names=('post',))
+    def checkPhone(self, request, *args, **kwargs):
+        phone = request.data.get('phone')
+
+        if User.objects.filter(phone=phone).exists():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': '해당 전화번호가 이미 존재합니다.'})
+        else :
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': 'OK'})
 
     @action(detail=False, methods=('POST',), url_path='signup', http_method_names=('post',))
     def signup(self, request, *args, **kwargs):
@@ -218,10 +247,110 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
     serializer_class = UserSmallCategoryFeedbackSerializer
     permission_classes = [IsAuthenticated]
 
+    def checkFeedback(self, user, smallCategory, scenario, start, end):
+        currentDate = date.today()
+        print("오늘 : ",currentDate)
+        hourSlot1 = time(start)
+        hourSlot2 = time(end)
+        dateSlot1 = datetime.combine(currentDate,hourSlot1)
+        dateSlot2 = datetime.combine(currentDate,hourSlot2)
+        print("이것보다 크고 ",dateSlot1)
+        print("이것보다 작은 ",dateSlot2)
+
+        isExist = User_SmallCategory_Feedback.objects.filter(
+            user= user, 
+            smallCategory= smallCategory, 
+            scenario = scenario,
+            timestamp__gte=dateSlot1,
+            timestamp__lt=dateSlot2,
+        ).exists()
+
+        return isExist
+
     def create(self, request, *args, **kwargs):
         smallCategory = request.data.get('smallCategory')
         scenario = request.data.get('scenario')
         score = request.data.get('score')
+
+        current = timezone.now()
+        print("로컬타임 : ",current)
+        currentHour = current.time().hour
+        
+        print("현재 시각 : ",currentHour)
+        
+
+        if currentHour >= 0 and currentHour < 2 :
+            if self.checkFeedback(request.user, smallCategory,scenario,0,2):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 2 and currentHour < 4 :
+            if self.checkFeedback(request.user, smallCategory,scenario,2,4):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 4 and currentHour < 6 :
+            if self.checkFeedback(request.user, smallCategory,scenario,4,6):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 6 and currentHour < 8 :
+            if self.checkFeedback(request.user, smallCategory,scenario,6,8):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 8 and currentHour < 10 :
+            if self.checkFeedback(request.user, smallCategory,scenario,8,10):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 10 and currentHour < 12 :
+            if self.checkFeedback(request.user, smallCategory,scenario,10,12):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 12 and currentHour < 14 :
+            if self.checkFeedback(request.user, smallCategory,scenario,12,14):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 14 and currentHour < 16 :
+            if self.checkFeedback(request.user, smallCategory,scenario,14,16):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 16 and currentHour < 18 :
+            if self.checkFeedback(request.user, smallCategory,scenario,16,18):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 18 and currentHour < 20 :
+            if self.checkFeedback(request.user, smallCategory,scenario,18,20):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 20 and currentHour < 22 :
+            if self.checkFeedback(request.user, smallCategory,scenario,20,22):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
+        elif currentHour >= 22 and currentHour < 24 :
+            if self.checkFeedback(request.user, smallCategory,scenario,22,24):
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST,
+                    data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
+                )
 
         if (smallCategory==None) or (scenario==None) or (score==None) :
             return Response(
