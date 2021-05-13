@@ -81,6 +81,32 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    @action(detail=False, methods=('POST',), url_path='checkusername', http_method_names=('post',))
+    def checkUsername(self, request, *args, **kwargs):
+        username = request.data.get('username')
+
+        if User.objects.filter(username=username).exists():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': '해당 아이디가 이미 존재합니다.'})
+        else :
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': 'OK'})
+
+    @action(detail=False, methods=('POST',), url_path='checkphone', http_method_names=('post',))
+    def checkPhone(self, request, *args, **kwargs):
+        phone = request.data.get('phone')
+
+        if User.objects.filter(phone=phone).exists():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': '해당 전화번호가 이미 존재합니다.'})
+        else :
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': 'OK'})
+
     @action(detail=False, methods=('POST',), url_path='signup', http_method_names=('post',))
     def signup(self, request, *args, **kwargs):
 
