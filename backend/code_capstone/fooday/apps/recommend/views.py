@@ -25,13 +25,29 @@ class RecommendCategory(APIView):
         data = {'user_id':[user]}
         response = requests.post(URL, data=json.dumps(data))
 
-        smallCategoryList = []
-        for itemId in json.loads(response.json()["body"]):
-            item = SmallCategory.objects.get(id = itemId)
-            smallCategorydict = model_to_dict(item)
-            smallCategorydict.pop("img")
-            smallCategorydict.pop("tag")
-            smallCategoryList.append(smallCategorydict)
+        if response.json()["statusCode"]==200:
+
+            smallCategoryList = []
+            for itemId in json.loads(response.json()["body"]):
+                item = SmallCategory.objects.get(id = itemId)
+                smallCategorydict = model_to_dict(item)
+                smallCategorydict.pop("img")
+                smallCategorydict.pop("tag")
+                smallCategoryList.append(smallCategorydict)
+
+        else :
+
+            qs = Order_Menu.objects.select_related('menu').values('menu__smallCategory').annotate(count=Count('menu__smallCategory')).order_by('-count')
+            smallCategoryList = []
+            for i in qs[:4]:
+                if i['menu__smallCategory']== None:
+                    continue
+                item = SmallCategory.objects.get(id = i['menu__smallCategory'])
+                smallCategorydict = model_to_dict(item)
+                smallCategorydict.pop("img")
+                smallCategorydict.pop("tag")
+                smallCategoryList.append(smallCategorydict)
+
         return smallCategoryList
 
     def recommendByAWS(self, user):
@@ -88,19 +104,19 @@ class RecommendCategory(APIView):
         location = request.data.get('location')
 
         timeSlot = setTimeSlot()
-        lat, lng = geoCoding(location)
-        description, temp, weatherGroup = openWeather(lat, lng)
+        # lat, lng = geoCoding(location)
+        # description, temp, weatherGroup = openWeather(lat, lng)
 
         selfCategoryList = self.recommendBySelf(request.user.id)
         awsCategoryList = self.recommendByAWS(request.user.id)
-        weatherCategoryList = self.recommendByWeather(weatherGroup)
+        # weatherCategoryList = self.recommendByWeather(weatherGroup)
         timeSlotCategoryList = self.recommendByTimeSlot(timeSlot)
 
         return Response({
             "user" : request.user.id,
             "selfCategoryList" : selfCategoryList,
             "awsCategoryList" : awsCategoryList,
-            "weatherCategoryList" : weatherCategoryList,
+            # "weatherCategoryList" : weatherCategoryList,
             "timeSlotCategoryList" : timeSlotCategoryList
         })
 
