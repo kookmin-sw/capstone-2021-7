@@ -1,31 +1,30 @@
 import axios from "axios";
-// import AsyncStorage from "@react-native-community/async-storage";
+
+import AsyncStorage from "@react-native-community/async-storage";
 
 axios.defaults.baseURL = "http://ec2-13-209-254-218.ap-northeast-2.compute.amazonaws.com/";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 const tokenConfig = async () => {
-  // let token = null;
-  // try {
-  //   token = await AsyncStorage.getItem("userToken");
-  //   console.log("token :", token);
-  // } catch (e) {
-  //   console.log(e);
-  // }
+  let token = null;
+  try {
+    token = await AsyncStorage.getItem("userToken");
+    console.log("token :", token);
+  } catch (e) {
+    console.log(e);
+  }
 
   // Headers
   const config = {
     headers: {
       "Content-Type": "application/json",
-    },
+    }
   };
 
-  // if (token) {
-  //   // config.headers["Authorization"] = `Token ${token}`;
-  //   config.headers["Authorization"] = `${token}`;
-  // }
-  // config.headers["Authorization"] = token;
+  if (token) {
+    config.headers["Authorization"] = `Token ${token}`;
+  }
 
   return config;
 };
@@ -33,9 +32,10 @@ const tokenConfig = async () => {
 const callAPI = async (method, url, data) => {
   console.log(`run ${method}:: '${url}' API.`);
   const config = await tokenConfig();
+  console.log(config);
   switch (method) {
     case "GET":
-      return axios.get(url);
+      return axios.get(url, config);
     case "POST":
       return axios.post(url, JSON.stringify(data), config);
     case "PUT":
@@ -44,5 +44,6 @@ const callAPI = async (method, url, data) => {
       return axios.delete(url, JSON.stringify(data), config);
   }
 };
+
 
 export { tokenConfig, callAPI };

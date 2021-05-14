@@ -11,74 +11,11 @@ import CheckBox from './checkbox';
 
 import { UserLocationContext } from '../context/userlocationcontext';
 import { IsLoginContext } from '../context/logincontext';
-import { OrderContext } from '../context/ordercontext';
 
 import { getMenu, orderMenu } from '../api/store-api';
-import { getOrder} from '../api/user-api';
-
-const Menu = ({ route }) => {
-  const navigation = useNavigation();
-
-  const [menuList, setMenuList] = useState([]);
-  const [clickedMenuList, setClickedMenuList] = useState([]);
-
-  const { userLocation } = useContext(UserLocationContext);
-  const { isLogin } = useContext(IsLoginContext);
-  const { setOrderList } = useContext(OrderContext);
-  
-
-  const callGetMenu = async () => {
-    await getMenu(route.params.storeId)
-      .then((result) => {
-        setMenuList(result.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    }
-  
-  const callGetOrder = async () => {
-    await getOrder()
-      .then((result) => {
-        setOrderList(result.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }
-
-  const callOrderMenu = async () => {
-	if (isLogin===false){
-		Alert.alert(
-			"로그인이 필요한 서비스입니다.",
-			"로그인 해주세요",
-			[
-				{ text: "OK", onPress: () => navigation.navigate('myprofile') }
-			]
-			);
-	} else {
-		await orderMenu({
-			menuList : clickedMenuList,
-			location : userLocation
-		  })
-		  .then((result) => {
-        callGetOrder();
-        Alert.alert(
-          "주문이 완료되었습니다.",
-          "주문내역에서 확인해주세요",
-          [{ text: "OK", onPress: () => navigation.navigate('myorder')}]
-        );
-		  })
-		  .catch((err) => {
-			  console.log(err);
-		  })
-	}
-  }
 
 
-	useEffect(() => {
-		callGetMenu();
-	},[]);
+const MyDetailOrder = ({ route }) => {
 
 	return (
 		<View style={styles.menu}>
@@ -88,7 +25,7 @@ const Menu = ({ route }) => {
 										<FontAwesome name="square" size={80} color="#E0E0E0" />
 								</View>
 								<View style={styles.storename}>
-										<Text style={styles.catename}>{route.params.storeName}</Text>
+										<Text style={styles.catename}>{route.params.orderList[0].store}</Text>
 								</View>
 								<TouchableOpacity>
 									<Ionicons name="heart-outline" size={40} color="pink" />
@@ -96,7 +33,7 @@ const Menu = ({ route }) => {
 						</View>
 				</View>
 				<ScrollView style={styles.menulist}>
-          {menuList.map((elem, key) => {
+          {route.params.orderList.map((elem, key) => {
             return(
               <View style={styles.tq} key={key}>
                 <View>
@@ -106,13 +43,9 @@ const Menu = ({ route }) => {
                     <Text style={styles.food}>{elem.name}</Text>
                     <Text style={styles.price}>{elem.price}</Text>
                 </View>
-                <CheckBox clickedMenuList={clickedMenuList} setClickedMenuList={setClickedMenuList} menuId={elem.id}></CheckBox>
             </View>
             )})}
 				</ScrollView>
-				<TouchableOpacity onPress={callOrderMenu} style={styles.button}>
-					<Text style={styles.order}>주문하기</Text>
-				</TouchableOpacity>
 		</View>
 	);
 }
@@ -195,4 +128,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Menu;
+export default MyDetailOrder;

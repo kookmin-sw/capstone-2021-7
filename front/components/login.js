@@ -1,27 +1,81 @@
-import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useContext } from 'react';
+
+import { Alert, StyleSheet, Text, View, TextInput, TouchableOpacity, Button } from 'react-native';
+import AsyncStorage from "@react-native-community/async-storage";
 
 import { Ionicons } from '@expo/vector-icons';
 
-const Login = () => {
+import { login } from '../api/user-api';
+
+import { IsLoginContext } from '../context/logincontext';
+
+const Login = ({navigation}) => {
+  const [id, setId] = useState("");
+  const [pwd, setPwd] = useState("");
+
+  const { isLogin, setIsLogin } = useContext(IsLoginContext);
+
+  const onClick = async () => {
+    await login({
+      username: id,
+      password: pwd
+    })
+    .then( async (result) => {
+      console.log(result.data.data.token);
+      await AsyncStorage.setItem("userToken", result.data.data.token);
+      setIsLogin(true);
+      Alert.alert(
+        "로그인에 성공했습니다!",
+        "어서오세요!",
+        [
+          { text: "OK", onPress: () => navigation.navigate('main')}
+        ]
+      );
+    })
+    .catch((err) => console.log(err));
+  }
+
+  const logout = async () => {
+    await AsyncStorage.removeItem("userToken");
+    setIsLogin(false);
+  }
+
   return (
-    <View style={styles.myprofile}>
-      <Text style={styles.signintext}>
-        <Ionicons name="person" size={70} color="#3498DB" />{'\t'}로그인
-      </Text>
-      <View>
-        <TextInput style={styles.input} placeholder=" 아이디"></TextInput>
-        <TextInput style={styles.input}placeholder=" 비밀번호"></TextInput>
-      </View>
-      <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button1}>
-          <Text style={styles.text}>완료{'\t'}{'\t'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button2}>
-          <Text style={styles.text}>회원가입</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <>
+    {isLogin === false 
+      ? <View style={styles.myprofile}>
+          <Text style={styles.signintext}>
+            <Ionicons name="person" size={70} color="#3498DB" />{'\t'}로그인
+          </Text>
+          <View>
+            <TextInput 
+              value={id}
+              onChangeText={text => setId(text)}
+              style={styles.input} 
+              placeholder=" 아이디"/>
+            <TextInput 
+              value={pwd}
+              secureTextEntry={true}
+              onChangeText={text => setPwd(text)}
+              style={styles.input}
+              placeholder=" 비밀번호"/>
+          </View>
+          <View style={styles.buttons}>
+            <TouchableOpacity onPress={onClick} style={styles.button1}>
+              <Text style={styles.text}>완료{'\t'}{'\t'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('signup')} style={styles.button2}>
+              <Text style={styles.text}>회원가입</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      : <View style={styles.myprofile}>
+            <Text>어서오세요</Text>
+            <Button onPress={logout} title = {"로그아웃"}></Button>
+        </View>
+    }
+    </>
+    
   );
 }
 

@@ -21,7 +21,7 @@ const ShowPostcode = () => {
           setUserLocation("");
           console.log(data.address);
           await setUserLocation(data.address);
-          navigation.push('location');
+          navigation.navigate('location');
         }}/>
     </View>
   );
