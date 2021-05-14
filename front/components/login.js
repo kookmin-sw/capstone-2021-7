@@ -55,6 +55,7 @@ const Login = ({navigation}) => {
               placeholder=" 아이디"/>
             <TextInput 
               value={pwd}
+              secureTextEntry={true}
               onChangeText={text => setPwd(text)}
               style={styles.input}
               placeholder=" 비밀번호"/>
