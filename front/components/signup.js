@@ -1,9 +1,11 @@
 import React ,{useState} from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
 import { RadioButton } from 'react-native-paper';
+
+import { checkUserName, checkPhone } from '../api/user-api';
 
 const SignUp = ({navigation}) => {
 
@@ -14,27 +16,80 @@ const SignUp = ({navigation}) => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("male");
   const [age, setAge] = useState("")
+  const [checkId, setCheckId] = useState(true);
+  const [checkNumber, setCheckNumber] = useState(true);
+
+
+  const callCheckUserName = async () => {
+    await checkUserName({
+      username: username
+    })
+    .then((result) => {
+      console.log(result.data.message);
+      // return true
+      setCheckId(true)
+    })
+    .catch((err)=>{
+      console.log(err.response.data);
+      if(err.response.data==='해당 아이디가 이미 존재합니다.'){
+        setCheckId(false);
+      }
+      //  setCheckId(false);
+      // alert('이미 등록된 아이디입니다')
+
+      // // return false
+      // setCheckId(false);
+    })
+  }
+  
+  const callCheckPhone = async () => {
+    await checkPhone({
+      phone: phone
+    })
+    .then((result) => {
+      //  setCheckNumber(true);
+      console.log(result.data.message);
+      // return true
+      setCheckNumber(true);
+    })
+    .catch((err) => {
+      console.log(err.response.data);
+      if(err.response.data==='해당 전화번호가 이미 존재합니다.'){
+        setCheckId(false);
+      }
+      //  setCheckNumber(false);
+      // alert('이미 등록된 번호입니다')
+      // return false
+      // setCheckNumber(false);
+    });
+  }
 
   //검증 및 유효성 검사
-  const inspection = (e) => {
-    e.preventDefault();
+  const inspection = async () => {
+    // e.preventDefault();
+
+    await callCheckUserName();
+    await callCheckPhone();
 
     if(name=="" || phone=="" || username=="" || password=="" || age=="")
     {
-      alert('빈칸에 값을 입력해주세요');
+      alert('빈칸에 값을 입력하세요')
       return;
     }
+
+    else if(checkId===false){alert('이미 등록된 아이디입니다')}
+    else if(checkNumber===false) alert('이미 등록된 번호입니다');
+
     //비밀번호 확인 일치여부
     else if(password!=checkpassword){
       alert('비밀번호가 일치하지 않습니다.');
     }
+
     //나이 두자릿수
     else if(age<10 || age>99){
       alert('나이가 올바르지 않습니다.');
-      return;
     }
-    //번호 중복 검사
-    //아이디 중복 검사
+
     else {
       {
         navigation.navigate('survey', {

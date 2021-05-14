@@ -33,6 +33,7 @@ const Rating = ({route, navigation}) => {
   }
 
   const countRate = (item) => {
+
     console.log('ok');
   }
 

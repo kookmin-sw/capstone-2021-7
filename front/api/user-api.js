@@ -5,6 +5,14 @@ const postUserInformation = (postData) => {
     return callAPI("POST", "user/signup/", postData);
   };
 
+const checkUserName = (data) => {
+  return callAPI("POST", 'user/checkusername/', data)
+}
+
+const checkPhone = (data) => {
+  return callAPI("POST", 'user/checkphone/', data)
+}
+
 const login = (postData) => {
   console.log("데이터",postData);
   return callAPI("POST", "user/login/", postData);
@@ -27,4 +35,4 @@ const postLocation = (data) => {
   return callAPI("POST", "location/", data);
 }
 
-export { postUserInformation, login, logout, getOrder, getLocationList, postLocation };
+export { postUserInformation, login, logout, getOrder, checkUserName,  getLocationList, postLocation, checkPhone };
