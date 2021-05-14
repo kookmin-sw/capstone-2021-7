@@ -190,9 +190,9 @@ const Store = ({ route }) => {
               </View>
             </TouchableOpacity>
         )})}
+        <View style={{marginBottom:'7%'}}></View>
       </ScrollView>
     </View>
-
   );
 }
 
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flex:5,
-    paddingTop:'10%',
+    paddingTop:'5%',
     width:350,
   },
   category: {
@@ -227,8 +227,6 @@ const styles = StyleSheet.create({
     fontSize:28,
     fontWeight:'bold',
   },
-  // feedback:{
-  // }
   bigText:{
     fontSize:20,
     fontWeight:'bold',
