@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
@@ -9,24 +9,24 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { getOrder} from '../api/user-api';
 
+import { OrderContext } from '../context/ordercontext';
+
 const MyOrder = () => {
   const navigation = useNavigation();
 
-  const [orderList, setOrderList] = useState([]);
-
+  const {orderList, setOrderList} = useContext(OrderContext);
+  
   const callGetOrder = async () => {
     await getOrder()
     .then((result) => {
       setOrderList(result.data);
-      console.log(result.data);
     })
     .catch((err) => {
       console.log(err);
     })
   }
-
+  
   useEffect(() => {
-    console.log("출발했나");
     callGetOrder();
   },[]);
 
@@ -43,10 +43,9 @@ const MyOrder = () => {
         {orderList.map((elem, key) => {
           const words = elem.timestamp.split('-');
           const day = words[2].split('T');
-          console.log(words);
           return(
             <TouchableOpacity 
-              key = {key}
+              key = {elem.id}
               onPress = {()=> 
                 navigation.navigate({
                   name : 'mydetailorder',
@@ -70,6 +69,7 @@ const MyOrder = () => {
               </View>
             </TouchableOpacity>
         )})}
+        <View style={{marginBottom:'11%'}}></View>
       </ScrollView>
     </View>
 
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flex:5,
-    paddingTop:'10%',
+    paddingTop:'5%',
     width:350,
   },
   category: {
@@ -107,8 +107,6 @@ const styles = StyleSheet.create({
     fontSize:28,
     fontWeight:'bold',
   },
-  // feedback:{
-  // }
   bigText:{
     fontSize:20,
     fontWeight:'bold',
