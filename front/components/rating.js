@@ -1,19 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Modal } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Modal, ScrollView } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 import { getSmallCategory } from '../api/rating-api';
+import { signup } from '../api/user-api';
 
-const Rating = ({route, navigation}) => {
-  
+const Rating = ({route}) => {
+  const navigation = useNavigation();
+
   const {name, phone, username, password, gender, age, taste, price, amount} = route.params;
 
   const [smallCategory , setSmallCategory] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [count, setCount] = useState(0);
+  const [postList, setPostList] = useState([]);
+  const [eventList, setEventList] = useState([]);
+  const [checkedItem, setCheckedList] = useState([]);
+  const [clickedItem , setClickedItem] = useState(9999);
 
   const callGetSmallCategory = async () => {
     await getSmallCategory()
@@ -23,25 +30,77 @@ const Rating = ({route, navigation}) => {
       .catch((err) => console.log(err));
   };
 
+  const handdleClick = (val) => {
+    if (eventList.includes(clickedItem.id)) {
+      setEventList(eventList.filter(item => item !== clickedItem.id));
+      setCheckedList(checkedItem.filter(item => item.obj.id !== clickedItem.id));
+      setPostList(postList.filter(item => item[0] !== clickedItem.id));
+    }
+    setEventList(eventList => [...eventList, clickedItem.id]);
+    setCheckedList(checkedItem => [...checkedItem, {obj:clickedItem, val:val}]);
+    setPostList(postList => [...postList, [clickedItem.id,val]]);
+    setModalVisible(!modalVisible);
+    setClickedItem(9999);
+  }
+
   useEffect(() => {
     callGetSmallCategory();
   },[]);
 
+  const aboutModal = () => {
+    console.log("클릭된게 뭐야??",clickedItem);
+    console.log(eventList);
+    if (eventList.includes(clickedItem.id)){
+      Alert.alert(
+        "이미 평가한 카테고리입니다.",
+        "다시 평가하시겠습니까?",
+        [
+          { text: "OK", onPress: () => setModalVisible(!modalVisible)},
+          { text: "cancle", onPress: () => {console.log("Ask me later pressed"),setClickedItem(9999);}}
+
+        ]
+      );
+    }else {
+      setModalVisible(!modalVisible);
+    }
+  }
+
+  useEffect(() => {
+    if (clickedItem !== 9999){
+      aboutModal();
+    }
+  }, [clickedItem]);
+
   const onClick = (item) => {
-    setModalVisible(!modalVisible)
-    countRate(item);
+    setClickedItem(item);
   }
 
-  const countRate = (item) => {
+  const postData = {
+    name: name, 
+    phone: phone, 
+    username: username, 
+    password: password, 
+    age: age, 
+    gender: gender, 
+    taste: taste, 
+    price: price, 
+    amount: amount,
+    eventList: postList
 
-    console.log('ok');
+  };
+
+  const callSignup = async () =>{
+    await signup(postData)
+      .then((result) => {
+        console.log(result.data);
+        navigation.navigate('success');
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('알수없는 오류가 발생했습니다');
+      });
   }
 
-  const postData = {name: name, phone: phone, username: username, password: password, age: age, gender: gender, taste: taste, price: price, amount: amount};
-
-  const print = () =>{
-    console.log('ok')
-  }
   const renderSmallCategory = ({ item }) => {
     // console.log(item);
     return (
@@ -52,7 +111,8 @@ const Rating = ({route, navigation}) => {
           margin: 15,
         }}
       >
-        <TouchableOpacity onPress={() => { onClick(item) }}>
+        <TouchableOpacity onPress={ () => {
+            onClick(item) }}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <FontAwesome name="circle" size={72} color="#E0E0E0" />
             {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
@@ -64,87 +124,123 @@ const Rating = ({route, navigation}) => {
       </View>
       );
     }
-    return (
-      <View style ={styles.rating}>
-        <View style ={styles.top}>
-          <Text style={styles.title}>카테고리 중 5개 이상을 골라 점수를 입력해주세요!</Text>
-          <Text style={styles.sub}>
-            평가는 1점에서 5점 사이만 가능합니다
-            <FontAwesome5 name="smile" size={20} color="#3498DB" />
-          </Text>
-          <Text style={styles.count}>평가한 음식 수: {count} 개</Text>
-        </View>
-        <View style={styles.flat}>
-          <FlatList
-            data={smallCategory}
-            renderItem={renderSmallCategory}
-            style={{ margin: 20 }}
-            keyExtractor={(item) => item.id.toString()} 
-            numColumns={4}
-            key={4}
-          />
-        </View>
 
-        <View style={styles.centeredView}>
-          <Modal
-            animationType="none"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>점수를 선택해주세요</Text>
-                <View style={styles.buttons}>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>1점</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>2점</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>3점</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>4점</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>5점</Text>
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity
-                    style={styles.cancelbutton}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.canceltext}>취소</Text>
-                  </TouchableOpacity>
+  return (
+    <View style ={styles.rating}>
+      <View style ={styles.top}>
+        <Text style={styles.title}>카테고리 중 5개 이상을 골라 점수를 입력해주세요!</Text>
+        <Text style={styles.sub}>
+          평가는 1점에서 5점 사이만 가능합니다
+          <FontAwesome5 name="smile" size={20} color="#3498DB" />
+        </Text>
+        <Text style={styles.count}>평가한 음식 수: {eventList.length} 개</Text>
+        <Text style={styles.count}>평가한 음식 </Text>
+        <Text></Text>
+        <ScrollView horizontal={true} style={{flexDirection: "row"}}>
+          {checkedItem.map((elem, key)=>{
+            return (
+              <View key={key} style={{flexDirection: "row"}}>
+              <Text  style={{fontSize:24, fontWeight:'bold'}}>{elem.obj.name}({elem.val})</Text>
+              <TouchableOpacity onPress={()=>{
+                Alert.alert(
+                  "평가를 취소하시겠습니까?",
+                  "",
+                  [
+                    { text: "OK", onPress: () => {
+                      setEventList(eventList.filter(item => item !== elem));
+                      setCheckedList(checkedItem.filter(item => item.obj.id !== elem.obj.id));
+                      setPostList(postList.filter(item => item[0] !== clickedItem.id));
+                    }},
+                    { text: "cancle", onPress: () => console.log("Ask me later pressed")}
+                  ]
+                );
+              }}>
+                <AntDesign name="delete" size={24} color="black" />
+              </TouchableOpacity>
+              <Text>   </Text>
               </View>
-            </View>
-          </Modal>
-        </View>
-        <TouchableOpacity onPress={print} style={styles.btn}>
-          <Text style={styles.btntext}>완료</Text>
-        </TouchableOpacity>
+            )
+          })} 
+        </ScrollView>
+        
+        
       </View>
-    );
+      <View style={styles.flat}>
+        <FlatList
+          data={smallCategory}
+          renderItem={renderSmallCategory}
+          style={{ margin: 20 }}
+          keyExtractor={(item) => item.id.toString()} 
+          numColumns={4}
+          key={4}
+        />
+      </View>
+
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="none"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>점수를 선택해주세요</Text>
+              <View style={styles.buttons}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    handdleClick(1);
+                  }}>
+                  <Text style={styles.textStyle}>1점</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    handdleClick(2);
+                  }}>
+                  <Text style={styles.textStyle}>2점</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    handdleClick(3);
+                  }}>
+                  <Text style={styles.textStyle}>3점</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    handdleClick(4);
+                  }}>
+                  <Text style={styles.textStyle}>4점</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    handdleClick(5);
+                  }}>
+                  <Text style={styles.textStyle}>5점</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                  style={styles.cancelbutton}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.canceltext}>취소</Text>
+                </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
+      <TouchableOpacity onPress={() => callSignup()} style={styles.btn}>
+        <Text style={styles.btntext}>완료</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -155,7 +251,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   top : {
-    flex: 0.4,
+    flex: 1.5,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -268,7 +364,6 @@ const styles = StyleSheet.create({
     fontWeight:'900', 
     fontSize:20,
     marginTop:10,
-    marginBottom:20,
   }
 });
 
