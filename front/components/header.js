@@ -14,7 +14,7 @@ import { color } from 'react-native-reanimated';
 const Header = () => {
     const navigation = useNavigation();
     const {userLocation, setUserLocation} = useContext(UserLocationContext)
-    
+
     return (
         <View >
           <View style={{ alignSelf: 'center', marginTop: 2 }} >
@@ -22,7 +22,7 @@ const Header = () => {
           </View>
           <View style= {{ alignSelf: 'center', flexDirection: 'row', marginTop: 10  }}>
             <Text style ={styles.white2}>{userLocation} </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => {
                 navigation.push('locationlist')
               }}
