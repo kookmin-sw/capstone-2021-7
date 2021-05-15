@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,6 +17,7 @@ import { getMenu, orderMenu } from '../api/store-api';
 import { getOrder} from '../api/user-api';
 
 const Menu = ({ route }) => {
+	console.log(route)
   const navigation = useNavigation();
 
   const [menuList, setMenuList] = useState([]);
@@ -25,7 +26,7 @@ const Menu = ({ route }) => {
   const { userLocation } = useContext(UserLocationContext);
   const { isLogin } = useContext(IsLoginContext);
   const { setOrderList } = useContext(OrderContext);
-  
+
 
   const callGetMenu = async () => {
     await getMenu(route.params.storeId)
@@ -36,7 +37,7 @@ const Menu = ({ route }) => {
         console.log(err);
       })
     }
-  
+
   const callGetOrder = async () => {
     await getOrder()
       .then((result) => {
@@ -82,37 +83,33 @@ const Menu = ({ route }) => {
 
 	return (
 		<View style={styles.menu}>
-				<View style={styles.store}>
-						<View style={styles.top}>
-								<View>
-										<FontAwesome name="square" size={80} color="#E0E0E0" />
-								</View>
-								<View style={styles.storename}>
-										<Text style={styles.catename}>{route.params.storeName}</Text>
-								</View>
-								<TouchableOpacity>
-									<Ionicons name="heart-outline" size={40} color="pink" />
-								</TouchableOpacity>
-						</View>
+			<View style={styles.store}>
+				<View style={styles.top}>
+					<Image source={{ uri: route.params.storeImg }} style={styles.storeimg} />
+					<View style={styles.storename}>
+							<Text style={styles.catename}>{route.params.storeName}</Text>
+					</View>
+					<TouchableOpacity>
+						<Ionicons name="heart-outline" size={40} color="pink" />
+					</TouchableOpacity>
 				</View>
-				<ScrollView style={styles.menulist}>
-          {menuList.map((elem, key) => {
-            return(
-              <View style={styles.tq} key={key}>
-                <View>
-                    <FontAwesome name="square" size={80} color="#E0E0E0" />
-                </View>
-                <View style={styles.tqname}>
-                    <Text style={styles.food}>{elem.name}</Text>
-                    <Text style={styles.price}>{elem.price}</Text>
-                </View>
-                <CheckBox clickedMenuList={clickedMenuList} setClickedMenuList={setClickedMenuList} menuId={elem.id}></CheckBox>
-            </View>
-            )})}
-				</ScrollView>
-				<TouchableOpacity onPress={callOrderMenu} style={styles.button}>
-					<Text style={styles.order}>주문하기</Text>
-				</TouchableOpacity>
+			</View>
+			<ScrollView style={styles.menulist}>
+				{menuList.map((elem, key) => {
+					return(
+					<View style={styles.tq} key={key}>
+						<Image source={{ uri: elem.img }} style={styles.storeimg} />
+						<View style={styles.tqname}>
+							<Text style={styles.food}>{elem.name}</Text>
+							<Text style={styles.price}>{elem.price}</Text>
+						</View>
+						<CheckBox clickedMenuList={clickedMenuList} setClickedMenuList={setClickedMenuList} menuId={elem.id}></CheckBox>
+					</View>
+					)})}
+			</ScrollView>
+			<TouchableOpacity onPress={callOrderMenu} style={styles.button}>
+				<Text style={styles.order}>주문하기</Text>
+			</TouchableOpacity>
 		</View>
 	);
 }
@@ -129,13 +126,13 @@ const styles = StyleSheet.create({
 			paddingTop:30,
 			borderBottomColor: "#3498DB",
 			borderBottomWidth:5,
-			width:350,
+			width:'90%',
 			justifyContent:'center'
 	},
 	top:{
 		maxWidth:350,
 		flexDirection:'row',
-		alignItems:'center'
+		alignItems:'center',
 	//   marginLeft:50,
 	},
 	storename:{
@@ -143,6 +140,10 @@ const styles = StyleSheet.create({
 		marginLeft:20,
 		marginRight:20,
 		width:200
+	},
+	storeimg:{
+		width:'20%',
+		height:'90%'
 	},
 	catename:{
 			fontSize:22,
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
 			borderBottomColor:'#dbdbdb',
 			borderBottomWidth:1,
 			width:'85%'
-	},  
+	},
 	tqname:{
 		marginLeft:15,
 		width:'70%',

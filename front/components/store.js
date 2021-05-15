@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -40,6 +40,7 @@ const Store = ({ route }) => {
       })
       .then((result) => {
         setStoreList(result.data);
+        console.log(result.data)
       })
       .catch((err) => {
         console.log(err);
@@ -110,17 +111,17 @@ const Store = ({ route }) => {
     } else{
       callGetStoreByBigCatgory();
     }
-    
+
   },[]);
 
   return (
     <View style={styles.store}>
       <View style={styles.top}>
         <View style={styles.category}>
-          <FontAwesome name="circle" size={120} color="#E0E0E0"/>
+          <Image source={{ uri: route.params.categoryImg }} style={styles.categoryimg} />
           <Text style={styles.categoryname}>{route.params.categoryName}</Text>
         </View>
-        {route.params.from === false 
+        {route.params.from === false
         ? <View></View>
         : <Text style={styles.feedback}>
             <TouchableOpacity onPress={() => {
@@ -132,7 +133,7 @@ const Store = ({ route }) => {
                   { text: "cancle", onPress: () => console.log("Ask me later pressed")}
                 ]
               );
-              
+
               }}>
               <Text style={styles.feedtext}>
                 <FontAwesome5 name="thumbs-up" size={24} color="blue" />이 추천 좋아요{'\n'}
@@ -147,7 +148,7 @@ const Store = ({ route }) => {
                   { text: "cancle", onPress: () => console.log("Ask me later pressed")}
                 ]
               );
-              
+
               }}>
               <Text style={styles.feedtext}>
                 <FontAwesome5 name="thumbs-down" size={24} color="red" /> 이 추천 별로예요
@@ -155,13 +156,12 @@ const Store = ({ route }) => {
             </TouchableOpacity>
           </Text>
         }
-        
       </View>
 
       <ScrollView style={styles.list}>
         {storeList.map((elem, key) => {
           return(
-            <TouchableOpacity 
+            <TouchableOpacity
               key = {key}
               onPress={()=> {
                 navigation.navigate({
@@ -170,7 +170,8 @@ const Store = ({ route }) => {
                     storeId:elem.id,
                     storeName:elem.name,
                     storeLocation:elem.location,
-                    storeIntro:elem.intro
+                    storeIntro:elem.intro,
+                    storeImg:elem.img
                   }
               })}}>
               <View style={styles.tq}>
@@ -182,9 +183,9 @@ const Store = ({ route }) => {
                   <View style={{
                     flexDirection: "row"
                   }}>
-                    {elem.menu.map((elem, key) => 
+                    {elem.menu.map((elem, key) =>
                       <Text key={key} style={styles.smallText}>{elem.name}, </Text>
-                    )} 
+                    )}
                   </View>
                 </View>
               </View>
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
   },
   top: {
     flex:0.4,
-    marginTop:30,
+    marginTop:20,
     borderBottomColor:"#3498DB",
     borderBottomWidth:5,
     alignItems:'center',
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
   list: {
     flex:5,
     paddingTop:'5%',
-    width:350,
+    width:'80%',
   },
   category: {
     alignItems:'center',
@@ -224,8 +225,13 @@ const styles = StyleSheet.create({
     marginBottom:15
   },
   categoryname:{
-    fontSize:28,
+    fontSize:23,
     fontWeight:'bold',
+  },
+  categoryimg:{
+    width:60,
+    height:60,
+    marginBottom:5
   },
   bigText:{
     fontSize:20,
