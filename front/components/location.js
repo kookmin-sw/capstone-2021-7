@@ -34,7 +34,7 @@ const Location = () => {
 
   return (
     <View style={styles.container}>
-      <Text>{userLocation}</Text>
+      <Text style={styles.userlocation}>{userLocation}</Text>
       <View>
         <TextInput
           style={styles.input}
@@ -57,9 +57,15 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
+    width:200,
     margin: 12,
-    borderWidth: 1,
+    borderWidth: 2,
+    textAlign:'center'
   },
+  userlocation: {
+    fontSize:18,
+    fontWeight:'bold',
+  }
 });
 
 export default Location;
