@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { StyleSheet, View,ScrollView, Text, ImageBackground, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, View,ScrollView, Text, ImageBackground, TouchableOpacity, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
 import { FontAwesome } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -42,10 +42,10 @@ const Recommend = () => {
       .catch((err) => console.log(err));
   }
 
-  
+
 
   useEffect(() => {
-    callGetRecommendCategory(); 
+    callGetRecommendCategory();
   },[]);
 
   return(
@@ -58,15 +58,15 @@ const Recommend = () => {
           <Text>피드백 역시 두시간에 한번씩 가능합니다.</Text>
       </View>
       { animating === true
-        ? 
-        <ShowActivityIndicator/> 
-        : 
+        ?
+        <ShowActivityIndicator/>
+        :
         <View style={styles.contents}>
           <View>
               <Text style={styles.question}>
-                  <MaterialIcons  name="restaurant-menu" size={50} color="#3498DB" /> 나한테 딱 맞는 음식{'\n'}
+                  <MaterialIcons  name="restaurant-menu" size={40} color="#3498DB" /> 나한테 딱 맞는 음식{'\n'}
               </Text>
-              
+
               <Text style={styles.smallSub}>AWS</Text>
               <View style={{
                 flexDirection: "row",
@@ -75,8 +75,8 @@ const Recommend = () => {
               }}>
                 {awsCategory.map((elem, key) => {
                   return(
-                    <TouchableOpacity 
-                      key={key} 
+                    <TouchableOpacity
+                      key={key}
                       onPress={()=> {
                         navigation.navigate({
                           name : 'store',
@@ -85,12 +85,13 @@ const Recommend = () => {
                             recommendType:"AWS",
                             categoryFlag: false,
                             categoryId:elem.id,
-                            categoryName:elem.name
+                            categoryName:elem.name,
+                            categoryImg:elem.img
                           }
                           })}}>
                       <View style={{ justifyContent: "center", alignItems: "center" }} >
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
-                        {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
+                        {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
+                        <Image source={{ uri: elem.img }} style={styles.categoryimg} />
                         <View style={{ width: 60 }}>
                           <Text style={{ textAlign: "center" }}>{elem.name} </Text>
                         </View>
@@ -106,8 +107,8 @@ const Recommend = () => {
               }}>
                 {selfCategory.map((elem, key) => {
                   return(
-                    <TouchableOpacity 
-                      key={key} 
+                    <TouchableOpacity
+                      key={key}
                       onPress={()=> {
                         navigation.navigate({
                           name : 'store',
@@ -130,7 +131,7 @@ const Recommend = () => {
                 )})}
               </View>
           </View>
-          
+
             <Text style={styles.question}>
                 <Ionicons name="ios-time" size={50} color="#3498DB" />시간대별 음식{'\n'}
             </Text>
@@ -141,7 +142,7 @@ const Recommend = () => {
             }}>
               {timeSlotCategory.map((elem, key) => {
                 return(
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     key={key}
                     onPress={()=> {
                       navigation.navigate({
@@ -164,8 +165,8 @@ const Recommend = () => {
                 </TouchableOpacity>
               )})}
             </View>
-          
-          
+
+
             <Text style={styles.question}>
                 <Ionicons name="md-sunny" size={50} color="#3498DB" /> 지금 날씨에 어울리는 음식{'\n'}
             </Text>
@@ -176,7 +177,7 @@ const Recommend = () => {
             }}>
               {weatherCategory.map((elem, key) => {
                 return(
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     key={key}
                     onPress={()=> {
                       navigation.navigate({
@@ -202,11 +203,11 @@ const Recommend = () => {
             <TouchableOpacity onPress={()=>{
               setAnimating(true);
               callGetRecommendCategory();
-              }} 
+              }}
               style={styles.button}>
               <Text style={styles.order}>다시추천받기</Text>
             </TouchableOpacity>
-                        
+
       </View>
       }
     </ScrollView>
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
         // borderBottomWidth:5,
         paddingBottom:30,
         alignItems:'center'
-        
+
     },
     space:{
         flex:1
@@ -274,6 +275,11 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: "center"
     },
+    categoryimg: {
+      width:40,
+      height:40,
+      marginBottom:5
+    }
 });
 
 export default Recommend;

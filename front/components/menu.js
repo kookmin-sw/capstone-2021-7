@@ -83,30 +83,32 @@ const Menu = ({ route }) => {
 
 	return (
 		<View style={styles.menu}>
-			<View style={styles.store}>
-				<View style={styles.top}>
-					<Image source={{ uri: route.params.storeImg }} style={styles.storeimg} />
-					<View style={styles.storename}>
-							<Text style={styles.catename}>{route.params.storeName}</Text>
-					</View>
-					<TouchableOpacity>
-						<Ionicons name="heart-outline" size={40} color="pink" />
-					</TouchableOpacity>
-				</View>
-			</View>
-			<ScrollView style={styles.menulist}>
-				{menuList.map((elem, key) => {
-					return(
-					<View style={styles.tq} key={key}>
-						<Image source={{ uri: elem.img }} style={styles.storeimg} />
-						<View style={styles.tqname}>
-							<Text style={styles.food}>{elem.name}</Text>
-							<Text style={styles.price}>{elem.price}</Text>
+			<View style={styles.menucontainer}>
+				<View style={styles.store}>
+					<View style={styles.top}>
+						<Image source={{ uri: route.params.storeImg }} style={styles.storeimg} />
+						<View style={styles.storename}>
+								<Text style={styles.catename}>{route.params.storeName}</Text>
 						</View>
-						<CheckBox clickedMenuList={clickedMenuList} setClickedMenuList={setClickedMenuList} menuId={elem.id}></CheckBox>
+						<TouchableOpacity style={styles.hearticon}>
+							<Ionicons name="heart-outline" size={40} color="pink" />
+						</TouchableOpacity>
 					</View>
-					)})}
-			</ScrollView>
+				</View>
+				<ScrollView style={styles.menulist}>
+					{menuList.map((elem, key) => {
+						return(
+						<View style={styles.tq} key={key}>
+							<Image source={{ uri: elem.img }} style={styles.menuimg} />
+							<View style={styles.tqname}>
+								<Text style={styles.food}>{elem.name}</Text>
+								<Text style={styles.price}>{elem.price}</Text>
+							</View>
+							<CheckBox clickedMenuList={clickedMenuList} setClickedMenuList={setClickedMenuList} menuId={elem.id}></CheckBox>
+						</View>
+						)})}
+				</ScrollView>
+			</View>
 			<TouchableOpacity onPress={callOrderMenu} style={styles.button}>
 				<Text style={styles.order}>주문하기</Text>
 			</TouchableOpacity>
@@ -120,80 +122,95 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		alignItems: 'center',
 		justifyContent: 'center',
+		width:'100%',
+		height:'100%'
+	},
+	menucontainer: {
+		width: '90%',
+		height: '90%',
+		flexDirection : 'column',
+		justifyContent: 'center'
 	},
 	store: {
-			flex:0.3,
-			paddingTop:30,
-			borderBottomColor: "#3498DB",
-			borderBottomWidth:5,
-			width:'90%',
-			justifyContent:'center'
+		flex:0.3,
+		paddingTop:30,
+		borderBottomColor: "#3498DB",
+		borderBottomWidth:5,
+		width:'100%',
+		justifyContent:'center'
 	},
 	top:{
-		maxWidth:350,
 		flexDirection:'row',
 		alignItems:'center',
+		justifyContent: 'space-between',
+		width:'100%'
 	//   marginLeft:50,
+	},
+	storeimg:{
+		flexBasis:'20%'
 	},
 	storename:{
 		justifyContent:'center',
-		marginLeft:20,
-		marginRight:20,
-		width:200
+		flexBasis:'60%'
 	},
-	storeimg:{
-		width:'20%',
-		height:'90%'
+	hearticon:{
+		flexBasis:'13%'
 	},
 	catename:{
-			fontSize:22,
-			fontWeight:'bold'
+		fontSize:22,
+		fontWeight:'bold',
+		overflow: 'visible',
+		marginLeft: 15
 	},
 	menulist: {
-			flex:1,
-			width:'100%',
-			marginLeft:60,
-			paddingTop:'5%',
-	},
-	checkbox:{
-			alignSelf:'center',
-
-	},
-	button: {
-			backgroundColor: "#3498DB",
-			borderRadius:5,
-			width:400,
-			height:55,
-			justifyContent:'center',
+		flex:1,
+		width:'100%',
+		paddingTop:'4%',
+		alignContent: 'center'
 	},
 	order:{
-			textAlign:'center',
-			color:'white',
-			fontSize:20,
-			fontWeight:'bold',
+		textAlign:'center',
+		color:'white',
+		fontSize:20,
+		fontWeight:'bold',
 	},
 	tq:{
-			flexDirection:'row',
-			padding:7,
-			borderBottomColor:'#dbdbdb',
-			borderBottomWidth:1,
-			width:'85%'
+		flexDirection:'row',
+		padding:8,
+		borderBottomColor:'#dbdbdb',
+		borderBottomWidth:1,
+		height:72,
+	},
+	menuimg:{
+		flexBasis: '20%'
 	},
 	tqname:{
-		marginLeft:15,
-		width:'70%',
+		paddingLeft:15,
 		justifyContent:'center',
+		flexBasis: '70%'
 	},
 	food:{
-			fontWeight:'bold',
-			fontSize:18,
-			marginRight:50
+		fontWeight:'bold',
+		fontSize:16,
+		marginRight:10
 	},
 	price:{
-			fontSize:15,
-			color:"#3498DB",
-			lineHeight:20,
+		fontSize:14,
+		color:"#3498DB",
+		lineHeight:20,
+	},
+	checkbox:{
+		alignSelf:'center',
+		flexBasis: '10%',
+	},
+	button: {
+		backgroundColor: "#3498DB",
+		borderRadius:5,
+		width:400,
+		height:55,
+		justifyContent:'center',
 	}
+
 });
 
 export default Menu;

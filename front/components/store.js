@@ -234,11 +234,12 @@ const styles = StyleSheet.create({
     marginBottom:5
   },
   bigText:{
-    fontSize:20,
+    fontSize:19,
     fontWeight:'bold',
+    marginBottom:5
   },
   smallText:{
-    fontSize:15,
+    fontSize:14,
     fontWeight:'bold',
     color:'#3498DB',
   },
