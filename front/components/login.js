@@ -70,12 +70,25 @@ const Login = ({navigation}) => {
           </View>
         </View>
       : <View style={styles.myprofile}>
-            <Text>어서오세요</Text>
-            <Button onPress={logout} title = {"로그아웃"}></Button>
+          <Ionicons name="person-circle-outline" size={100} color="#3498DB" />
+            <Text style={styles.greet}>Fooday에 오신 것을 환영합니다 !</Text>
+            {/* <Button onPress={logout} title = {"로그아웃"}></Button> */}
+            <TouchableOpacity style={styles.logoutbtn} onPress={()=>navigation.navigate('main')}>
+              <Text style={styles.logouttext}>{"메인으로 이동"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.logoutbtn} onPress={()=>navigation.navigate('mystore')}>
+              <Text style={styles.logouttext}>{"찜한 가게 목록"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.logoutbtn} onPress={()=>navigation.navigate('recommend')}>
+              <Text style={styles.logouttext}>{"추천 받기"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.logoutbtn} onPress={logout}>
+              <Text style={styles.logouttext}>{"로그아웃"}</Text>
+            </TouchableOpacity>
         </View>
     }
     </>
-    
+     
   );
 }
 
@@ -126,6 +139,27 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     textAlign:'center',
     color:'white',
+  },
+  greet: {
+    fontWeight:'bold',
+    fontSize:22,
+    marginBottom:'5%'
+  },
+  logoutbtn: {
+    borderWidth:1,
+    borderRadius:5,
+    borderColor:"#3498DB",
+    backgroundColor:"#3498DB",
+    height:50,
+    width:250,
+    marginTop:'2%',
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  logouttext: {
+    color: "white",
+    fontWeight:'bold',
+    fontSize:15,
   }
 });
 
