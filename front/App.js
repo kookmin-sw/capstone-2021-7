@@ -39,9 +39,10 @@ import UserLocationProvider from './context/userlocationprovider';
 import { UserLocationContext } from './context/userlocationcontext';
 import LoginProvider from './context/loginprovider';
 import { IsLoginContext } from './context/logincontext';
+import OrderProvider from './context/orderprovider';
 
 // API
-import { getLocationList} from './api/user-api';
+import { getLocationList } from './api/user-api';
 
 const MainStack = createStackNavigator();
 
@@ -310,9 +311,11 @@ const App = () => {
   return (
     <LoginProvider>
       <UserLocationProvider>
-        <NavigationContainer >
-          <TabBar/>
-        </NavigationContainer>
+        <OrderProvider>
+          <NavigationContainer >
+            <TabBar/>
+          </NavigationContainer>
+        </OrderProvider>
       </UserLocationProvider>
     </LoginProvider>
   );
