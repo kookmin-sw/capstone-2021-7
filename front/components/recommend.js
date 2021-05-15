@@ -62,156 +62,145 @@ const Recommend = () => {
         <ShowActivityIndicator/>
         :
         <View style={styles.contents}>
-          <View>
+          <View style={styles.recommendBlock}>
               <Text style={styles.question}>
                   <MaterialIcons  name="restaurant-menu" size={40} color="#3498DB" /> 나한테 딱 맞는 음식{'\n'}
               </Text>
 
-              <Text style={styles.smallSub}>AWS</Text>
-              <View style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                paddingBottom:20
-              }}>
-                {awsCategory.map((elem, key) => {
-                  return(
-                    <TouchableOpacity
-                      key={key}
-                      onPress={()=> {
-                        navigation.navigate({
-                          name : 'store',
-                          params:{
-                            from : true,
-                            recommendType:"AWS",
-                            categoryFlag: false,
-                            categoryId:elem.id,
-                            categoryName:elem.name,
-                            categoryImg:elem.img
-                          }
-                          })}}>
-                      <View style={{ justifyContent: "center", alignItems: "center" }} >
-                        {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
-                        <Image source={{ uri: elem.img }} style={styles.categoryimg} />
-                        <View style={{ width: 60 }}>
-                          <Text style={{ textAlign: "center" }}>{elem.name} </Text>
+                <Text style={styles.smallSub}>AWS</Text>
+                <View style={styles.categoryList}>
+                  {awsCategory.map((elem, key) => {
+                    return(
+                      <TouchableOpacity
+                        key={key}
+                        onPress={()=> {
+                          navigation.navigate({
+                            name : 'store',
+                            params:{
+                              from : true,
+                              recommendType:"AWS",
+                              categoryFlag: false,
+                              categoryId:elem.id,
+                              categoryName:elem.name,
+                              categoryImg:elem.img
+                            }
+                            })}}>
+                        <View style={ styles.category } >
+                          {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
+                          <Image source={{ uri: elem.img }} style={styles.categoryimg} />
+                          <View style={{ width: 60 }}>
+                            <Text style={{ textAlign: "center" }}>{elem.name} </Text>
+                          </View>
                         </View>
-                      </View>
-                  </TouchableOpacity>
-                )})}
-              </View>
+                    </TouchableOpacity>
+                  )})}
+                </View>
 
-              <Text style={styles.smallSub}>자체개발 알고리즘</Text>
-              <View style={{
-                flexDirection: "row",
-                justifyContent: "center",
-              }}>
-                {selfCategory.map((elem, key) => {
-                  return(
-                    <TouchableOpacity
-                      key={key}
-                      onPress={()=> {
-                        navigation.navigate({
-                          name : 'store',
-                          params:{
-                            from : true,
-                            recommendType:"SELF",
-                            categoryFlag: false,
-                            categoryId:elem.id,
-                            categoryName:elem.name,
-                            categoryImg:elem.img
-                          }
-                          })}}>
-                      <View style={{ justifyContent: "center", alignItems: "center" }} >
-                        {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
-                        <Image source={{ uri: elem.img }} style={styles.categoryimg} />
-                        <View style={{ width: 60 }}>
-                          <Text style={{ textAlign: "center" }}>{elem.name} </Text>
+                <Text style={styles.smallSub}>자체개발 알고리즘</Text>
+                <View style={styles.categoryList}>
+                  {selfCategory.map((elem, key) => {
+                    return(
+                      <TouchableOpacity
+                        key={key}
+                        onPress={()=> {
+                          navigation.navigate({
+                            name : 'store',
+                            params:{
+                              from : true,
+                              recommendType:"SELF",
+                              categoryFlag: false,
+                              categoryId:elem.id,
+                              categoryName:elem.name,
+                              categoryImg:elem.img
+                            }
+                            })}}>
+                        <View style={{ justifyContent: "center", alignItems: "center" }} >
+                          {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
+                          <Image source={{ uri: elem.img }} style={styles.categoryimg} />
+                          <View style={{ width: 60 }}>
+                            <Text style={{ textAlign: "center" }}>{elem.name} </Text>
+                          </View>
                         </View>
-                      </View>
-                  </TouchableOpacity>
-                )})}
-              </View>
+                    </TouchableOpacity>
+                  )})}
+                </View>
           </View>
 
+          <View style={styles.recommendBlock}>
             <Text style={styles.question}>
                 <Ionicons name="ios-time" size={50} color="#3498DB" />시간대별 음식{'\n'}
             </Text>
-
-            <View style={{
-              flexDirection: "row",
-              justifyContent: "center",
-            }}>
-              {timeSlotCategory.map((elem, key) => {
-                return(
-                  <TouchableOpacity
-                    key={key}
-                    onPress={()=> {
-                      navigation.navigate({
-                        name : 'store',
-                        params:{
-                          from : true,
-                          recommendType:"TIME",
-                          categoryFlag: false,
-                          categoryId:elem.id,
-                          categoryName:elem.name,
-                          categoryImg:elem.img
-                        }
-                        })}} >
-                    <View style={{ justifyContent: "center", alignItems: "center" }} >
-                      {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
-                        <Image source={{ uri: elem.img }} style={styles.categoryimg} />
-                      <View style={{ width: 60 }}>
-                        <Text style={{ textAlign: "center" }}>{elem.name} </Text>
-                      </View>
+            <View style={styles.categoryList}>
+            {timeSlotCategory.map((elem, key) => {
+              return(
+                <TouchableOpacity
+                  key={key}
+                  onPress={()=> {
+                    navigation.navigate({
+                      name : 'store',
+                      params:{
+                        from : true,
+                        recommendType:"TIME",
+                        categoryFlag: false,
+                        categoryId:elem.id,
+                        categoryName:elem.name,
+                        categoryImg:elem.img
+                      }
+                      })}} >
+                  <View style={ styles.category } >
+                    {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
+                      <Image source={{ uri: elem.img }} style={styles.categoryimg} />
+                    <View style={{ width: 60 }}>
+                      <Text style={{ textAlign: "center" }}>{elem.name} </Text>
                     </View>
-                </TouchableOpacity>
-              )})}
-            </View>
+                  </View>
+              </TouchableOpacity>
+            )})}
+          </View>
+          </View>
 
-
+          <View style={styles.recommendBlock}>
             <Text style={styles.question}>
                 <Ionicons name="md-sunny" size={50} color="#3498DB" /> 지금 날씨에 어울리는 음식{'\n'}
             </Text>
-
-            <View style={{
-              flexDirection: "row",
-              justifyContent: "center",
-            }}>
-              {weatherCategory.map((elem, key) => {
-                return(
-                  <TouchableOpacity
-                    key={key}
-                    onPress={()=> {
-                      navigation.navigate({
-                        name : 'store',
-                        params:{
-                          from : true,
-                          recommendType:"WEATHER",
-                          categoryFlag: false,
-                          categoryId:elem.id,
-                          categoryName:elem.name,
-                          categoryImg:elem.img
-                        }
-                        })}} >
-                    <View style={{ justifyContent: "center", alignItems: "center" }} >
-                      {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
-                        <Image source={{ uri: elem.img }} style={styles.categoryimg} />
-                      <View style={{ width: 60 }}>
-                        <Text style={{ textAlign: "center" }}>{elem.name} </Text>
-                      </View>
+            <View style={styles.categoryList}>
+            {weatherCategory.map((elem, key) => {
+              return(
+                <TouchableOpacity
+                  key={key}
+                  onPress={()=> {
+                    navigation.navigate({
+                      name : 'store',
+                      params:{
+                        from : true,
+                        recommendType:"WEATHER",
+                        categoryFlag: false,
+                        categoryId:elem.id,
+                        categoryName:elem.name,
+                        categoryImg:elem.img
+                      }
+                      })}} >
+                  <View style={ styles.category } >
+                    {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
+                      <Image source={{ uri: elem.img }} style={styles.categoryimg} />
+                    <View style={{ width: 60 }}>
+                      <Text style={{ textAlign: "center" }}>{elem.name} </Text>
                     </View>
-                </TouchableOpacity>
-              )})}
-            </View>
-            <TouchableOpacity onPress={()=>{
-              setAnimating(true);
-              callGetRecommendCategory();
-              }}
-              style={styles.button}>
-              <Text style={styles.order}>다시추천받기</Text>
-            </TouchableOpacity>
+                  </View>
+              </TouchableOpacity>
+            )})}
+          </View>
+          </View>
 
-      </View>
+          <TouchableOpacity onPress={()=>{
+            setAnimating(true);
+            callGetRecommendCategory();
+            }}
+            style={styles.button}>
+            <Text style={styles.order}>다시추천받기</Text>
+          </TouchableOpacity>
+
+        </View>
       }
     </ScrollView>
 
@@ -222,12 +211,12 @@ const styles = StyleSheet.create({
     recommend:{
         backgroundColor:'white',
         width:'100%',
-        paddingTop:30,
+        paddingTop:20,
         flex:1,
     },
     topIcon:{
         flex:1,
-        paddingBottom:30,
+        paddingBottom:20,
         alignItems: 'center',
         borderBottomColor: '#3498DB',
         borderBottomWidth: 5,
@@ -241,6 +230,10 @@ const styles = StyleSheet.create({
         alignItems:'center'
 
     },
+    recommendBlock: {
+      flexDirection: 'column',
+      justifyContent:'center'
+    },
     space:{
         flex:1
     },
@@ -249,6 +242,7 @@ const styles = StyleSheet.create({
         fontWeight:"bold",
         color:'#3498DB',
         paddingTop:10,
+        textAlign: 'center'
     },
     name:{
         fontSize:15,
@@ -272,17 +266,31 @@ const styles = StyleSheet.create({
       alignSelf:'center',
       fontSize:15,
       fontWeight:'bold',
-      color:'#3498DB'
+      color:'#3498DB',
+      margin:5
     },
     container: {
       flex: 1,
       justifyContent: "center"
     },
+    categoryList:{
+      flexDirection: "row",
+      justifyContent: "center",
+      marginBottom: 20,
+      height: 110
+
+    },
+    category: {
+      justifyContent: "center",
+      alignItems: "center",
+      flex:1,
+      margin:2
+    },
     categoryimg: {
-      width:40,
-      height:40,
+      width: 70,
+      height: 70,
       marginBottom:5
-    }
+    },
 });
 
 export default Recommend;

@@ -83,9 +83,9 @@ const Menu = ({ route }) => {
 
 	return (
 		<View style={styles.menu}>
-			<View style={styles.menucontainer}>
-				<View style={styles.store}>
-					<View style={styles.top}>
+			<View style={styles.store}>
+				<View style={styles.top}>
+					<View style={styles.topin}>
 						<Image source={{ uri: route.params.storeImg }} style={styles.storeimg} />
 						<View style={styles.storename}>
 								<Text style={styles.catename}>{route.params.storeName}</Text>
@@ -109,6 +109,7 @@ const Menu = ({ route }) => {
 						)})}
 				</ScrollView>
 			</View>
+
 			<TouchableOpacity onPress={callOrderMenu} style={styles.button}>
 				<Text style={styles.order}>주문하기</Text>
 			</TouchableOpacity>
@@ -122,45 +123,44 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		alignItems: 'center',
 		justifyContent: 'center',
-		width:'100%',
-		height:'100%'
-	},
-	menucontainer: {
-		width: '90%',
-		height: '90%',
-		flexDirection : 'column',
-		justifyContent: 'center'
 	},
 	store: {
-		flex:0.3,
-		margin:20,
-		borderBottomColor: "#3498DB",
-		borderBottomWidth:5,
-		width:'90%',
-		justifyContent:'center'
+		flex:1,
+		justifyContent:'center',
+		padding:10
 	},
 	top:{
-		flexDirection:'row',
-		alignItems:'center',
-		justifyContent: 'space-between',
-		width:'100%'
+		flex:0.3,
+		borderBottomColor: "#3498DB",
+		borderBottomWidth:5,
+		padding:10
 	//   marginLeft:50,
 	},
+	topin:{
+		margin:6,
+		alignItems:'center',
+		justifyContent:'center',
+		flex:1,
+		flexDirection:'row',
+		justifyContent: 'space-between'
+	},
 	storeimg:{
-		flexBasis:'20%'
+		height:'90%',
+		flex:3
 	},
 	storename:{
 		justifyContent:'center',
-		flexBasis:'60%'
+		flex:9,
+		marginLeft:20,
+		marginRight:20
 	},
 	hearticon:{
-		flexBasis:'13%'
+		flex:2
 	},
 	catename:{
-		fontSize:22,
+		fontSize:21,
 		fontWeight:'bold',
-		overflow: 'visible',
-		marginLeft: 15
+		overflow: 'visible'
 	},
 	menulist: {
 		flex:1,
@@ -176,13 +176,14 @@ const styles = StyleSheet.create({
 	},
 	tq:{
 		flexDirection:'row',
-		padding:8,
+		padding:5,
 		borderBottomColor:'#dbdbdb',
 		borderBottomWidth:1,
 		height:72,
 	},
 	menuimg:{
-		flexBasis: '20%'
+		flexBasis: '20%',
+		margin:2
 	},
 	tqname:{
 		paddingLeft:12,
@@ -190,20 +191,18 @@ const styles = StyleSheet.create({
 		justifyContent:'center',
 		flexBasis: '70%',
 		flexDirection: 'column',
-		justifyContent: 'space-around',
+		justifyContent: 'center',
 	},
 	food:{
 		fontWeight:'bold',
 		fontSize:15,
-		alignContent:'center',
-		flexBasis:'70%',
-		width: '95%'
+		width: '95%',
+		justifyContent : 'center'
 	},
 	price:{
 		fontSize:14,
 		color:"#3498DB",
-		lineHeight:20,
-		flexBasis:'30%',
+		lineHeight:20
 	},
 	checkbox:{
 		alignSelf:'center',

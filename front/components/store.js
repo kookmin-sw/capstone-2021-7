@@ -160,7 +160,6 @@ const Store = ({ route }) => {
 
       <ScrollView style={styles.list}>
         {storeList.map((elem, key) => {
-          console.log(elem)
           return(
             <TouchableOpacity
               key = {key}
@@ -177,7 +176,7 @@ const Store = ({ route }) => {
               })}}>
               <View style={styles.tq}>
                   {/* <FontAwesome name="square" size={80} color="#E0E0E0" /> */}
-                <Image source={{ uri: elem.img }} style={styles.storeimg} />
+                  <Image source={{ uri: elem.img }} style={styles.storeimg} />
                 <View style={styles.tqname}>
                   <Text style={styles.bigText}>{elem.name}</Text>
                   <View style={{
@@ -203,7 +202,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    padding:20
+    padding:10
   },
   top: {
     flex:0.4,
@@ -239,8 +238,8 @@ const styles = StyleSheet.create({
   },
   storeimg:{
 		flexBasis: '20%',
-    width:30,
-    height:30
+    width:60,
+    height:60
 	},
   bigText:{
     fontSize:19,
@@ -259,9 +258,11 @@ const styles = StyleSheet.create({
   },
   tq: {
     flexDirection:'row',
+    margin:3
   },
   tqname:{
     marginLeft:15,
+    marginRight:15,
     justifyContent:'center',
   },
   feedback: {
