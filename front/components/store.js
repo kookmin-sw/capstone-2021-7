@@ -136,7 +136,7 @@ const Store = ({ route }) => {
 
               }}>
               <Text style={styles.feedtext}>
-                <FontAwesome5 name="thumbs-up" size={24} color="blue" />이 추천 좋아요{'\n'}
+                <FontAwesome5 name="thumbs-up" size={24} color="blue" />  이 추천 좋아요{'\n'}
               </Text>
             </TouchableOpacity>{'\n'}
             <TouchableOpacity onPress={() => {
@@ -151,7 +151,7 @@ const Store = ({ route }) => {
 
               }}>
               <Text style={styles.feedtext}>
-                <FontAwesome5 name="thumbs-down" size={24} color="red" /> 이 추천 별로예요
+                <FontAwesome5 name="thumbs-down" size={24} color="red" />  이 추천 별로예요
               </Text>
             </TouchableOpacity>
           </Text>
@@ -160,6 +160,7 @@ const Store = ({ route }) => {
 
       <ScrollView style={styles.list}>
         {storeList.map((elem, key) => {
+          console.log(elem)
           return(
             <TouchableOpacity
               key = {key}
@@ -175,9 +176,8 @@ const Store = ({ route }) => {
                   }
               })}}>
               <View style={styles.tq}>
-                <View>
-                  <FontAwesome name="square" size={80} color="#E0E0E0" />
-                </View>
+                  {/* <FontAwesome name="square" size={80} color="#E0E0E0" /> */}
+                <Image source={{ uri: elem.img }} style={styles.storeimg} />
                 <View style={styles.tqname}>
                   <Text style={styles.bigText}>{elem.name}</Text>
                   <View style={{
@@ -203,36 +203,45 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    padding:20
   },
   top: {
     flex:0.4,
-    marginTop:20,
     borderBottomColor:"#3498DB",
     borderBottomWidth:5,
     alignItems:'center',
     justifyContent:'center',
-    width:350,
     flexDirection:'row',
+    paddingTop:5,
+    width:'100%'
+
   },
   list: {
     flex:5,
     paddingTop:'5%',
-    width:'80%',
+    width:'90%',
   },
   category: {
     alignItems:'center',
     justifyContent:'center',
-    marginBottom:15
+    marginBottom:15,
+    marginTop:15,
+    flexBasis:'50%'
   },
   categoryname:{
-    fontSize:23,
+    fontSize:21,
     fontWeight:'bold',
   },
   categoryimg:{
-    width:60,
-    height:60,
+    width:70,
+    height:70,
     marginBottom:5
   },
+  storeimg:{
+		flexBasis: '20%',
+    width:30,
+    height:30
+	},
   bigText:{
     fontSize:19,
     fontWeight:'bold',
@@ -254,7 +263,13 @@ const styles = StyleSheet.create({
   tqname:{
     marginLeft:15,
     justifyContent:'center',
-  }
+  },
+  feedback: {
+    fontWeight:"bold",
+    color:'#898989',
+    flexBasis: '50%'
+
+  },
 });
 
 export default Store;

@@ -133,10 +133,10 @@ const styles = StyleSheet.create({
 	},
 	store: {
 		flex:0.3,
-		paddingTop:30,
+		margin:20,
 		borderBottomColor: "#3498DB",
 		borderBottomWidth:5,
-		width:'100%',
+		width:'90%',
 		justifyContent:'center'
 	},
 	top:{
@@ -185,23 +185,29 @@ const styles = StyleSheet.create({
 		flexBasis: '20%'
 	},
 	tqname:{
-		paddingLeft:15,
+		paddingLeft:12,
+		paddingRight:12,
 		justifyContent:'center',
-		flexBasis: '70%'
+		flexBasis: '70%',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
 	},
 	food:{
 		fontWeight:'bold',
-		fontSize:16,
-		marginRight:10
+		fontSize:15,
+		alignContent:'center',
+		flexBasis:'70%',
+		width: '95%'
 	},
 	price:{
 		fontSize:14,
 		color:"#3498DB",
 		lineHeight:20,
+		flexBasis:'30%',
 	},
 	checkbox:{
 		alignSelf:'center',
-		flexBasis: '10%',
+		flexBasis: '10%'
 	},
 	button: {
 		backgroundColor: "#3498DB",
