@@ -11,10 +11,10 @@ const MyStore = () => {
         <Text style={styles.down}>S{'\t'}O{'\t'}O{'\t'}N</Text>
       </View>
       <View style={styles.icon}>
-      <MaterialIcons name="engineering" size={150} color="#3498DB" />
+        <MaterialIcons name="engineering" size={150} color="#3498DB" />
         <Text style={styles.title}>서비스 개발 중입니다</Text>
       </View>
-      
+
     </View>
   );
 }
@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
+    height: '100%',
+		justifyContent: 'space-between',
   },
   title:{
     fontSize:30,
@@ -48,15 +51,15 @@ const styles = StyleSheet.create({
     color:"#3498DB",
   },
   coming:{
-    flex:1,
     justifyContent:'center',
     alignItems:'center',
-    marginTop:'10%'
+    marginTop:'10%',
+    flexBasis: '30%'
   },
   icon:{
-    flex:1.5,
     alignItems:'center',
-    marginTop:'20%'
+    flexBasis:'60%'
+
   }
 });
 
