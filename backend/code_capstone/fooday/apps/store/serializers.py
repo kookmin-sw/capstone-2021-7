@@ -6,10 +6,10 @@ from .models import *
 
 class StoreBigCategorySerializer(serializers.ModelSerializer):
     menu = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Store
-        fields = ['id','menu','location','intro','name']
+        fields = ['id','menu','location','intro','name', 'img']
 
     def get_menu(self,obj):
         returnList= []
