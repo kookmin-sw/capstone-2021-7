@@ -31,7 +31,6 @@ class RecommendCategory(APIView):
             for itemId in json.loads(response.json()["body"]):
                 item = SmallCategory.objects.get(id = itemId)
                 smallCategorydict = model_to_dict(item)
-                smallCategorydict.pop("img")
                 smallCategorydict.pop("tag")
                 smallCategoryList.append(smallCategorydict)
 
@@ -44,7 +43,6 @@ class RecommendCategory(APIView):
                     continue
                 item = SmallCategory.objects.get(id = i['menu__smallCategory'])
                 smallCategorydict = model_to_dict(item)
-                smallCategorydict.pop("img")
                 smallCategorydict.pop("tag")
                 smallCategoryList.append(smallCategorydict)
 
@@ -66,7 +64,6 @@ class RecommendCategory(APIView):
             itemId = item['itemId']
             item = SmallCategory.objects.get(id = itemId)
             smallCategorydict = model_to_dict(item)
-            smallCategorydict.pop("img")
             smallCategorydict.pop("tag")
             smallCategoryList.append(smallCategorydict)
         return smallCategoryList
@@ -80,7 +77,6 @@ class RecommendCategory(APIView):
                 continue
             item = SmallCategory.objects.get(id = i['menu__smallCategory'])
             smallCategorydict = model_to_dict(item)
-            smallCategorydict.pop("img")
             smallCategorydict.pop("tag")
             smallCategoryList.append(smallCategorydict)
         return smallCategoryList
@@ -94,7 +90,6 @@ class RecommendCategory(APIView):
                 continue
             item = SmallCategory.objects.get(id = i['menu__smallCategory'])
             smallCategorydict = model_to_dict(item)
-            smallCategorydict.pop("img")
             smallCategorydict.pop("tag")
             smallCategoryList.append(smallCategorydict)
         return smallCategoryList
@@ -137,7 +132,6 @@ class RecommendCategoryForMany(APIView):
         for itemId in json.loads(response.json()["body"]):
             item = SmallCategory.objects.get(id = itemId)
             smallCategorydict = model_to_dict(item)
-            smallCategorydict.pop("img")
             smallCategorydict.pop("tag")
             smallCategoryList.append(smallCategorydict)
 
