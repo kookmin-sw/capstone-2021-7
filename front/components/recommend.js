@@ -117,12 +117,13 @@ const Recommend = () => {
                             recommendType:"SELF",
                             categoryFlag: false,
                             categoryId:elem.id,
-                            categoryName:elem.name
+                            categoryName:elem.name,
+                            categoryImg:elem.img
                           }
                           })}}>
                       <View style={{ justifyContent: "center", alignItems: "center" }} >
-                        <FontAwesome name="circle" size={72} color="#E0E0E0" />
-                        {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
+                        {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
+                        <Image source={{ uri: elem.img }} style={styles.categoryimg} />
                         <View style={{ width: 60 }}>
                           <Text style={{ textAlign: "center" }}>{elem.name} </Text>
                         </View>
@@ -152,12 +153,13 @@ const Recommend = () => {
                           recommendType:"TIME",
                           categoryFlag: false,
                           categoryId:elem.id,
-                          categoryName:elem.name
+                          categoryName:elem.name,
+                          categoryImg:elem.img
                         }
                         })}} >
                     <View style={{ justifyContent: "center", alignItems: "center" }} >
-                      <FontAwesome name="circle" size={72} color="#E0E0E0" />
-                      {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
+                      {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
+                        <Image source={{ uri: elem.img }} style={styles.categoryimg} />
                       <View style={{ width: 60 }}>
                         <Text style={{ textAlign: "center" }}>{elem.name} </Text>
                       </View>
@@ -187,12 +189,13 @@ const Recommend = () => {
                           recommendType:"WEATHER",
                           categoryFlag: false,
                           categoryId:elem.id,
-                          categoryName:elem.name
+                          categoryName:elem.name,
+                          categoryImg:elem.img
                         }
                         })}} >
                     <View style={{ justifyContent: "center", alignItems: "center" }} >
-                      <FontAwesome name="circle" size={72} color="#E0E0E0" />
-                      {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
+                      {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
+                        <Image source={{ uri: elem.img }} style={styles.categoryimg} />
                       <View style={{ width: 60 }}>
                         <Text style={{ textAlign: "center" }}>{elem.name} </Text>
                       </View>
