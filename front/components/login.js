@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   greet: {
     fontWeight:'bold',
     fontSize:22,
-    marginBottom:'10%'
+    marginBottom:'5%'
   },
   logoutbtn: {
     borderWidth:1,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor:"#3498DB",
     height:50,
     width:250,
-    marginTop:'3%',
+    marginTop:'2%',
     alignItems:'center',
     justifyContent:'center'
   },
