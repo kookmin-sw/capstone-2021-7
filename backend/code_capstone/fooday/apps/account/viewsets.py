@@ -1,4 +1,5 @@
 from django.utils.datastructures import MultiValueDictKeyError
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
 from django.utils import timezone
 
@@ -70,14 +71,27 @@ class LocationViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         name = request.data.get('name')
-        serializer = self.get_serializer(data={
-            "user":request.user.id,
-            "name":name
-        })
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        try :
+            obj = Location.objects.get(user=request.user, name=name)
+            obj.delete()
+            serializer = self.get_serializer(data={
+                "user":request.user.id,
+                "name":name
+            })
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            
+        except ObjectDoesNotExist:
+            serializer = self.get_serializer(data={
+                "user":request.user.id,
+                "name":name
+            })
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     """
     List a queryset.

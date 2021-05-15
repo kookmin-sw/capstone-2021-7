@@ -63,6 +63,7 @@ class RecommendCategory(APIView):
         )
         smallCategoryList = []
         for item in response['itemList'][:4]:
+            print(item)
             itemId = item['itemId']
             item = SmallCategory.objects.get(id = itemId)
             smallCategorydict = model_to_dict(item)
