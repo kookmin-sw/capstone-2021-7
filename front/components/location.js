@@ -61,21 +61,25 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     width:200,
-    margin: 12,
+    margin: 25,
     borderWidth: 2,
-    textAlign:'center'
+    textAlign:'center',
+    justifyContent:'center',
   },
   userlocation: {
     fontSize:18,
     fontWeight:'bold',
+    alignItems:'center',
+    justifyContent:'center'
   },
   searchbtn: {
     alignItems:'center',
     justifyContent:'center',
     height:50,
-    width:150,
+    width:250,
     backgroundColor:'#3498DB',
-    borderRadius:5
+    borderRadius:5,
+    marginTop:'15%',
   },
   searchtext: {
     color:"white",

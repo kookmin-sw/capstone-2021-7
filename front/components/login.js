@@ -8,12 +8,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { login } from '../api/user-api';
 
 import { IsLoginContext } from '../context/logincontext';
+import { UserLocationContext } from '../context/userlocationcontext';
 
 const Login = ({navigation}) => {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
 
   const { isLogin, setIsLogin } = useContext(IsLoginContext);
+  const { userLocation } = useContext(UserLocationContext);
 
   const onClick = async () => {
     await login({
@@ -33,6 +35,20 @@ const Login = ({navigation}) => {
       );
     })
     .catch((err) => console.log(err));
+  }
+
+  const check = () => {
+    if (userLocation ==="위치정보를 입력해주세요"){
+      Alert.alert(
+        "위치 정보를 입력해주세요",
+        "화면 상단의 돋보기를 눌러 위치정보를 입력해주세요",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    }else {
+      navigation.navigate('recommend');
+    }
   }
 
   const logout = async () => {
@@ -79,7 +95,7 @@ const Login = ({navigation}) => {
             <TouchableOpacity style={styles.logoutbtn} onPress={()=>navigation.navigate('mystore')}>
               <Text style={styles.logouttext}>{"찜한 가게 목록"}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.logoutbtn} onPress={()=>navigation.navigate('recommend')}>
+            <TouchableOpacity style={styles.logoutbtn} onPress={check}>
               <Text style={styles.logouttext}>{"추천 받기"}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.logoutbtn} onPress={logout}>
