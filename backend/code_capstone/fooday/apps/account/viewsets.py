@@ -56,7 +56,12 @@ class OrderMenuViewSet(viewsets.ModelViewSet):
 
                 # AWS event 전송
                 try:
-                    personalize_events = boto3.client(service_name='personalize-events')
+                    personalize_events = boto3.client(
+                        service_name='personalize-events',
+                        region_name='ap-northeast-2',
+                        aws_access_key_id= os.getenv('AWS_ACCESS_KEY_ID'),
+                        aws_secret_access_key= os.getenv('AWS_SECRET_ACCESS_KEY')
+                    )
                     personalize_events.put_events(
                         trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
                         userId= str(user.id),
@@ -201,7 +206,12 @@ class UserViewSet(viewsets.ModelViewSet):
         try:
             # AWS putuser 전송
             sex = 1 if gender=='female' else 2
-            personalize_events = boto3.client(service_name='personalize-events')
+            personalize_events = boto3.client(
+                service_name='personalize-events',
+                region_name='ap-northeast-2',
+                aws_access_key_id= os.getenv('AWS_ACCESS_KEY_ID'),
+                aws_secret_access_key= os.getenv('AWS_SECRET_ACCESS_KEY')
+            )
             data = {"sex": sex, "old": age, "flavor": taste, "amount": amount, "price":price}
             response = personalize_events.put_users(
                 datasetArn = 'arn:aws:personalize:ap-northeast-2:287004205854:dataset/fooday-dataset/USERS',
@@ -215,30 +225,39 @@ class UserViewSet(viewsets.ModelViewSet):
 
         token = Token.objects.create(user=user)
 
-
-        for event in eventList:
-            User_SmallCategory_Like.objects.create(
-                user=user,
-                smallCategory=SmallCategory.objects.get(id=event[0]),
-                rating=event[1]
+        try:
+            for event in eventList:
+                User_SmallCategory_Like.objects.create(
+                    user=user,
+                    smallCategory=SmallCategory.objects.get(id=event[0]),
+                    rating=event[1]
+                )
+                print(event[0], event[1])
+                # AWS event 전송
+                personalize_events = boto3.client(
+                    service_name='personalize-events',
+                    region_name='ap-northeast-2',
+                    aws_access_key_id= os.getenv('AWS_ACCESS_KEY_ID'),
+                    aws_secret_access_key= os.getenv('AWS_SECRET_ACCESS_KEY')
+                )
+                personalize_events.put_events(
+                    trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
+                    userId= str(user.id),
+                    sessionId = 'session_id',
+                    eventList = [{
+                        'sentAt': int(timestamp()),
+                        'eventType': 'Like',
+                        'properties': json.dumps({
+                            'itemId': str(event[0]),
+                            'eventValue': int(event[1])
+                            })
+                        }]
+                )
+        except:
+            Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={'message': '잘못된 선호도 입력입니다.'},
             )
-            print(event[0], event[1])
-            # AWS event 전송
-            personalize_events = boto3.client(service_name='personalize-events')
-            personalize_events.put_events(
-                trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
-                userId= str(user.id),
-                sessionId = 'session_id',
-                eventList = [{
-                    'sentAt': int(timestamp()),
-                    'eventType': 'Like',
-                    'properties': json.dumps({
-                        'itemId': str(event[0]),
-                        'eventValue': int(event[1])
-                        })
-                    }]
-            )
-
 
         return Response(
                 status=status.HTTP_200_OK,
@@ -401,7 +420,12 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
 
         # AWS event 전송
         try:
-            personalize_events = boto3.client(service_name='personalize-events')
+            personalize_events = boto3.client(
+                service_name='personalize-events',
+                region_name='ap-northeast-2',
+                aws_access_key_id= os.getenv('AWS_ACCESS_KEY_ID'),
+                aws_secret_access_key= os.getenv('AWS_SECRET_ACCESS_KEY')
+            )
             personalize_events.put_events(
                 trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
                 userId= str(user.id),
