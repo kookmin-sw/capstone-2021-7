@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Modal, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Modal, ScrollView, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -11,6 +11,7 @@ import { getSmallCategory } from '../api/rating-api';
 import { signup } from '../api/user-api';
 
 const Rating = ({route}) => {
+
   const navigation = useNavigation();
 
   const {name, phone, username, password, gender, age, taste, price, amount} = route.params;
@@ -114,8 +115,9 @@ const Rating = ({route}) => {
         <TouchableOpacity onPress={ () => {
             onClick(item) }}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <FontAwesome name="circle" size={72} color="#E0E0E0" />
+            {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
             {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
+            <Image source={{ uri: item.img }} style={{ width:40, height:40, marginBottom:5, borderRadius:23 }} />
             <View style={{ width: 60 }}>
               <Text style={{ textAlign: "center" }}>{item.name} </Text>
             </View>
@@ -126,6 +128,8 @@ const Rating = ({route}) => {
     }
 
   return (
+    <>
+    <ScrollView >
     <View style ={styles.rating}>
       <View style ={styles.top}>
         <Text style={styles.title}>카테고리 중 5개 이상을 골라 점수를 입력해주세요!</Text>
@@ -147,7 +151,7 @@ const Rating = ({route}) => {
                   "",
                   [
                     { text: "OK", onPress: () => {
-                      setEventList(eventList.filter(item => item !== elem));
+                      setEventList(eventList.filter(item => item !== elem.obj.id));
                       setCheckedList(checkedItem.filter(item => item.obj.id !== elem.obj.id));
                       setPostList(postList.filter(item => item[0] !== clickedItem.id));
                     }},
@@ -169,10 +173,10 @@ const Rating = ({route}) => {
         <FlatList
           data={smallCategory}
           renderItem={renderSmallCategory}
-          style={{ margin: 20 }}
+          style={{ margin: 10 }}
           keyExtractor={(item) => item.id.toString()} 
-          numColumns={4}
-          key={4}
+          numColumns={3}
+          key={3}
         />
       </View>
 
@@ -236,10 +240,13 @@ const Rating = ({route}) => {
           </View>
         </Modal>
       </View>
-      <TouchableOpacity onPress={() => callSignup()} style={styles.btn}>
-        <Text style={styles.btntext}>완료</Text>
-      </TouchableOpacity>
+      
     </View>
+    </ScrollView>
+    <TouchableOpacity onPress={() => callSignup()} style={styles.btn}>
+      <Text style={styles.btntext}>완료</Text>
+    </TouchableOpacity>
+    </>
   );
 }
 
@@ -255,7 +262,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:50,
+    marginTop:10,
     padding:10,
   },
   title: {
@@ -271,7 +278,7 @@ const styles = StyleSheet.create({
     marginBottom:10,
   },
   flat: {
-    flex: 3,
+    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',

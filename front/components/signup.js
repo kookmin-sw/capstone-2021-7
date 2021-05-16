@@ -1,5 +1,5 @@
 import React ,{useState} from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Button,ScrollView } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -111,6 +111,7 @@ const SignUp = ({navigation}) => {
   }
   
   return (
+    <ScrollView>
     <View style={styles.myprofile}>
       <Loader loading={animating} />
       <View style={styles.top}>
@@ -156,6 +157,7 @@ const SignUp = ({navigation}) => {
         </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
   );
 }
 
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
     paddingBottom:50,
   },
   inputs: {
-    flex:5,
+    flex:1,
     justifyContent:'center',
     textAlign:'center'
   },
