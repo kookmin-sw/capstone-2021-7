@@ -17,7 +17,7 @@ from apps.store.models import *
 from apps.category.models import *
 from datetime import datetime, date, time
 import pytz
-
+import boto3
 
 class OrderMenuViewSet(viewsets.ModelViewSet):
 
@@ -52,6 +52,27 @@ class OrderMenuViewSet(viewsets.ModelViewSet):
 
             for data in datas:
                 User_SmallCategory_Order.objects.create(user=user, smallCategory=data.smallCategory)
+
+                # AWS event 전송
+                try:
+                    personalize_events = boto3.client(service_name='personalize-events')
+                    personalize_events.put_events(
+                        trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
+                        userId= str(user.id),
+                        sessionId = 'session_id',
+                        eventList = [{
+                            'sentAt': int(time.time()),
+                            'eventType': 'Order',
+                            'properties': json.dumps({
+                                'itemId': data.smallCategory.id,
+                                'eventValue': 1
+                                })
+                            }]
+                    )
+                except:
+                    print('error')
+
+
 
         return Response(
             status=status.HTTP_201_CREATED,
@@ -176,6 +197,21 @@ class UserViewSet(viewsets.ModelViewSet):
             age = age
         )
 
+        try:
+            # AWS putuser 전송
+            sex = 1 if gender=='female' else 2
+            personalize_events = boto3.client(service_name='personalize-events')
+            data = {"sex": sex, "old": age, "flavor": taste, "amount": amount, "price":price}
+            response = personalize_events.put_users(
+                datasetArn = 'arn:aws:personalize:ap-northeast-2:287004205854:dataset/fooday-dataset/USERS',
+                users = [{
+                    'userId': str(user.id),
+                    'properties': json.dumps(data)
+                }]
+            )
+        except:
+            print('error')
+
         token = Token.objects.create(user=user)
 
         try:
@@ -185,6 +221,22 @@ class UserViewSet(viewsets.ModelViewSet):
                     smallCategory=SmallCategory.objects.get(id=event[0]),
                     rating=event[1]
                 )
+                # AWS event 전송
+                personalize_events = boto3.client(service_name='personalize-events')
+                personalize_events.put_events(
+                    trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
+                    userId= str(user.id),
+                    sessionId = 'session_id',
+                    eventList = [{
+                        'sentAt': int(time.time()),
+                        'eventType': 'Like',
+                        'properties': json.dumps({
+                            'itemId': event[0],
+                            'eventValue': event[1]
+                            })
+                        }]
+                )
+
         except :
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
@@ -240,12 +292,13 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
         print("이것보다 작은 ",dateSlot2)
 
         isExist = User_SmallCategory_Feedback.objects.filter(
-            user= user, 
-            smallCategory= smallCategory, 
+            user= user,
+            smallCategory= smallCategory,
             scenario = scenario,
             timestamp__gte=dateSlot1,
             timestamp__lt=dateSlot2,
         ).exists()
+
 
         return isExist
 
@@ -257,9 +310,9 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
         current = timezone.now()
         print("로컬타임 : ",current)
         currentHour = current.time().hour
-        
+
         print("현재 시각 : ",currentHour)
-        
+
 
         if currentHour >= 0 and currentHour < 2 :
             if self.checkFeedback(request.user, smallCategory,scenario,0,2):
@@ -348,6 +401,25 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
         })
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
+
+        # AWS event 전송
+        try:
+            personalize_events = boto3.client(service_name='personalize-events')
+            personalize_events.put_events(
+                trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
+                userId= str(user.id),
+                sessionId = 'session_id',
+                eventList = [{
+                    'sentAt': int(time.time()),
+                    'eventType': 'Feedback',
+                    'properties': json.dumps({
+                        'itemId': smallCategory,
+                        'eventValue': score
+                        })
+                    }]
+            )
+        except:
+            print('error')
 
         return Response(
             status=status.HTTP_201_CREATED,
