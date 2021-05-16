@@ -19,6 +19,7 @@ from apps.category.models import *
 from datetime import datetime, date, time
 import pytz
 import boto3
+from time import time as timestamp
 
 class OrderMenuViewSet(viewsets.ModelViewSet):
 
@@ -62,10 +63,10 @@ class OrderMenuViewSet(viewsets.ModelViewSet):
                         userId= str(user.id),
                         sessionId = 'session_id',
                         eventList = [{
-                            'sentAt': int(time.time()),
+                            'sentAt': int(timestamp()),
                             'eventType': 'Order',
                             'properties': json.dumps({
-                                'itemId': data.smallCategory.id,
+                                'itemId': str(data.smallCategory.id),
                                 'eventValue': 1
                                 })
                             }]
@@ -228,34 +229,30 @@ class UserViewSet(viewsets.ModelViewSet):
 
         token = Token.objects.create(user=user)
 
-        try:
-            for event in eventList:
-                User_SmallCategory_Like.objects.create(
-                    user=user,
-                    smallCategory=SmallCategory.objects.get(id=event[0]),
-                    rating=event[1]
-                )
-                # AWS event 전송
-                personalize_events = boto3.client(service_name='personalize-events')
-                personalize_events.put_events(
-                    trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
-                    userId= str(user.id),
-                    sessionId = 'session_id',
-                    eventList = [{
-                        'sentAt': int(time.time()),
-                        'eventType': 'Like',
-                        'properties': json.dumps({
-                            'itemId': event[0],
-                            'eventValue': event[1]
-                            })
-                        }]
-                )
 
-        except :
-            return Response(
-                status=status.HTTP_400_BAD_REQUEST,
-                data={'message': '잘못된 선호도 정보입니다.'},
+        for event in eventList:
+            User_SmallCategory_Like.objects.create(
+                user=user,
+                smallCategory=SmallCategory.objects.get(id=event[0]),
+                rating=event[1]
             )
+            print(event[0], event[1])
+            # AWS event 전송
+            personalize_events = boto3.client(service_name='personalize-events')
+            personalize_events.put_events(
+                trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
+                userId= str(user.id),
+                sessionId = 'session_id',
+                eventList = [{
+                    'sentAt': int(timestamp()),
+                    'eventType': 'Like',
+                    'properties': json.dumps({
+                        'itemId': str(event[0]),
+                        'eventValue': int(event[1])
+                        })
+                    }]
+            )
+
 
         return Response(
                 status=status.HTTP_200_OK,
@@ -424,11 +421,11 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
                 userId= str(user.id),
                 sessionId = 'session_id',
                 eventList = [{
-                    'sentAt': int(time.time()),
+                    'sentAt': int(timestamp()),
                     'eventType': 'Feedback',
                     'properties': json.dumps({
-                        'itemId': smallCategory,
-                        'eventValue': score
+                        'itemId': str(smallCategory),
+                        'eventValue': int(score)
                         })
                     }]
             )
