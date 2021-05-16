@@ -10,7 +10,6 @@ class BigCategory(models.Model):
     img = models.ImageField(upload_to="bigcategory", null = True, blank = True)
 
 class SmallCategory(models.Model):
-    bigCategory = models.ForeignKey(BigCategory, on_delete=models.CASCADE, related_name = "smallCategory")
     name = models.CharField(max_length = 256, default = "null")
     img = models.ImageField(upload_to="smallcategory", null = True, blank = True)
     tag = models.ManyToManyField(Tag, through = "SmallCategory_Tag", related_name = "smallCategory")
