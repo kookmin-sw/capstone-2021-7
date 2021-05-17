@@ -8,7 +8,7 @@ const Choose = ({navigation}) => {
   return (
     <View style ={styles.choose}>
       <View style={styles.likemodal}>
-        <TouchableOpacity style={styles.btn} onPress={()=> navigation.navigate('recommend')}>
+        <TouchableOpacity style={styles.btn} onPress={()=> navigation.navigate('음식 추천')}>
           <Ionicons style={{marginRight:20}} name="person" size={33} color="white" />
           <Text style={styles.btntext}>개인 추천 받기</Text>
         </TouchableOpacity>
