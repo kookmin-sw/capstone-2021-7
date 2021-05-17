@@ -26,7 +26,7 @@ const Multi = ({navigation}) => {
   return (
     <View style ={styles.multi}>
       <View style={{flex:0.5}}></View>
-      <Ionicons style={{marginBottom:'15%'}} name="people" size={100} color="#3498DB" />
+      <Ionicons style={{marginBottom:'5%'}} name="people" size={80} color="#3498DB" />
       <Text style={{fontWeight:'bold', fontSize:15}}>함께 추천 받을 유저의 전화번호를 입력하세요</Text>
       <View style={styles.input}>
         <MaterialCommunityIcons name="cellphone-basic" size={50} color="#3498DB" />
@@ -35,7 +35,7 @@ const Multi = ({navigation}) => {
           <FontAwesome5 name="plus" size={20} color="#3498DB" />
         </TouchableOpacity>
       </View>
-      <ScrollView style={{marginTop:'10%'}}>
+      <ScrollView style={{marginTop:'7%'}}>
         <View style={styles.number}>
           <Text style={styles.list}>01074230824</Text>
           <TouchableOpacity onPress={del}>
