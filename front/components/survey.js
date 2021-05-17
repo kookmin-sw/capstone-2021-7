@@ -109,48 +109,58 @@ const Survey = ({route, navigation}) => {
           <View style={styles.radiobtn}>
             <View style={styles.radiobtn}>
               <Text style={{fontWeight:'bold'}}>1점</Text>
-              <RadioButton
-                value="1"
-                color="#3498DB"
-                status={ price === '1' ? 'checked' : 'unchecked' }
-                onPress={() => setPrice('1')}
-              />
+              <View style={{borderWidth:1}}>
+                <RadioButton
+                  value="1"
+                  color="#3498DB"
+                  status={ price === '1' ? 'checked' : 'unchecked' }
+                  onPress={() => setPrice('1')}
+                />
+              </View>
             </View>
             <View style={styles.radiobtn}>
-              <Text style={{fontWeight:'bold'}}>2점</Text>
+              <Text style={{fontWeight:'bold', borderRadius:35}}>2점</Text>
+              <View style={{borderWidth:1}}>
               <RadioButton
                 value="2"
                 color="#3498DB"
                 status={ price === '2' ? 'checked' : 'unchecked' }
                 onPress={() => setPrice('2')}
               />
+              </View>
             </View>
             <View style={styles.radiobtn}>
               <Text style={{fontWeight:'bold'}}>3점</Text>
+              <View style={{borderWidth:1}}>
               <RadioButton
                 value="3"
                 color="#3498DB"
                 status={ price === '3' ? 'checked' : 'unchecked' }
                 onPress={() => setPrice('3')}
               />
+              </View>
             </View>
             <View style={styles.radiobtn}>
               <Text style={{fontWeight:'bold'}}>4점</Text>
+              <View style={{borderWidth:1}}>
               <RadioButton
                 value="4"
                 color="#3498DB"
                 status={ price === '4' ? 'checked' : 'unchecked' }
                 onPress={() => setPrice('4')}
               />
+              </View>
             </View>
             <View style={styles.radiobtn}>
               <Text style={{fontWeight:'bold'}}>5점</Text>
+              <View style={{borderWidth:1}}>
               <RadioButton
                 value="5"
                 color="#3498DB"
                 status={ price === '5' ? 'checked' : 'unchecked' }
                 onPress={() => setPrice('5')}
               />
+              </View>
             </View>
           </View>
         </View>

@@ -111,59 +111,65 @@ const SignUp = ({navigation}) => {
   }
   
   return (
-    <ScrollView>
-    <View style={styles.myprofile}>
-      <Loader loading={animating} />
-      <View style={styles.top}>
-        <Text style={styles.signuptext}>
-          <Ionicons name="person-add" size={60} color="#3498DB" />{'\t'}회원가입
-        </Text>
-      </View>
-      <View style={styles.inputs}>
-        <TextInput value={name} style={styles.input} onChangeText={text => setName(text)} placeholder=" 이름"></TextInput>
-        <TextInput value={phone} style={styles.input} keyboardType="number-pad" onChangeText={text => setPhone(text)} placeholder=" 번호 ( ex: 01012345678 )"></TextInput>
-        <TextInput value={username} style={styles.input} returnKeyType="next" onChangeText={text => setUsername(text)} placeholder=" 아이디"></TextInput>
-        <TextInput secureTextEntry={true} value={password} style={styles.input} onChangeText={text => setPassword(text)} placeholder=" 비밀번호"></TextInput>
-        <TextInput secureTextEntry={true} value={checkpassword} style={styles.input} onChangeText={text => setCheckPassword(text)} placeholder=" 비밀번호 확인"></TextInput>
-        <TextInput value={age} style={styles.input} onChangeText={text => setAge(text)} placeholder=" 나이 ( ex: 24 )"></TextInput>
-        <View style={styles.radiobtn}>
+    <ScrollView style={{flex:1}}>
+      <View style={styles.myprofile}>
+
+        <View style={styles.top}>
+          <Text style={styles.signuptext}>
+            <Ionicons name="person-add" size={60} color="#3498DB" />{'\t'}회원가입
+          </Text>
+        </View>
+
+        <View style={styles.inputs}>
+          <TextInput value={name} style={styles.input} onChangeText={text => setName(text)} placeholder=" 이름"></TextInput>
+          <TextInput value={phone} style={styles.input} keyboardType="number-pad" onChangeText={text => setPhone(text)} placeholder=" 번호 ( ex: 01012345678 )"></TextInput>
+          <TextInput value={username} style={styles.input} returnKeyType="next" onChangeText={text => setUsername(text)} placeholder=" 아이디"></TextInput>
+          <TextInput secureTextEntry={true} value={password} style={styles.input} onChangeText={text => setPassword(text)} placeholder=" 비밀번호"></TextInput>
+          <TextInput secureTextEntry={true} value={checkpassword} style={styles.input} onChangeText={text => setCheckPassword(text)} placeholder=" 비밀번호 확인"></TextInput>
+          <TextInput value={age} style={styles.input} onChangeText={text => setAge(text)} placeholder=" 나이 ( ex: 24 )"></TextInput>
           <View style={styles.radiobtn}>
-            <Text>남자</Text>
-            <RadioButton
-              value="male"
-              color="#3498DB"
-              status={ gender === 'male' ? 'checked' : 'unchecked' }
-              onPress={() => setGender('male')}
-            />
-          </View>
-          <View style={styles.radiobtn}>
-            <Text>여자</Text>
-            <RadioButton
-              value="female"
-              color="#3498DB"
-              status={ gender === 'female' ? 'checked' : 'unchecked' }
-              onPress={() => setGender('female')}
-            />
+            <View style={styles.radiobtn}>
+              <Text>남자 </Text>
+              <View style={{borderWidth:1, borderRadius:35}}>
+              <RadioButton
+                value="male"
+                color="#3498DB"
+                status={ gender === 'male' ? 'checked' : 'unchecked' }
+                onPress={() => setGender('male')}
+              />
+              </View>
+            </View>
+            <View style={styles.radiobtn}>
+              <Text>여자 </Text>
+              <View style={{borderWidth:1, borderRadius:35}}>
+              <RadioButton
+                value="female"
+                color="#3498DB"
+                status={ gender === 'female' ? 'checked' : 'unchecked' }
+                onPress={() => setGender('female')}
+              />
+              </View>
+            </View>
           </View>
         </View>
+
+        <View style={styles.buttons}>
+          <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            inspection();
+          }}>
+            <Text style={styles.text}>다음</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.buttons}>
-        <TouchableOpacity
-         style={styles.button}
-         onPress={() => {
-          inspection();
-         }}>
-          <Text style={styles.text}>다음</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   myprofile: {
-    flex: 1,
+    flex:1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -181,7 +187,7 @@ const styles = StyleSheet.create({
     paddingBottom:50,
   },
   inputs: {
-    flex:1,
+    flex:5,
     justifyContent:'center',
     textAlign:'center'
   },
@@ -203,6 +209,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   buttons: {
+    flex:1,
     flexDirection:'row',
     marginTop:20,
   },
@@ -220,9 +227,6 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     textAlign:'center',
     color:'white',
-  },
-  label:{
-    margin:8
   },
   radiobtn:{
     flexDirection:'row',
