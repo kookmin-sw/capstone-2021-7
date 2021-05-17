@@ -93,11 +93,11 @@ const Rating = ({route}) => {
   const callSignup = async () =>{
     await signup(postData)
       .then((result) => {
-        console.log(result.data);
+        console.log("로그인에 잘되었어?",result.data);
         navigation.navigate('success');
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data);
         alert('알수없는 오류가 발생했습니다');
       });
   }
