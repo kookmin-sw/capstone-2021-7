@@ -302,7 +302,26 @@ const TabBar = () => {
             }
           },
         })}/>
-      <Tab.Screen name="myorder" component={MyOrderStackScreen}/>
+      <Tab.Screen 
+        name="myorder" 
+        component={MyOrderStackScreen}
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+            if (isLogin === false ){
+              Alert.alert(
+                "로그인이 필요한 서비스입니다",
+                "로그인해주세요",
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+            } else {
+              navigation.navigate('myorder');
+            }
+          },
+        })}/>
       <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
     </Tab.Navigator>
   );
