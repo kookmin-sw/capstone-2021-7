@@ -293,9 +293,6 @@ const styles = StyleSheet.create({
     backgroundColor:"#3498DB",
     borderRadius:5,
     padding:10,
-    margin:10,
-    width:350,
-    height:50
   },
   btntext: {
     color:'white', 

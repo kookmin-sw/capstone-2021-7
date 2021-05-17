@@ -33,6 +33,8 @@ import Rating from './components/rating';
 import SignUp from './components/signup';
 import MyDetailOrder from './components/mydetailorder';
 import LocationList from './components/locationlist';
+// import Choose from './components/choose';
+// import Multi from './components/multi';
 
 // context
 import UserLocationProvider from './context/userlocationprovider';
@@ -195,6 +197,33 @@ const RecommendStackScreen = () => {
   );
 }
 
+// const MultiStack = createStackNavigator();
+
+// const MultiStackScreen = () => {
+//   return(
+//     <MultiStack.Navigator
+//       screenOptions={{
+//         headerStyle: {
+//           backgroundColor: '#3498DB',
+//           height: 120,
+//         },
+//         headerTitleAlign: 'center',
+//         headerTitleStyle: {
+//           fontWeight: 'bold',
+//           color: 'white',
+//           fontSize: 20,
+//         },
+//         headerBackTitle: " ",
+//         headerBackTitleStyle: {
+//           color: 'white'
+//         },
+//       }}>
+//       <MultiStack.Screen name="choose" component={Choose}/>
+//       <MultiStack.Screen name="multi" component={Multi}/>
+//       <RecommendStack.Screen name="recommend" component={Recommend}/>
+//     </MultiStack.Navigator>
+//   );
+// }
 
 const Tab = createBottomTabNavigator();
 
@@ -269,7 +298,7 @@ const TabBar = () => {
       }}
     >
       <Tab.Screen name="main" children={()=><MainStackScreen/>}/>
-      <Tab.Screen name="mystore" component={MyStoreStackScreen}/>
+      <Tab.Screen name="mystore" component={MyStore}/>
       <Tab.Screen 
         name="recommend" 
         component={RecommendStackScreen}
