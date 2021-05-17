@@ -78,7 +78,7 @@ const Login = ({navigation}) => {
           </View>
           <View style={styles.buttons}>
             <TouchableOpacity onPress={onClick} style={styles.button1}>
-              <Text style={styles.text}>완료{'\t'}{'\t'}</Text>
+              <Text style={styles.text}>완료</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={()=>navigation.navigate('signup')} style={styles.button2}>
               <Text style={styles.text}>회원가입</Text>
