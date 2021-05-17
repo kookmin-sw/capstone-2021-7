@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     backgroundColor:"#3498DB",
     borderRadius:5,
     padding:15,
-    margin:10,
+    margin:'10%',
     width:300,
   },
   text:{
