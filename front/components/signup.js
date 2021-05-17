@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Button,Scro
 
 import { Ionicons } from '@expo/vector-icons';
 
+
 import { RadioButton } from 'react-native-paper';
 
-import Loader from './loader';
 
 import { checkUserName, checkPhone } from '../api/user-api';
 
@@ -129,26 +129,28 @@ const SignUp = ({navigation}) => {
           <TextInput value={age} style={styles.input} onChangeText={text => setAge(text)} placeholder=" 나이 ( ex: 24 )"></TextInput>
           <View style={styles.radiobtn}>
             <View style={styles.radiobtn}>
-              <Text>남자 </Text>
-              <View style={{borderWidth:1, borderRadius:35}}>
+              <TouchableOpacity onPress={() => setGender('male')}>
+                <Text>남자 </Text>
+              </TouchableOpacity>
               <RadioButton
                 value="male"
                 color="#3498DB"
                 status={ gender === 'male' ? 'checked' : 'unchecked' }
                 onPress={() => setGender('male')}
               />
-              </View>
+              
             </View>
             <View style={styles.radiobtn}>
-              <Text>여자 </Text>
-              <View style={{borderWidth:1, borderRadius:35}}>
+              <TouchableOpacity onPress={() => setGender('female')}>
+                <Text>여자 </Text>
+              </TouchableOpacity>
               <RadioButton
                 value="female"
                 color="#3498DB"
                 status={ gender === 'female' ? 'checked' : 'unchecked' }
                 onPress={() => setGender('female')}
               />
-              </View>
+              
             </View>
           </View>
         </View>

@@ -55,7 +55,9 @@ const Survey = ({route, navigation}) => {
           </Text>
           <View style={styles.radiobtn}>
             <View style={styles.radiobtn}>
+              <TouchableOpacity onPress={() => setTaste('1')}>
               <Text style={{fontWeight:'bold'}}>1점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="1"
                 color="#3498DB"
@@ -64,7 +66,9 @@ const Survey = ({route, navigation}) => {
               />
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setTaste('2')}>
               <Text style={{fontWeight:'bold'}}>2점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="2"
                 color="#3498DB"
@@ -73,7 +77,9 @@ const Survey = ({route, navigation}) => {
               />
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setTaste('3')}>
               <Text style={{fontWeight:'bold'}}>3점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="3"
                 color="#3498DB"
@@ -82,7 +88,9 @@ const Survey = ({route, navigation}) => {
               />
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setTaste('4')}>
               <Text style={{fontWeight:'bold'}}>4점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="4"
                 color="#3498DB"
@@ -91,7 +99,9 @@ const Survey = ({route, navigation}) => {
               />
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setTaste('5')}>
               <Text style={{fontWeight:'bold'}}>5점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="5"
                 color="#3498DB"
@@ -108,59 +118,65 @@ const Survey = ({route, navigation}) => {
           </Text>
           <View style={styles.radiobtn}>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setPrice('1')}>
               <Text style={{fontWeight:'bold'}}>1점</Text>
-              <View style={{borderWidth:1}}>
+              </TouchableOpacity>
                 <RadioButton
                   value="1"
                   color="#3498DB"
                   status={ price === '1' ? 'checked' : 'unchecked' }
                   onPress={() => setPrice('1')}
                 />
-              </View>
+              
+            
             </View>
             <View style={styles.radiobtn}>
-              <Text style={{fontWeight:'bold', borderRadius:35}}>2점</Text>
-              <View style={{borderWidth:1}}>
+            <TouchableOpacity onPress={() => setPrice('2')}>
+              <Text style={{fontWeight:'bold'}}>2점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="2"
                 color="#3498DB"
                 status={ price === '2' ? 'checked' : 'unchecked' }
                 onPress={() => setPrice('2')}
               />
-              </View>
+              
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setPrice('3')}>
               <Text style={{fontWeight:'bold'}}>3점</Text>
-              <View style={{borderWidth:1}}>
+              </TouchableOpacity>
               <RadioButton
                 value="3"
                 color="#3498DB"
                 status={ price === '3' ? 'checked' : 'unchecked' }
                 onPress={() => setPrice('3')}
               />
-              </View>
+             
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setPrice('4')}>
               <Text style={{fontWeight:'bold'}}>4점</Text>
-              <View style={{borderWidth:1}}>
+              </TouchableOpacity>
               <RadioButton
                 value="4"
                 color="#3498DB"
                 status={ price === '4' ? 'checked' : 'unchecked' }
                 onPress={() => setPrice('4')}
               />
-              </View>
+              
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setPrice('5')}>
               <Text style={{fontWeight:'bold'}}>5점</Text>
-              <View style={{borderWidth:1}}>
+              </TouchableOpacity>
               <RadioButton
                 value="5"
                 color="#3498DB"
                 status={ price === '5' ? 'checked' : 'unchecked' }
                 onPress={() => setPrice('5')}
               />
-              </View>
+             
             </View>
           </View>
         </View>
@@ -171,7 +187,9 @@ const Survey = ({route, navigation}) => {
           </Text>
           <View style={styles.radiobtn}>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setAmount('1')}>
               <Text style={{fontWeight:'bold'}}>1점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="1"
                 color="#3498DB"
@@ -180,7 +198,9 @@ const Survey = ({route, navigation}) => {
               />
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setAmount('2')}>
               <Text style={{fontWeight:'bold'}}>2점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="2"
                 color="#3498DB"
@@ -189,7 +209,9 @@ const Survey = ({route, navigation}) => {
               />
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setAmount('3')}>
               <Text style={{fontWeight:'bold'}}>3점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="3"
                 color="#3498DB"
@@ -198,7 +220,9 @@ const Survey = ({route, navigation}) => {
               />
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setAmount('4')}>
               <Text style={{fontWeight:'bold'}}>4점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="4"
                 color="#3498DB"
@@ -207,7 +231,9 @@ const Survey = ({route, navigation}) => {
               />
             </View>
             <View style={styles.radiobtn}>
+            <TouchableOpacity onPress={() => setAmount('5')}>
               <Text style={{fontWeight:'bold'}}>5점</Text>
+              </TouchableOpacity>
               <RadioButton
                 value="5"
                 color="#3498DB"
