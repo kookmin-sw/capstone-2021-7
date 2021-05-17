@@ -40,7 +40,10 @@ const LocationList = () => {
         <View style={styles.category}>
           <Text style={styles.categoryname}>위치를 입력해주세요</Text>
           <Text></Text>
-          <Button title="주소검색하기" onPress={()=>navigation.push('postcode')}/>
+          <TouchableOpacity style={styles.searchbtn} onPress={()=>navigation.push('postcode')}>
+            <Text style={styles.searchtext}>주소 검색하기</Text>
+          </TouchableOpacity>
+          {/* <Button title="주소검색하기" onPress={()=>navigation.push('postcode')}/> */}
         </View>
       </View>
 
@@ -137,6 +140,19 @@ const styles = StyleSheet.create({
   tqname:{
     marginLeft:15,
     justifyContent:'center',
+  },
+  searchbtn: {
+    alignItems:'center',
+    justifyContent:'center',
+    height:50,
+    width:150,
+    backgroundColor:'#3498DB',
+    borderRadius:5
+  },
+  searchtext: {
+    color:"white",
+    fontWeight:'bold',
+    fontSize:14
   }
 });
 

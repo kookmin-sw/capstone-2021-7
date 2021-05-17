@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -34,7 +34,7 @@ const Location = () => {
 
   return (
     <View style={styles.container}>
-      <Text>{userLocation}</Text>
+      <Text style={styles.userlocation}>{userLocation}</Text>
       <View>
         <TextInput
           style={styles.input}
@@ -42,7 +42,10 @@ const Location = () => {
           onChangeText={text => setDetailLocation(text)}
           placeholder="상세주소를 입력해주세요"
         />
-        <Button title="확인" onPress={onClick}/>
+        <TouchableOpacity style={styles.searchbtn} onPress={onClick}>
+          <Text style={styles.searchtext}>확인</Text>
+        </TouchableOpacity>
+        {/* <Button title="확인" onPress={onClick}/> */}
       </View>
     </View>
   );
@@ -57,9 +60,32 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    margin: 12,
-    borderWidth: 1,
+    width:200,
+    margin: 25,
+    borderWidth: 2,
+    textAlign:'center',
+    justifyContent:'center',
   },
+  userlocation: {
+    fontSize:18,
+    fontWeight:'bold',
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  searchbtn: {
+    alignItems:'center',
+    justifyContent:'center',
+    height:50,
+    width:250,
+    backgroundColor:'#3498DB',
+    borderRadius:5,
+    marginTop:'15%',
+  },
+  searchtext: {
+    color:"white",
+    fontWeight:'bold',
+    fontSize:14
+  }
 });
 
 export default Location;

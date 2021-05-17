@@ -289,7 +289,8 @@ const styles = StyleSheet.create({
     categoryimg: {
       width: 70,
       height: 70,
-      marginBottom:5
+      marginBottom:5,
+      borderRadius:30,
     },
 });
 

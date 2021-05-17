@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Modal, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Modal, ScrollView, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -93,11 +93,11 @@ const Rating = ({route}) => {
   const callSignup = async () =>{
     await signup(postData)
       .then((result) => {
-        console.log(result.data);
+        console.log("로그인에 잘되었어?",result.data);
         navigation.navigate('success');
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data);
         alert('알수없는 오류가 발생했습니다');
       });
   }
@@ -115,8 +115,9 @@ const Rating = ({route}) => {
         <TouchableOpacity onPress={ () => {
             onClick(item) }}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <FontAwesome name="circle" size={72} color="#E0E0E0" />
+            {/* <FontAwesome name="circle" size={72} color="#E0E0E0" /> */}
             {/* <Image source={{ uri: item.src }} style={styles.tinyImage} /> */}
+            <Image source={{ uri: item.img }} style={{ width:40, height:40, marginBottom:5, borderRadius:23 }} />
             <View style={{ width: 60 }}>
               <Text style={{ textAlign: "center" }}>{item.name} </Text>
             </View>
