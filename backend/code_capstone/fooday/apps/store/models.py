@@ -7,7 +7,7 @@ from apps.account.models import *
 
 class Store(models.Model):
     location = models.CharField(max_length = 256, default = "null")
-    intro = models.TextField(default = "null")
+    intro = models.TextField(default = "null", null=True)
     name = models.CharField(max_length = 150, default = "null")
     img = models.TextField(default = "null",null=True)
     bigcategory = models.ManyToManyField(BigCategory, through = "Store_BigCategory")

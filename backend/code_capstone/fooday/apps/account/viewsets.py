@@ -16,7 +16,7 @@ from .serializers import *
 from apps.utils import *
 from apps.store.models import *
 from apps.category.models import *
-from datetime import datetime, date, time
+from datetime import datetime, date, time, timedelta
 import pytz
 import boto3
 from time import time as timestamp
@@ -314,10 +314,17 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
     def checkFeedback(self, user, smallCategory, scenario, start, end):
         currentDate = date.today()
         print("오늘 : ",currentDate)
+        tomorrowDate = currentDate + timedelta(days=1)
+        print("내일 : ", tomorrowDate )
         hourSlot1 = time(start)
-        hourSlot2 = time(end)
         dateSlot1 = datetime.combine(currentDate,hourSlot1)
-        dateSlot2 = datetime.combine(currentDate,hourSlot2)
+        if int(end) == 23:
+            hourSlot2 = time(0)
+            dateSlot2 = datetime.combine(tomorrowDate,hourSlot2)
+        else :
+            hourSlot2 = time(end)
+            dateSlot2 = datetime.combine(currentDate,hourSlot2)
+        
         print("이것보다 크고 ",dateSlot1)
         print("이것보다 작은 ",dateSlot2)
 
@@ -328,7 +335,6 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
             timestamp__gte=dateSlot1,
             timestamp__lt=dateSlot2,
         ).exists()
-
 
         return isExist
 
@@ -411,7 +417,7 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
                     data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
                 )
         elif currentHour >= 22 and currentHour < 24 :
-            if self.checkFeedback(request.user, smallCategory,scenario,22,24):
+            if self.checkFeedback(request.user, smallCategory,scenario,22,23):
                 return Response(
                     status=status.HTTP_400_BAD_REQUEST,
                     data={'message': '피드백 할 수 있는 시간대가 아닙니다.'}
@@ -442,7 +448,7 @@ class UserSmallCategoryFeedbackViewSet(viewsets.ModelViewSet):
             )
             personalize_events.put_events(
                 trackingId = '35969295-2f06-4f1e-a61a-ff3be97a4554',
-                userId= str(user.id),
+                userId= str(request.user.id),
                 sessionId = 'session_id',
                 eventList = [{
                     'sentAt': int(timestamp()),
