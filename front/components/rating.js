@@ -157,7 +157,7 @@ const Rating = ({route}) => {
                     { text: "OK", onPress: () => {
                       setEventList(eventList.filter(item => item !== elem.obj.id));
                       setCheckedList(checkedItem.filter(item => item.obj.id !== elem.obj.id));
-                      setPostList(postList.filter(item => item[0] !== clickedItem.id));
+                      setPostList(postList.filter(item => item[0] !== elem.obj.id));
                     }},
                     { text: "cancle", onPress: () => console.log("Ask me later pressed")}
                   ]

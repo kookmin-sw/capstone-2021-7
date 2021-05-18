@@ -191,12 +191,14 @@ const RecommendStackScreen = () => {
           color: 'white'
         },
       }}>
+      
       <RecommendStack.Screen name="choose" component={Choose}/>
       <RecommendStack.Screen name="multi" component={Multi}/>
       <RecommendStack.Screen name="음식 추천" component={Recommend}/>
       <RecommendStack.Screen name="store" component={Store}/>
       <RecommendStack.Screen name="menu" component={Menu}/>
       <RecommendStack.Screen name="recommendmany" component={RecommendMany}/>
+      <RecommendStack.Screen name="sorry" component={MyStore}/>
     </RecommendStack.Navigator>
   );
 }
