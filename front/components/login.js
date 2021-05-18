@@ -80,10 +80,12 @@ const Login = ({navigation}) => {
             <TouchableOpacity onPress={onClick} style={styles.button1}>
               <Text style={styles.text}>완료</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigation.navigate('signup')} style={styles.button2}>
+          </View>
+          <View>
+          <TouchableOpacity onPress={()=>navigation.navigate('signup')} style={styles.button2}>
               <Text style={styles.text}>회원가입</Text>
             </TouchableOpacity>
-          </View>
+            </View>
         </View>
       : <View style={styles.myprofile}>
           <Ionicons name="person-circle-outline" size={100} color="#3498DB" />
