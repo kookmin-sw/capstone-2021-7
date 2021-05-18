@@ -28,12 +28,13 @@ class OrderSerializer(serializers.ModelSerializer):
         returnList= []
         menuList = obj.orderMenu.all()
         for menu in menuList:
-            store = menu.store.name
+            store = menu.store
             menu = model_to_dict(menu)
             returnList.append({
                 "name" : menu['name'],
                 "price": menu['price'],
-                "store": store,
+                "store": store.name,
+                "storeImg": store.img,
                 })
         return returnList
 
