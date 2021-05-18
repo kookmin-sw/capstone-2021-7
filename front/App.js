@@ -35,6 +35,7 @@ import MyDetailOrder from './components/mydetailorder';
 import LocationList from './components/locationlist';
 import Choose from './components/choose';
 import Multi from './components/multi';
+import RecommendMany from './components/recommendmany';
 
 // context
 import UserLocationProvider from './context/userlocationprovider';
@@ -195,6 +196,7 @@ const RecommendStackScreen = () => {
       <RecommendStack.Screen name="음식 추천" component={Recommend}/>
       <RecommendStack.Screen name="store" component={Store}/>
       <RecommendStack.Screen name="menu" component={Menu}/>
+      <RecommendStack.Screen name="recommendmany" component={RecommendMany}/>
     </RecommendStack.Navigator>
   );
 }

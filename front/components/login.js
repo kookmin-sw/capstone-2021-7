@@ -77,10 +77,9 @@ const Login = ({navigation}) => {
               placeholder=" 비밀번호"/>
           </View>
           <View style={styles.buttons}>
-            <TouchableOpacity onPress={onClick} style={styles.button2}>
-              <Text style={styles.text}>완료{'\t'}{'\t'}</Text>
+            <TouchableOpacity onPress={onClick} style={styles.button1}>
+              <Text style={styles.text}>완료</Text>
             </TouchableOpacity>
-            
           </View>
           <View>
           <TouchableOpacity onPress={()=>navigation.navigate('signup')} style={styles.button2}>
