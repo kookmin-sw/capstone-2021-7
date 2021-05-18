@@ -91,8 +91,9 @@ class StoreSmallCategoryViewSet(viewsets.ModelViewSet):
                 )
             menus = Menu.objects.filter(smallCategory=smallCategory)
             location = location.split()[1]
-
+            print(location)
             stores = Store.objects.filter(menu__in=menus, location__contains=location)
+            print(stores)
             if (stores is None):
                 return Response(
                     status = status.HTTP_400_BAD_REQUEST,
