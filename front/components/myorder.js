@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -34,13 +34,15 @@ const MyOrder = () => {
     <View style={styles.store}>
       <View style={styles.top}>
         <View style={styles.category}>
-          <FontAwesome name="circle" size={120} color="#E0E0E0"/>
+          <FontAwesome5 name="clipboard-list" color="#3498DB" size={50} />
+          <Text></Text>
           <Text style={styles.categoryname}>주문 내역</Text>
         </View>
       </View>
 
       <ScrollView style={styles.list}>
         {orderList.map((elem, key) => {
+          console.log(elem);
           const words = elem.timestamp.split('-');
           const day = words[2].split('T');
           return(
@@ -57,7 +59,7 @@ const MyOrder = () => {
               >
               <View style={styles.tq}>
                 <View>
-                  <FontAwesome name="square" size={80} color="#E0E0E0" />
+                  <Image source={{ uri: elem.menu[0].storeImg }} style={styles.categoryimg} />
                 </View>
                 <View style={styles.tqname}>
                   <Text style={styles.smallText2}>{words[0]}  {words[1]}/{day[0]} </Text>
@@ -130,7 +132,13 @@ const styles = StyleSheet.create({
   tqname:{
     marginLeft:15,
     justifyContent:'center',
-  }
+  },
+  categoryimg: {
+    width: 70,
+    height: 70,
+    marginBottom:5,
+    borderRadius:30,
+  },
 });
 
 
