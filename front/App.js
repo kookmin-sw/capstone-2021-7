@@ -33,6 +33,9 @@ import Rating from './components/rating';
 import SignUp from './components/signup';
 import MyDetailOrder from './components/mydetailorder';
 import LocationList from './components/locationlist';
+import Choose from './components/choose';
+import Multi from './components/multi';
+import RecommendMany from './components/recommendmany';
 
 // context
 import UserLocationProvider from './context/userlocationprovider';
@@ -188,9 +191,12 @@ const RecommendStackScreen = () => {
           color: 'white'
         },
       }}>
+      <RecommendStack.Screen name="choose" component={Choose}/>
+      <RecommendStack.Screen name="multi" component={Multi}/>
       <RecommendStack.Screen name="음식 추천" component={Recommend}/>
       <RecommendStack.Screen name="store" component={Store}/>
       <RecommendStack.Screen name="menu" component={Menu}/>
+      <RecommendStack.Screen name="recommendmany" component={RecommendMany}/>
     </RecommendStack.Navigator>
   );
 }
@@ -298,7 +304,26 @@ const TabBar = () => {
             }
           },
         })}/>
-      <Tab.Screen name="myorder" component={MyOrderStackScreen}/>
+      <Tab.Screen 
+        name="myorder" 
+        component={MyOrderStackScreen}
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+            if (isLogin === false ){
+              Alert.alert(
+                "로그인이 필요한 서비스입니다",
+                "로그인해주세요",
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+            } else {
+              navigation.navigate('myorder');
+            }
+          },
+        })}/>
       <Tab.Screen name="myprofile" component={MyProfileStackScreen}/>
     </Tab.Navigator>
   );
