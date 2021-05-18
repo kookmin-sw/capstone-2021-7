@@ -11,7 +11,7 @@ const RecommendMany = ({navigation}) => {
       <View style={styles.top}>
         <FontAwesome5 name="thumbs-up" size={50} color="#3498DB" />
       </View>
-      <View style={{flex:3}}>
+      <View style={{flex:3.5}}>
         <View style={styles.listone}>
           <FontAwesome name="circle" size={150} color="#E0E0E0" />
           <Text style={{padding:10}}></Text>
@@ -43,11 +43,12 @@ const styles = StyleSheet.create({
     flex:0.5,
     alignItems:'center',
     justifyContent:'center',
-    marginTop:'15%',
+    // marginTop:'10%',
     marginBottom:'15%',
     borderBottomColor:'#3498DB',
     borderBottomWidth:5,
-    width:300
+    width:300,
+    padding:'10%'
   },
   listone:{
     flexDirection:'row',
