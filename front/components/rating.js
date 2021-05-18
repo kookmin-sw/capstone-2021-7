@@ -272,12 +272,12 @@ const styles = StyleSheet.create({
   title: {
     color: "#3498DB",
     fontWeight: 'bold',
-    fontSize:18,
+    fontSize:16,
   },
   sub: {
     color: "#3498DB",
     fontWeight: 'bold',
-    fontSize:15,
+    fontSize:14,
     marginTop:5,
     marginBottom:10,
   },
