@@ -55,7 +55,7 @@ const Recommend = () => {
           <Text style={{fontWeight:'bold'}}>나에게 딱 맞는 음식 추천중 aws는 "짝수시 정각"마다 갱신됩니다. </Text>
           <Text style={{fontWeight:'bold'}}>ex) 10시, 12시, 2시, 4시</Text>
           <Text style={{fontWeight:'bold'}}>나에게 딱 맞는 음식 추천중 자체개발알고리즘은 "30분"마다 갱신됩니다. </Text>
-          <Text style={{fontWeight:'bold'}}>피드백은 각 추천에 대해 두시간에 한번씩 가능합니다.</Text>
+          <Text style={{fontWeight:'bold'}}>피드백은 각 추천별로 각 카테고리에 대해 두시간에 한번씩 가능합니다.</Text>
       </View>
       { animating === true
         ?

@@ -2,7 +2,7 @@ import axios from "axios";
 
 import AsyncStorage from "@react-native-community/async-storage";
 
-axios.defaults.baseURL = "http://ec2-13-209-254-218.ap-northeast-2.compute.amazonaws.com:8080/";
+axios.defaults.baseURL = "http://ec2-13-209-254-218.ap-northeast-2.compute.amazonaws.com:8088/";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
