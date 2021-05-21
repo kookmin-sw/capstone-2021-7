@@ -82,10 +82,13 @@ const Login = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View>
-          <TouchableOpacity onPress={()=>navigation.navigate('signup')} style={styles.button2}>
-              <Text style={styles.text}>회원가입</Text>
-            </TouchableOpacity>
+            <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center'}}>
+              <Text style={{color:'gray',fontSize:15, fontWeight:'bold', marginRight:'5%'}}>아직 회원이 아니신가요?</Text>
+              <TouchableOpacity onPress={()=>navigation.navigate('signup')} style={styles.button2}>
+                <Text style={styles.text2}>회원가입</Text>
+              </TouchableOpacity>
             </View>
+          </View>
         </View>
       : <View style={styles.myprofile}>
           <Ionicons name="person-circle-outline" size={100} color="#3498DB" />
@@ -140,23 +143,24 @@ const styles = StyleSheet.create({
     backgroundColor:"#3498DB",
     borderRadius:5,
     padding:10,
-    margin:10,
-    width:100,
+    marginBottom:'10%',
+    width:300,
   },
   button2: {
-    borderColor:"#3498DB",
-    borderWidth:2,
-    backgroundColor:"#3498DB",
-    borderRadius:5,
-    padding:10,
-    margin:10,
-    width:180
+    borderBottomWidth:2,
+    borderColor:'#3498DB',
+    padding:3,
   },
   text:{
-    fontSize:15,
+    fontSize:18,
     fontWeight:'bold',
     textAlign:'center',
     color:'white',
+  },
+  text2:{
+    color:'#3498DB',
+    fontWeight:'bold',
+    fontSize:18
   },
   greet: {
     fontWeight:'bold',

@@ -12,7 +12,7 @@ const Choose = ({navigation}) => {
           <Ionicons style={{marginRight:20}} name="person" size={33} color="white" />
           <Text style={styles.btntext}>개인 추천 받기</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={()=> navigation.navigate('sorry')}>
+        <TouchableOpacity style={styles.btn} onPress={()=> navigation.navigate('multi')}>
           <Ionicons style={{marginRight:20}} name="people" size={40} color="white" />
           <Text style={styles.btntext}>다수 추천 받기</Text>
         </TouchableOpacity>

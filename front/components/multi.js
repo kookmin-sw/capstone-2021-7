@@ -12,13 +12,22 @@ const Multi = ({navigation}) => {
   const [phone, setPhone] = useState("");
   const [phoneList, setPhoneList] = useState([]);
 
-  const del = () => {
+  const addNumber = () => {
+    setPhoneList(phoneList => [...phoneList, phone]);
+    console.log('추가')
+  }
+
+  const deleteNumber = () => {
+    console.log('삭제')
+  }
+
+  const deleteAlert = () => {
     Alert.alert(
       "Fooday",
       "목록에서 선택한 번호가 지워집니다",
       [
         { text: "취소", style: "cancel", onPress: () => console.log("취소") },
-        { text: "삭제", onPress: () => console.log("삭제") }
+        { text: "삭제", onPress: () => deleteNumber }
       ]
     );
   }
@@ -31,14 +40,14 @@ const Multi = ({navigation}) => {
       <View style={styles.input}>
         <MaterialCommunityIcons name="cellphone-basic" size={50} color="#3498DB" />
         <TextInput style={styles.textinput} value={phone} onChangeText={text => setPhone(text)} placeholder=" ex) 01012345678"></TextInput>
-        <TouchableOpacity onPress={console.log(phone)}>
+        <TouchableOpacity onPress={addNumber}>
           <FontAwesome5 name="plus" size={20} color="#3498DB" />
         </TouchableOpacity>
       </View>
       <ScrollView style={{marginTop:'7%'}}>
         <View style={styles.number}>
           <Text style={styles.list}>01074230824</Text>
-          <TouchableOpacity onPress={del}>
+          <TouchableOpacity onPress={deleteAlert}>
             <AntDesign name="delete" size={18} color="gray" />
           </TouchableOpacity>
         </View>
