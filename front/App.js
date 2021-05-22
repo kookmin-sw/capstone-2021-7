@@ -193,11 +193,11 @@ const RecommendStackScreen = () => {
       }}>
       
       <RecommendStack.Screen name="choose" component={Choose}/>
-      <RecommendStack.Screen name="multi" component={Multi}/>
+      <RecommendStack.Screen options={{ title: '다수 추천' }} name="multi" component={Multi}/>
       <RecommendStack.Screen name="음식 추천" component={Recommend}/>
       <RecommendStack.Screen name="store" component={Store}/>
       <RecommendStack.Screen name="menu" component={Menu}/>
-      <RecommendStack.Screen name="recommendmany" component={RecommendMany}/>
+      <RecommendStack.Screen options={{ title: '다수 추천' }} name="recommendmany" component={RecommendMany}/>
       <RecommendStack.Screen name="sorry" component={MyStore}/>
     </RecommendStack.Navigator>
   );
