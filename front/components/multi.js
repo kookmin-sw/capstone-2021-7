@@ -8,7 +8,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
 import { checkPhone } from '../api/user-api';
-import { getRecommendCategoryMany } from '../api/user-api';
 
 const Multi = ({navigation}) => {
 
@@ -39,26 +38,7 @@ const Multi = ({navigation}) => {
   }
 
 
-  const postData = {
-    phoneList: phoneList
-  };
-
-  const callGetRecommendCategoryMany = async () =>{
-    if (phoneList.length < 1){
-      alert('인원이 부족합니다');
-    }
-    else {
-      await getRecommendCategoryMany(postData)
-      .then((result) => {
-        console.log(postData);
-        console.log(result.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-        alert('알수없는 오류가 발생했습니다');
-      });
-    }
-  }
+  
 
   return (
     <View style ={styles.multi}>
@@ -97,7 +77,20 @@ const Multi = ({navigation}) => {
           )
         })}
       </ScrollView>
-      <TouchableOpacity style={styles.btn} onPress={()=>callGetRecommendCategoryMany()}>
+      <TouchableOpacity 
+        style={styles.btn} 
+        onPress={()=> {
+          if (phoneList.length < 1){
+            alert('인원이 부족합니다');
+          } else {
+            navigation.navigate({
+              name : 'recommendmany',
+              params:{
+                phoneList: phoneList,
+              }
+              })
+          }
+          }}>
         <Text style={{fontSize:18, color:'white', fontWeight:'bold'}}>추천받기</Text>
       </TouchableOpacity>
     </View>
