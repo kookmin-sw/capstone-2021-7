@@ -7,29 +7,57 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
+import { checkPhone } from '../api/user-api';
+import { getRecommendCategoryMany } from '../api/user-api';
+
 const Multi = ({navigation}) => {
 
   const [phone, setPhone] = useState("");
   const [phoneList, setPhoneList] = useState([]);
 
-  const addNumber = () => {
-    setPhoneList(phoneList => [...phoneList, phone]);
-    console.log('추가')
+  const addNumber = async () => {
+    if(phone===""){
+       alert('번호를 입력해주세요')
+    }
+    else if(phoneList.includes(phone)){
+      alert('이미 추가한 번호입니다')
+    }
+    else{
+      await checkPhone({
+        phone: phone
+      })
+      .then((result) => {
+        alert('존재하지 않는 사용자입니다')
+      })
+      .catch((err) => {
+        if(err.response.data.message==='해당 전화번호가 이미 존재합니다.'){
+          setPhoneList(phoneList => [...phoneList, phone]);
+          setPhone("")
+        }
+      });    
+    }
   }
 
-  const deleteNumber = () => {
-    console.log('삭제')
-  }
 
-  const deleteAlert = () => {
-    Alert.alert(
-      "Fooday",
-      "목록에서 선택한 번호가 지워집니다",
-      [
-        { text: "취소", style: "cancel", onPress: () => console.log("취소") },
-        { text: "삭제", onPress: () => deleteNumber }
-      ]
-    );
+  const postData = {
+    phoneList: phoneList
+  };
+
+  const callGetRecommendCategoryMany = async () =>{
+    if (phoneList.length < 1){
+      alert('인원이 부족합니다');
+    }
+    else {
+      await getRecommendCategoryMany(postData)
+      .then((result) => {
+        console.log(postData);
+        console.log(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        alert('알수없는 오류가 발생했습니다');
+      });
+    }
   }
 
   return (
@@ -45,24 +73,31 @@ const Multi = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <ScrollView style={{marginTop:'7%'}}>
-        <View style={styles.number}>
-          <Text style={styles.list}>01074230824</Text>
-          <TouchableOpacity onPress={deleteAlert}>
-            <AntDesign name="delete" size={18} color="gray" />
-          </TouchableOpacity>
-        </View>
-        {/* <View style={styles.number}>
-          <Text style={styles.list}>01082828282</Text>
-          <AntDesign name="delete" size={18} color="gray" />
-        </View>
-        <View style={styles.number}>
-          <Text style={styles.list}>01012345678</Text>
-          <TouchableOpacity>
-            <AntDesign name="delete" size={18} color="gray" />
-          </TouchableOpacity>
-        </View> */}
+        {phoneList.map((elem, key)=>{
+          return (
+            <View key={key} style={{flexDirection: "row"}}>
+              <Text  style={styles.list}>{elem}</Text>
+              <View style={styles.number}>
+                <TouchableOpacity onPress={()=>{
+                  Alert.alert(
+                    "Fooday",
+                    "목록에서 선택한 번호가 지워집니다",
+                    [
+                      { text: "삭제", onPress: () => {
+                        setPhoneList(phoneList.filter(item => item !== elem));
+                      }},
+                      { text: "취소", style: "cancel", onPress: () => console.log("취소")}
+                    ]
+                  );
+                }}>
+                  <AntDesign name="delete" size={18} color="gray" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          )
+        })}
       </ScrollView>
-      <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('recommendmany')}>
+      <TouchableOpacity style={styles.btn} onPress={()=>callGetRecommendCategoryMany()}>
         <Text style={{fontSize:18, color:'white', fontWeight:'bold'}}>추천받기</Text>
       </TouchableOpacity>
     </View>
@@ -96,9 +131,7 @@ const styles = StyleSheet.create({
     fontSize:15,
     color:'gray',
     fontWeight:'bold',
-    marginRight:20,
-    borderBottomColor:'gray',
-    borderBottomWidth:2,
+    marginRight:20
   },
   number: {
     flexDirection:'row',
