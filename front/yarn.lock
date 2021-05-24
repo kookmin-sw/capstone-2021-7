@@ -10759,6 +10759,11 @@
   "resolved" "https://registry.npmjs.org/react-native-daum-postcode/-/react-native-daum-postcode-1.0.10.tgz"
   "version" "1.0.10"
 
+"react-native-device-info@^8.1.3":
+  "integrity" "sha512-73e3wiGFL8DvIXEd8x4Aq+mO8mZvHARwfYorIEu+X0trLHY92bP5Ict8DJHDjCQ0+HtAvpA4Wda2VoUVN1zh6Q=="
+  "resolved" "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-8.1.3.tgz"
+  "version" "8.1.3"
+
 "react-native-drawer@2.5.1":
   "integrity" "sha512-cxcQNbSWy5sbGi7anSVp6EDr6JarOBMY9lbFOeLFeVYbONiudoqRKbgEsSDgSw3/LFCLvUXK5zdjXCOedeytxQ=="
   "resolved" "https://registry.npmjs.org/react-native-drawer/-/react-native-drawer-2.5.1.tgz"

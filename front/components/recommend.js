@@ -4,7 +4,6 @@ import { StyleSheet, View,ScrollView, Text, ImageBackground, TouchableOpacity, I
 
 import { useNavigation } from '@react-navigation/native';
 
-import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -53,9 +52,10 @@ const Recommend = () => {
       <View style={styles.topIcon}>
           <FontAwesome5 name="thumbs-up" size={50} color="#3498DB" />
           <Text></Text>
-          <Text>나에게 딱 맞는 음식 추천은 "짝수시 정각"마다 갱신됩니다. </Text>
-          <Text>ex) 10시, 12시, 2시, 4시</Text>
-          <Text>피드백 역시 두시간에 한번씩 가능합니다.</Text>
+          <Text style={{fontWeight:'bold'}}>나에게 딱 맞는 음식 추천중 aws는 "짝수시 정각"마다 갱신됩니다. </Text>
+          <Text style={{fontWeight:'bold'}}>ex) 10시, 12시, 2시, 4시</Text>
+          <Text style={{fontWeight:'bold'}}>나에게 딱 맞는 음식 추천중 자체개발알고리즘은 "30분"마다 갱신됩니다. </Text>
+          <Text style={{fontWeight:'bold'}}>피드백은 각 추천별로 각 카테고리에 대해 두시간에 한번씩 가능합니다.</Text>
       </View>
       { animating === true
         ?
@@ -289,7 +289,8 @@ const styles = StyleSheet.create({
     categoryimg: {
       width: 70,
       height: 70,
-      marginBottom:5
+      marginBottom:5,
+      borderRadius:30,
     },
 });
 

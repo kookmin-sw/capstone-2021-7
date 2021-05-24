@@ -32,6 +32,7 @@ const Menu = ({ route }) => {
     await getMenu(route.params.storeId)
       .then((result) => {
         setMenuList(result.data);
+        console.log(result.data);
       })
       .catch((err) => {
         console.log(err);
@@ -63,16 +64,17 @@ const Menu = ({ route }) => {
 			location : userLocation
 		  })
 		  .then((result) => {
-        callGetOrder();
-        Alert.alert(
-          "주문이 완료되었습니다.",
-          "주문내역에서 확인해주세요",
-          [{ text: "OK", onPress: () => navigation.navigate('myorder')}]
-        );
-		  })
-		  .catch((err) => {
-			  console.log(err);
-		  })
+			console.log("주문끝났냐?", result.data);
+			callGetOrder();
+			Alert.alert(
+			"주문이 완료되었습니다.",
+			"주문내역에서 확인해주세요",
+			[{ text: "OK", onPress: () => navigation.navigate('myorder')}]
+			);
+			})
+			.catch((err) => {
+				console.log(err.response);
+			})
 	}
   }
 
@@ -86,7 +88,11 @@ const Menu = ({ route }) => {
 			<View style={styles.store}>
 				<View style={styles.top}>
 					<View style={styles.topin}>
-						<Image source={{ uri: route.params.storeImg }} style={styles.storeimg} />
+            {route.params.storeImg===""
+              ? <FontAwesome name="circle" size={120} color="#E0E0E0"/>
+              : <Image source={{ uri: route.params.storeImg }} style={styles.storeimg} />
+            }
+						
 						<View style={styles.storename}>
 								<Text style={styles.catename}>{route.params.storeName}</Text>
 						</View>
@@ -97,6 +103,7 @@ const Menu = ({ route }) => {
 				</View>
 				<ScrollView style={styles.menulist}>
 					{menuList.map((elem, key) => {
+            console.log(elem);
 						return(
 						<View style={styles.tq} key={key}>
 							<Image source={{ uri: elem.img }} style={styles.menuimg} />

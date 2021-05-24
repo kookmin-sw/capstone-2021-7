@@ -26,6 +26,7 @@ const Store = ({ route }) => {
         smallCategory : route.params.categoryId
       })
       .then((result) => {
+        console.log("storebysmallcategory",result.data);
         setStoreList(result.data);
       })
       .catch((err) => {

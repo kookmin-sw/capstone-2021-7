@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -22,7 +22,7 @@ const MyDetailOrder = ({ route }) => {
 				<View style={styles.store}>
 						<View style={styles.top}>
 								<View>
-										<FontAwesome name="square" size={80} color="#E0E0E0" />
+								<Image source={{ uri: route.params.orderList[0].storeImg }} style={styles.categoryimg} />
 								</View>
 								<View style={styles.storename}>
 										<Text style={styles.catename}>{route.params.orderList[0].store}</Text>
@@ -34,10 +34,11 @@ const MyDetailOrder = ({ route }) => {
 				</View>
 				<ScrollView style={styles.menulist}>
           {route.params.orderList.map((elem, key) => {
+            console.log("elem",elem);
             return(
               <View style={styles.tq} key={key}>
                 <View>
-                    <FontAwesome name="square" size={80} color="#E0E0E0" />
+                  <Image source={{ uri: elem.storeImg }} style={styles.categoryimg} />
                 </View>
                 <View style={styles.tqname}>
                     <Text style={styles.food}>{elem.name}</Text>
@@ -125,7 +126,12 @@ const styles = StyleSheet.create({
 			fontSize:15,
 			color:"#3498DB",
 			lineHeight:20,
-	}
+  },
+  categoryimg:{
+    width:70,
+    height:70,
+    marginBottom:5
+  },
 });
 
 export default MyDetailOrder;
