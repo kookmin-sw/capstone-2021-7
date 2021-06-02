@@ -26,6 +26,7 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
     "react-native-daum-postcode": "^1.0.9",
+    "react-native-device-info": "^8.1.3",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-hr": "^1.1.4",
     "react-native-paper": "^4.8.1",

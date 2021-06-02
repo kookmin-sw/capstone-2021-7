@@ -91,15 +91,19 @@ const Rating = ({route}) => {
   };
 
   const callSignup = async () =>{
-    await signup(postData)
+    if (postList.length <5){
+      alert('5개 이상 평가해주세요');
+    }else {
+      await signup(postData)
       .then((result) => {
-        console.log(result.data);
+        console.log("로그인에 잘되었어?",result.data);
         navigation.navigate('success');
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data);
         alert('알수없는 오류가 발생했습니다');
       });
+    }
   }
 
   const renderSmallCategory = ({ item }) => {
@@ -153,7 +157,7 @@ const Rating = ({route}) => {
                     { text: "OK", onPress: () => {
                       setEventList(eventList.filter(item => item !== elem.obj.id));
                       setCheckedList(checkedItem.filter(item => item.obj.id !== elem.obj.id));
-                      setPostList(postList.filter(item => item[0] !== clickedItem.id));
+                      setPostList(postList.filter(item => item[0] !== elem.obj.id));
                     }},
                     { text: "cancle", onPress: () => console.log("Ask me later pressed")}
                   ]
@@ -268,12 +272,12 @@ const styles = StyleSheet.create({
   title: {
     color: "#3498DB",
     fontWeight: 'bold',
-    fontSize:18,
+    fontSize:16,
   },
   sub: {
     color: "#3498DB",
     fontWeight: 'bold',
-    fontSize:15,
+    fontSize:14,
     marginTop:5,
     marginBottom:10,
   },
