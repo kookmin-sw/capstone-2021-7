@@ -32,7 +32,7 @@ In the project, we try to solve the problem of "what do we eat today?" by provid
 ```markdown
 학번:   20171699
 e-mail: wdusdhso@kookmin.ac.kr
-역할:   팀장, api개발, 데이터수집, aws personalize 구축
+역할:   팀장, api개발, 데이터수집, 추천알고리즘 개발
 ```
 
 #### 박종민
